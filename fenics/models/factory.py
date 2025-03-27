@@ -4,7 +4,7 @@ from typing import Dict, Type, Optional, Any
 
 from fenics.models.base import ModelBase
 from fenics.models.cnn import Net
-from fenics.models.mlp import MLP
+# from fenics.models.mlp import MLP
 
 
 class ModelFactory:
