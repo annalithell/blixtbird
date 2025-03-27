@@ -705,9 +705,3 @@ Contributions are welcome! If you'd like to enhance Fenics, please follow these 
 This project is licensed under the [MIT License](LICENSE).
 
 ---
-
-## Acknowledgments
-
-- This project was part of a course project (DAT-300: Data-diven support for cyberphysical systems) at Chalmers University of Technology.
-
----
