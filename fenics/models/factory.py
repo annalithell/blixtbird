@@ -16,7 +16,7 @@ class ModelFactory:
     # Registry of available models
     _models: Dict[str, Type[ModelBase]] = {
         'cnn': Net,
-        'mlp': MLP,
+        # 'mlp': MLP,
     }
     
     @classmethod
