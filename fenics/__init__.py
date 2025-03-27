@@ -6,7 +6,7 @@ __email__ =
 
 # Import key components from modules
 from fenics.cli import FenicsShell, run_fenics_shell
-from fenics.config import parse_arguments, SimulationConfig, load_config_from_file, parse_arguments_pydantic
+from fenics.config import parse_arguments, SimulationConfig, load_config_from_file
 # from fenics.models import Net, ModelBase, MLP, ModelFactory
 from fenics.models import Net, ModelBase, ModelFactory
 from fenics.data import load_datasets_dirichlet, print_class_distribution, DataModule
