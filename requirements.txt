@@ -1,0 +1,14 @@
+# requirements.txt
+torch
+torchvision
+matplotlib
+seaborn
+scikit-learn
+numpy
+networkx
+psutil
+pyfiglet
+colorama
+pydantic
+yamllint
+tqdm
