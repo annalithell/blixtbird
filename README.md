@@ -711,7 +711,3 @@ This project is licensed under the [MIT License](LICENSE).
 - This project was part of a course project (DAT-300: Data-diven support for cyberphysical systems) at Chalmers University of Technology.
 
 ---
-
-## Contact
-
-For any questions or feedback, please contact [Shubham Saha](mailto:shuvsaha7@gmail.com) or [Sifat Nawrin Nova](mailto:nawrinnova04@gmail.com).
