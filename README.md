@@ -1,7 +1,7 @@
 # Fenics: Decentralized Federated Learning Simulator
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.7%2B-blue.svg)
+![Python](https://img.shields.io/badge/python-3.7%2B-purple.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-1.8.0%2B-yellow.svg)
 ![NetworkX](https://img.shields.io/badge/NetworkX-2.5%2B-green.svg)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-orange.svg)
