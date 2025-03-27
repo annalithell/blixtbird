@@ -3,6 +3,10 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.7%2B-blue.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-1.8.0%2B-yellow.svg)
+![NetworkX](https://img.shields.io/badge/NetworkX-2.5%2B-green.svg)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-orange.svg)
+![Scikit--learn](https://img.shields.io/badge/Scikit--learn-0.24%2B-red.svg)
+![Threading](https://img.shields.io/badge/Concurrent-Multithreading-blueviolet.svg)
 ![Modular](https://img.shields.io/badge/Architecture-Modular-brightgreen.svg)
 
 **Fenics** is a comprehensive simulator designed for decentralized federated learning environments. It allows researchers and practitioners to experiment with various network topologies, participant selection strategies, and attack scenarios to evaluate the robustness and efficiency of federated learning algorithms.
