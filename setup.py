@@ -6,8 +6,8 @@ import os
 setup(
     name='fenics',
     version='1.3.2',
-    author='Shubham Saha, Sifat Nawrin Nova',
-    author_email='shuvsaha7@gmail.com, nawrinnova04@gmail.com',
+    author=,
+    author_email=,
     packages=find_packages(),
     install_requires=[
         'torch',
