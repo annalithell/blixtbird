@@ -15,7 +15,7 @@ class SelectionFactory:
     
     # Registry of available strategies
     _strategies: Dict[str, Callable] = {
-        'uniform': select_clients_uniform,
+        # 'uniform': select_clients_uniform,
         'md_sampling': select_clients_md_sampling,
     }
     
