@@ -101,7 +101,8 @@ class AttackManager:
                 # Attacker will perform attack in all participation rounds
                 attack_rounds = participation_rounds
             else:
-                attack_rounds = self.rng.sample(participation_rounds, self.max_attacks)
+                # attack_rounds = self.rng.sample(participation_rounds, self.max_attacks)
+                attack_rounds = random.sample(participation_rounds, self.max_attacks)
             
             self.attacker_attack_rounds[attacker_id] = set(attack_rounds)
             
