@@ -33,9 +33,6 @@ class ClientSelector:
         self.random_seed = random_seed
         self.logger = logger or logging.getLogger()
         
-        # Set random seed for reproducibility
-        random.seed(random_seed)
-        np.random.seed(random_seed)
         
         # Calculate number of participants
         self.num_participants = max(1, int(len(nodes) * participation_rate))
@@ -81,12 +78,9 @@ class ClientSelector:
         """
         participating_nodes_per_round = []
         
-        for rnd in range(num_rounds):
-            if probabilities:
-                selected_nodes = self.select_clients_md_sampling(probabilities)
-            else:
-                selected_nodes = self.select_clients_uniform()
-            
+        for rnd in range(1, num_rounds + 1):
+            # Always use MD sampling with the provided probabilities
+            selected_nodes = self.select_clients_md_sampling(probabilities)
             participating_nodes_per_round.append(selected_nodes)
             
         return participating_nodes_per_round
