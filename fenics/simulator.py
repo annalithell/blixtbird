@@ -6,6 +6,7 @@ import time
 import logging
 import multiprocessing
 import psutil
+import numpy as np
 from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from tqdm import tqdm
@@ -75,6 +76,10 @@ class Simulator:
                 - total_aggregation_time_per_round: List of total aggregation times for each round
                 - total_execution_time: Total execution time for the entire simulation
         """
+        torch.manual_seed(0)
+        random.seed(0)
+        np.random.seed(0)
+
         metrics = defaultdict(lambda: defaultdict(list))
         cpu_usages = []
         round_times = []
