@@ -237,7 +237,7 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     #plt.title('Average Testing Metrics per Round (Line Plot)')
     plt.xticks(rounds)
     plt.ylim(0, 1)
-    plt.legend(markerscale=0.2, prop={'size': 6})
+    plt.legend(markerscale=0.8, prop={'size': 10})
     plt.grid(True)
     plt.tight_layout()
     testing_line_path = os.path.join(output_dir, 'average_testing_metrics_line_plot.pdf')
