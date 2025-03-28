@@ -1,8 +1,8 @@
 # fenics/__init__.py
 
 __version__ = "1.3.2"
-__author__ = 
-__email__ = 
+__author__ = ""
+__email__ = ""
 
 # Import key components from modules
 from fenics.cli import FenicsShell, run_fenics_shell
