@@ -22,6 +22,13 @@ def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
     """
     device = torch.device("cpu")
     model = local_model
+
+    # Simulate selfish free-rider attack
+    if attacker_type == 'freerider':
+        # calculate fake training time based on epochs
+        fake_time = 32 * epochs * 0.01
+        return model.state_dict(), fake_time
+
     model.to(device)
     # Added weight decay for L2 regularization
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)  # Weight decay added

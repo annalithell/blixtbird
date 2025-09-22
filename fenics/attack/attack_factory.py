@@ -6,6 +6,7 @@ import logging
 from fenics.attack.attack_types.base import Attack
 from fenics.attack.attack_types.poison import PoisonAttack
 from fenics.attack.attack_types.delay import DelayAttack
+from fenics.attack.attack_types.freerider import FreeRiderAttack
 
 
 class AttackFactory:
@@ -18,6 +19,7 @@ class AttackFactory:
     _attacks: Dict[str, Type[Attack]] = {
         'poison': PoisonAttack,
         'delay': DelayAttack,
+        'freerider': FreeRiderAttack, 
     }
     
     @classmethod
