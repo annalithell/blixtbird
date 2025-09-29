@@ -18,7 +18,11 @@ from fenics.aggregation import FedAvgStrategy, AggregationStrategy, AggregationF
 from fenics.client_selection import ClientSelector, select_clients_md_sampling, SelectionFactory
 from fenics.utils import setup_logging, calculate_selection_probabilities, detect_convergence
 from fenics.simulator import Simulator
-from fenics.attack import AttackManager, Attack, PoisonAttack, DelayAttack, AttackFactory
+from fenics.attack import AttackManager, AttackFactory, Attack #, PoisonAttack, DelayAttack
+from fenics.node.base import BaseNode
+from fenics.node.attacks.delay import DelayAttack
+from fenics.node.attacks.poison import PoisonAttack
+from fenics.node.attacks.freerider import FreeRiderAttack
 from fenics.plotting import visualize_data_distribution, plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
 
 __all__ = [

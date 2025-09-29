@@ -16,7 +16,7 @@ from fenics.models import ModelFactory
 from fenics.training import local_train, evaluate, summarize_model_parameters
 from fenics.communication import send_update
 from fenics.aggregation import AggregationFactory
-
+from fenics.node.node import Node
 
 class Simulator:
     """
@@ -62,6 +62,17 @@ class Simulator:
         self.attacks = attacks
         self.model_type = model_type
         self.logger = logger or logging.getLogger()
+        self.real_nodes = self.make_nodes()
+
+    def make_nodes(self):
+        """ Create a list of "real" nodes. """
+        real_nodes = []
+
+        for node_id in self.nodes:
+            node = Node(node_id=node_id, logger=self.logger)
+            real_nodes.append(node)
+        
+        return real_nodes
         
     def run_simulation(self) -> Tuple[Dict, List[float], List[float], List[float], List[float], float]:
         """
@@ -86,13 +97,13 @@ class Simulator:
         node_training_times = defaultdict(list)
         total_training_time_per_round = []
         total_aggregation_time_per_round = []
-        
+
         # Initialize local models for each node
         local_models = {}
-        for node in self.nodes:
+        for node in self.real_nodes:
             # Use the model factory to create the appropriate model type
-            local_models[node] = ModelFactory.get_model(self.model_type)
-        local_params = {node: local_models[node].state_dict() for node in self.nodes}
+            local_models[node.node_id] = ModelFactory.get_model(self.model_type)
+        local_params = {node.node_id: local_models[node.node_id].state_dict() for node in self.real_nodes}
 
         # Initialize global model
         global_model = ModelFactory.get_model(self.model_type)
@@ -106,7 +117,7 @@ class Simulator:
         simulation_start_time = time.time()
 
         # Use ProcessPoolExecutor for CPU-bound tasks like training
-        with ProcessPoolExecutor(max_workers=min(multiprocessing.cpu_count(), len(self.nodes))) as training_executor:
+        with ProcessPoolExecutor(max_workers=min(multiprocessing.cpu_count(), len(self.real_nodes))) as training_executor:
             # Initialize tqdm progress bar
             with tqdm(total=self.num_rounds, desc="Simulation Progress", unit="round") as pbar:
                 for rnd in range(1, self.num_rounds + 1):
@@ -169,7 +180,7 @@ class Simulator:
                     # Sending phase: Nodes send updates (with possible delays)
                     if successful_nodes:
                         send_futures = {}
-                        with ThreadPoolExecutor(max_workers=min(multiprocessing.cpu_count(), len(self.nodes))) as send_executor:
+                        with ThreadPoolExecutor(max_workers=min(multiprocessing.cpu_count(), len(self.real_nodes))) as send_executor:
                             for node in successful_nodes:
                                 attacker_type = None
                                 if node in self.attacker_node_ids and rnd in self.attacker_attack_rounds.get(node, set()):
@@ -205,8 +216,8 @@ class Simulator:
                             self.logger.info("Global model updated using Weighted Federated Averaging (FedAvg).")
 
                             # Distribute the updated global model to all nodes
-                            for node in self.nodes:
-                                local_models[node].load_state_dict(aggregated_state_dict)
+                            for node in self.real_nodes:
+                                local_models[node.node_id].load_state_dict(aggregated_state_dict)
                             self.logger.info("Global model distributed to all nodes.")
                         else:
                             self.logger.warning("Aggregation returned None. Global model not updated.")
@@ -220,36 +231,36 @@ class Simulator:
 
                     # Evaluation phase: training data
                     self.logger.info("\n=== Evaluation Phase of training data ===")
-                    for node in self.nodes:
-                        train_loader = torch.utils.data.DataLoader(self.node_datasets[node], batch_size=32, shuffle=False)
-                        model = local_models[node]
-                        self.logger.info(f"\nEvaluating model for node_{node} on training data...")
+                    for node in self.real_nodes:
+                        train_loader = torch.utils.data.DataLoader(self.node_datasets[node.node_id], batch_size=32, shuffle=False)
+                        model = local_models[node.node_id]
+                        self.logger.info(f"\nEvaluating model for node_{node.node_id} on training data...")
                         train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
-                        self.logger.info(f"[Round {rnd}] Training Data Evaluation of node_{node} -> Loss: {train_loss:.4f}, "
+                        self.logger.info(f"[Round {rnd}] Training Data Evaluation of node_{node.node_id} -> Loss: {train_loss:.4f}, "
                                     f"Accuracy: {train_accuracy:.4f}, F1 Score: {train_f1:.4f}, "
                                     f"Precision: {train_precision:.4f}, Recall: {train_recall:.4f}")
                         # Record training data metrics per node
-                        metrics[node]['train_loss'].append(train_loss)
-                        metrics[node]['train_accuracy'].append(train_accuracy)
-                        metrics[node]['train_f1_score'].append(train_f1)
-                        metrics[node]['train_precision'].append(train_precision)
-                        metrics[node]['train_recall'].append(train_recall)
+                        metrics[node.node_id]['train_loss'].append(train_loss)
+                        metrics[node.node_id]['train_accuracy'].append(train_accuracy)
+                        metrics[node.node_id]['train_f1_score'].append(train_f1)
+                        metrics[node.node_id]['train_precision'].append(train_precision)
+                        metrics[node.node_id]['train_recall'].append(train_recall)
 
                     # Evaluation phase: testing data
                     self.logger.info("\n=== Evaluation Phase of testing data ===")
-                    for node in self.nodes:
-                        test_loader = self.test_loaders_per_node[node]
-                        model = local_models[node]
-                        self.logger.info(f"\nEvaluating model for node_{node} on testing data...")
+                    for node in self.real_nodes:
+                        test_loader = self.test_loaders_per_node[node.node_id]
+                        model = local_models[node.node_id]
+                        self.logger.info(f"\nEvaluating model for node_{node.node_id} on testing data...")
                         loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
-                        self.logger.info(f"[Round {rnd}] Evaluation of node_{node} -> Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, "
+                        self.logger.info(f"[Round {rnd}] Evaluation of node_{node.node_id} -> Loss: {loss:.4f}, Accuracy: {accuracy:.4f}, "
                                     f"F1 Score: {f1:.4f}, Precision: {precision:.4f}, Recall: {recall:.4f}")
                         # Record metrics per node
-                        metrics[node]['loss'].append(loss)
-                        metrics[node]['accuracy'].append(accuracy)
-                        metrics[node]['f1_score'].append(f1)
-                        metrics[node]['precision'].append(precision)
-                        metrics[node]['recall'].append(recall)
+                        metrics[node.node_id]['loss'].append(loss)
+                        metrics[node.node_id]['accuracy'].append(accuracy)
+                        metrics[node.node_id]['f1_score'].append(f1)
+                        metrics[node.node_id]['precision'].append(precision)
+                        metrics[node.node_id]['recall'].append(recall)
 
                     # Finalize round timing
                     end_time_round = time.time()
