@@ -109,9 +109,10 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     attack_manager = AttackManager(
         num_nodes=simulation_args.num_nodes,
         use_attackers=simulation_args.use_attackers,
-        num_attackers=simulation_args.num_attackers,
-        attacker_nodes=simulation_args.attacker_nodes,
-        attacks=simulation_args.attacks,
+        #num_attackers=simulation_args.num_attackers,
+        #attacker_nodes=simulation_args.attacker_nodes,
+        #attacks=simulation_args.attacks,
+        attacker_nodes = simulation_args.attacker_nodes_by_nodes,
         max_attacks=simulation_args.max_attacks,
         logger=logger
     )

@@ -19,6 +19,8 @@ class PoisonAttack(BaseNode):
             logger: Logger instance
         """
         super().__init__(node_id, logger)
+        self.attack_round = 0 # Placeholder for potential future use
+        self.attack_type = 'poison'
     
     def execute(self, model: torch.nn.Module) -> None:
         """

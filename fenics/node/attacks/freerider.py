@@ -7,6 +7,7 @@ from typing import Optional
 from fenics.node.base import BaseNode
 
 
+#class FreeRiderAttack(BaseNode, attack_type='freerider'):
 class FreeRiderAttack(BaseNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
@@ -19,6 +20,8 @@ class FreeRiderAttack(BaseNode):
             logger: Logger instance
         """
         super().__init__(node_id, logger)
+        self.attack_round = 0 # Placeholder for potential future use
+        self.attack_type = 'freerider'
         
     def execute(self, model: torch.nn.Module):
         """

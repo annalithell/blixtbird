@@ -69,8 +69,10 @@ class Simulator:
         real_nodes = []
 
         for node_id in self.nodes:
-            node = Node(node_id=node_id, logger=self.logger)
-            real_nodes.append(node)
+            if node_id in self.attacker_node_ids: 
+                attacker_type = random.choice(self.attacks)
+                node = Node(node_id=node_id, logger=self.logger)
+                real_nodes.append(node)
         
         return real_nodes
         
