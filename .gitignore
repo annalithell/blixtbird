@@ -3,4 +3,3 @@ fenics.egg-info
 __pycache__
 /results*
 */FashionMNIST/raw
-*.yaml

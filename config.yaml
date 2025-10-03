@@ -1,0 +1,22 @@
+simulations:
+  simulation1:
+    rounds: 3                  # Number of training rounds
+    epochs: 1                  # Number of epochs per round
+    num_nodes: 7                # Total number of nodes in the simulation
+    # num_attackers: 3            # Number of attacker nodes ## DELETE
+    # attacker_nodes: [3]         # Specific nodes designated as attackers  ## CHANGE TO DICT
+    # attacks: ['freerider', 'poison']           # Types of attacks to simulate ## DELETE
+    # attacker_nodes: ['freerider' : [0,1], 'poison': [3,5], 'abc': [7]]
+    attacker_nodes_by_nodes: 
+      2: 'freerider'
+      3: 'freerider' 
+      4: 'poison'
+    use_attackers: true         # Flag to enable or disable attacker simulation 
+    participation_rate: 0.6     # Fraction of nodes participating each round ## DELETE
+    topology: fully_connected   # Network topology type
+    topology_file: null         # Path to a custom topology edge list file
+    max_attacks: 5              # Maximum number of attacks an attacker can perform
+    gossip_steps: 3             # Number of gossiping steps during aggregation
+    protocol: neighboring            # Aggregation protocol ('gossip' or 'neighboring')
+    alpha: 0.5                  # Dirichlet distribution parameter for data partitioning ### LOOK INTO WHAT THIS IS
+    model_type: cnn             # Model type to use ('cnn', 'mlp', or custom)
