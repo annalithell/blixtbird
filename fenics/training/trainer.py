@@ -20,7 +20,7 @@ def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
     Returns:
         Tuple of (model state dictionary, training time)
     """
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = local_model
     model.to(device)
     # Added weight decay for L2 regularization
