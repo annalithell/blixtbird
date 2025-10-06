@@ -14,9 +14,10 @@ class AttackManager:
     def __init__(self,
                  num_nodes: int,
                  use_attackers: bool = False,
-                 num_attackers: int = 0, 
-                 attacker_nodes: Optional[List[int]] = None,
-                 attacks: List[str] = None,
+                 #num_attackers: int = 0, 
+                 #attacker_nodes: Optional[List[int]] = None,
+                 attacker_nodes: Optional[Dict[int, str]] = None,
+                 #attacks: List[str] = None,
                  max_attacks: Optional[int] = None,
                  random_seed: int = 12345,
                  logger: Optional[logging.Logger] = None):
@@ -35,9 +36,9 @@ class AttackManager:
         """
         self.num_nodes = num_nodes
         self.use_attackers = use_attackers
-        self.num_attackers = num_attackers
+        #self.num_attackers = num_attackers
         self.attacker_nodes = attacker_nodes
-        self.attacks = attacks or []
+        #self.attacks = attacks or []
         self.max_attacks = max_attacks
         self.random_seed = random_seed
         self.logger = logger or logging.getLogger()
@@ -61,7 +62,8 @@ class AttackManager:
             return []
         
         if self.attacker_nodes is not None:
-            self.attacker_node_ids = self.attacker_nodes
+            self.attacker_node_ids = sorted(int(n) for n in self.attacker_nodes.keys())
+            #self.attacker_node_ids = self.attacker_nodes
         else:
             # Ensure num_attackers does not exceed num_nodes
             num_attackers = min(self.num_attackers, self.num_nodes)
