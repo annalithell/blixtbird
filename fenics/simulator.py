@@ -17,6 +17,11 @@ from fenics.training import local_train, evaluate, summarize_model_parameters
 from fenics.communication import send_update
 from fenics.aggregation import AggregationFactory
 
+import multiprocessing as mp
+try:
+    mp.set_start_method("spawn", force=True)
+except Exception as e:
+    pass
 
 class Simulator:
     """
