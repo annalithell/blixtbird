@@ -6,11 +6,14 @@ simulations:
     # num_attackers: 3            # Number of attacker nodes ## DELETE
     # attacker_nodes: [3]         # Specific nodes designated as attackers  ## CHANGE TO DICT
     # attacks: ['freerider', 'poison']           # Types of attacks to simulate ## DELETE
-    # attacker_nodes: ['freerider' : [0,1], 'poison': [3,5], 'abc': [7]]
-    attacker_nodes_by_nodes: 
+    node_type_map: 
+      0: 'base'
+      1: 'base'
       2: 'freerider'
       3: 'freerider' 
       4: 'poison'
+      5: 'base'
+      6: 'base'
     use_attackers: true         # Flag to enable or disable attacker simulation 
     participation_rate: 0.6     # Fraction of nodes participating each round ## DELETE
     topology: fully_connected   # Network topology type

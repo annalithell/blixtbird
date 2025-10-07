@@ -119,6 +119,7 @@ class FenicsShell(cmd.Cmd):
     
     def complete_setup(self, text, line, begidx, endidx):
         """Provide tab completion for setup command."""
+        # TODO: Change options
         options = ['--rounds', '--epochs', '--topology', '--participation_rate', '--gossip_steps', 
                    '--protocol', '--use_attackers', '--num_attackers', '--attacks', '--alpha', 
                    '--config', '--simulation_name', '--model_type']

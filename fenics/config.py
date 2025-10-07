@@ -1,7 +1,7 @@
 # fenics/config.py
 
 from typing import List, Optional, Dict, Any, Union
-from pydantic import BaseModel, Field, validator, root_validator
+from pydantic import BaseModel, Field, field_validator
 from pathlib import Path
 import yaml
 import os
@@ -14,11 +14,9 @@ class SimulationConfig(BaseModel):
     rounds: int = Field(5, description="Number of federated learning rounds")
     epochs: int = Field(1, description="Number of local epochs")
     num_nodes: int = Field(5, description="Number of nodes in the network")
-    
+    node_type_map: dict = Field({0:'base', 1:'base', 2:'base', 3:'base', 4:'base'}, description="Node type of each node in the network")   # TODO check if this actually works
+
     # Attacker parameters
-    num_attackers: int = Field(0, description="Number of attacker nodes")
-    attacker_nodes: Optional[List[int]] = Field(None, description="List of attacker node indices")
-    attacks: List[str] = Field([], description="Types of attacks: delay, poison")
     use_attackers: bool = Field(False, description="Include attacker nodes")
     max_attacks: Optional[int] = Field(None, description="Maximum number of times an attacker can perform an attack")
     
@@ -37,25 +35,25 @@ class SimulationConfig(BaseModel):
     # Model parameters
     model_type: str = Field("cnn", description="Model type to use: cnn, mlp, custom")
     
-    @validator('participation_rate')
+    @field_validator('participation_rate')
     def validate_participation_rate(cls, v):
         if not (0 < v <= 1):
             raise ValueError("participation_rate must be between 0 and 1")
         return v
     
-    @validator('num_attackers')
+    @field_validator('node_type_map')
     def validate_num_attackers(cls, v, values):
-        if 'num_nodes' in values and v > values['num_nodes']:
-            raise ValueError("num_attackers cannot exceed num_nodes")
+        if 'num_nodes' in values and len(v) > values.get['num_nodes']:
+            raise ValueError("Attacker nodes cannot exceed num_nodes")
         return v
     
-    @validator('topology_file')
+    @field_validator('topology_file')
     def validate_topology_file(cls, v, values):
         if values.get('topology') == 'custom' and not v:
             raise ValueError("topology_file must be provided when topology is 'custom'")
         return v
     
-    @validator('protocol')
+    @field_validator('protocol')
     def validate_protocol(cls, v):
         if v not in ['gossip', 'neighboring']:
             raise ValueError("protocol must be either 'gossip' or 'neighboring'")

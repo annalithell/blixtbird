@@ -64,6 +64,7 @@ class DataModule:
         self.test_loaders_per_node = None
         
     def setup(self) -> None:
+        # TODO think about this when distributing data_training sets
         """
         Set up the data module by loading datasets and creating network topology.
         """
@@ -88,7 +89,8 @@ class DataModule:
         )
         
         # Create nodes and build topology
-        self.nodes = create_nodes(self.num_nodes)
+        # TODO group 1 problem lol
+        self.nodes = create_nodes(self.num_nodes) # This is fine, reuse for topology and list[nodes
         self.G = build_topology(self.num_nodes, self.topology, self.topology_file)
         visualize_and_save_topology(self.G, self.topology, self.output_dir)
         
