@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import time
 import logging
+import os
 
 
 def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
@@ -54,3 +55,16 @@ def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
 
     # Return updated model parameters and training time
     return model.state_dict(), training_time  # Return tuple
+
+def load_datasets(nodes_ids, save_path='./federated_data'):
+
+    node_datasets = {}
+
+    for node_id in nodes_ids:
+        file_name = os.path.join(save_path, f'node_{node_id}_train_data.pt')
+        if not os.path.exists(file_name):
+            raise FileNotFoundError(f"File for node {node_id} not found: {file_name}")
+        node_dataset = torch.load(file_name, weights_only=False)
+        node_datasets[node_id] = node_dataset
+    
+    return node_datasets

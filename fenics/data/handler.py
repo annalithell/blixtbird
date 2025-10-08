@@ -6,6 +6,23 @@ import numpy as np
 import random
 from collections import defaultdict
 import logging
+import os
+
+def save_datasets(train_datasets, save_path='./federated_data'):
+    """
+    Save datasets (torch.utils.data.Subset) in separate files.
+    
+    Args:
+        train_datasets: List of training data for each node.
+        save_path: Path for folder where data will be saved.
+    """
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
+    
+    for i, dataset in enumerate(train_datasets):
+        print(f"i:{i}")
+        file_name = os.path.join(save_path, f'node_{i}_train_data.pt')
+        torch.save(dataset, file_name)
 
 
 def distribute_data_dirichlet(labels, num_nodes, alpha):
@@ -50,7 +67,7 @@ def distribute_data_dirichlet(labels, num_nodes, alpha):
     return node_indices
 
 
-def load_datasets_dirichlet(num_nodes, alpha):
+def load_datasets_dirichlet(num_nodes, alpha, save_to_file=True, save_path='./federated_data'):
     """
     Load and distribute the FashionMNIST dataset among nodes using Dirichlet distribution.
     
@@ -81,6 +98,11 @@ def load_datasets_dirichlet(num_nodes, alpha):
     total_assigned = sum(len(dataset) for dataset in train_datasets)
     total_available = len(train_dataset)
     assert total_assigned == total_available, "Data assignment mismatch!"
+
+    # Zapis rozdzielonych zbiorów do plików
+    if save_to_file:
+        save_datasets(train_datasets, save_path)
+        print("data saved")
 
     return train_datasets, test_dataset, labels
 

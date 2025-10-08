@@ -13,7 +13,7 @@ from tqdm import tqdm
 from typing import Dict, List, Tuple, Any, Optional, Set
 
 from fenics.models import ModelFactory
-from fenics.training import local_train, evaluate, summarize_model_parameters
+from fenics.training import local_train, evaluate, summarize_model_parameters, load_datasets
 from fenics.communication import send_update
 from fenics.aggregation import AggregationFactory
 
@@ -52,7 +52,8 @@ class Simulator:
             logger: Logger instance
         """
         self.nodes = nodes
-        self.node_datasets = node_datasets
+        #self.node_datasets = node_datasets
+        self.node_datasets = load_datasets(nodes)
         self.test_loaders_per_node = test_loaders_per_node
         self.participating_nodes_per_round = participating_nodes_per_round
         self.attacker_node_ids = attacker_node_ids
@@ -62,7 +63,7 @@ class Simulator:
         self.attacks = attacks
         self.model_type = model_type
         self.logger = logger or logging.getLogger()
-        
+
     def run_simulation(self) -> Tuple[Dict, List[float], List[float], List[float], List[float], float]:
         """
         Run the simulation.
