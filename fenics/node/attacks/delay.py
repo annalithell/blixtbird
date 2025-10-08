@@ -3,12 +3,13 @@
 import random
 import time
 import logging
-from typing import Optional
+from typing import Optional, override
 
-from fenics.node.base import BaseNode
+from fenics.node.attacks.base import BaseAttack
+from fenics.node.attacktype import AttackType ## TO BE FIXED
 
 
-class DelayAttack(BaseNode):
+class DelayAttack(BaseAttack):
     """Delay attack that simulates network delay by sleeping."""
     
     def __init__(self, node_id: int, logger: Optional[logging.Logger] = None):
@@ -19,10 +20,12 @@ class DelayAttack(BaseNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
+
         super().__init__(node_id, logger)
         self.attack_round = 0 # Placeholder for potential future use
-        self.attack_type = 'delay'
-    
+        self.attack_type = AttackType.DELAY
+
+    @override
     def execute(self) -> float:
         """
         Execute the delay attack by sleeping for a random amount of time.
