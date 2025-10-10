@@ -1,10 +1,11 @@
-# fenics/node/attacks/baseattack.py
+# fenics/node/baseattack.py
 
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
 from fenics.node.attacktype import AttackType
 from fenics.node.nodetype import NodeType
+
 
 class BaseAttack(ABC):
     """ A  base attack class for all attacks. """    

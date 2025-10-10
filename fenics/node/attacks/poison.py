@@ -5,8 +5,9 @@ import logging
 from typing import Optional, override
 
 from fenics.node.attacks.base import BaseAttack
-from fenics.node.attacktype import AttackType ## TO BE FIXED
+from fenics.node.attacks.attackregistry import register_attack
 
+@register_attack("poison")
 class PoisonAttack(BaseAttack):
     """Model poisoning attack that adds significant noise to model parameters."""
     
@@ -18,9 +19,9 @@ class PoisonAttack(BaseAttack):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, logger)
+        super().__init__(node_id)
         self.attack_round = 0 # Placeholder for potential future use
-        self.attack_type = AttackType.POISON
+        self.attack_type = self.__class__.__attack_type__
     
     @override
     def execute(self, model: torch.nn.Module) -> None:

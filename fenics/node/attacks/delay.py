@@ -6,9 +6,9 @@ import logging
 from typing import Optional, override
 
 from fenics.node.attacks.base import BaseAttack
-from fenics.node.attacktype import AttackType ## TO BE FIXED
+from fenics.node.attacks.attackregistry import register_attack
 
-
+@register_attack("delay")
 class DelayAttack(BaseAttack):
     """Delay attack that simulates network delay by sleeping."""
     
@@ -21,9 +21,9 @@ class DelayAttack(BaseAttack):
             logger: Logger instance
         """
 
-        super().__init__(node_id, logger)
+        super().__init__(node_id)
         self.attack_round = 0 # Placeholder for potential future use
-        self.attack_type = AttackType.DELAY
+        self.attack_type = self.__class__.__attack_type__
 
     @override
     def execute(self) -> float:

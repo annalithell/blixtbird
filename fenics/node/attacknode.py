@@ -3,7 +3,7 @@ from fenics.node.attacks import delay, poison, freerider
 from typing import Optional, Dict, Type, Callable, override
 import logging
 
-__attack_registry__: Dict[str, Type] = {}
+##__attack_registry__: Dict[str, Type] = {}
 
 class AttackNode(BaseNode):
     """ Base class for all attack nodes. """
@@ -17,7 +17,7 @@ class AttackNode(BaseNode):
         """
         super().__init__(node_id, NodeType.ATTACK, logger)
     
-    def register_attack(name: str = None) -> Callable[[Type], Type]:
+    ##def register_attack(name: str = None) -> Callable[[Type], Type]:
         
     @override
     def execute(self, *args, **kwargs):
