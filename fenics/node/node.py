@@ -3,6 +3,7 @@
 import torch
 import logging
 from typing import Optional
+from fenics.node.nodetype import NodeType
 
 from fenics.node.base import BaseNode
 
@@ -19,6 +20,7 @@ class Node(BaseNode):
             logger: Logger instance
         """
         super().__init__(node_id, logger)
+        self.type = NodeType.NORMAL
         
     def execute(self, model: torch.nn.Module):
         """

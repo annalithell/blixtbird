@@ -22,8 +22,8 @@ class BaseAttack(ABC):
         self.node_type = node
         self.training_data = None  # Placeholder for training data
         self.model_params = None  # Placeholder for model parameters
+        self.neighbors = []  # Placeholder for neighbor nodes
         self.logger = logger or logging.getLogger()
-        self.attack_type = AttackType.NONE
 
     @abstractmethod
     def execute(self, *args, **kwargs) -> Any:
@@ -33,4 +33,4 @@ class BaseAttack(ABC):
         Returns:
             Result of the node execution, depending on the node type
         """
-        pass
+        raise NotImplementedError("Subclasses must implement execute()")

@@ -14,7 +14,7 @@ from fenics.attack import AttackManager
 from fenics.simulator import Simulator
 from fenics.utils import setup_logging
 from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
-
+from fenics.node.attacks.attackregistry import autodiscover_attack_modules
 
 def setup_environment(logger=None):
     """
@@ -77,10 +77,11 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     
     print(Fore.CYAN + "Starting simulation...")
     logger.info("Starting simulation...")
-    
+    autodiscover_attack_modules()
     # Set up data module
     data_module = DataModule(
         num_nodes=simulation_args.num_nodes,
+        node_type_map=simulation_args.node_type_map, ### TODO PRESUMED STRUCTURE {0:"normal", 1:"attack", 2:"mitigation"}
         alpha=simulation_args.alpha,
         topology=simulation_args.topology,
         topology_file=simulation_args.topology_file,

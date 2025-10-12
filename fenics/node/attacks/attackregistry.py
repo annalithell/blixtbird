@@ -3,6 +3,7 @@ import importlib
 import pkgutil
 from pathlib import Path
 from typing import Dict, Type
+import os
 
 ATTACK_REGISTRY: Dict[str, Type] = {}
 
@@ -23,7 +24,7 @@ def register_attack(class_name: str):
     "attack a": <Class A>,
     "attack b": <Class B>,
     ...
-    } 
+    }
     """
     def decorator(attack_class: Type) -> Type:
         """
@@ -66,10 +67,9 @@ def autodiscover_attack_modules():
     call this in the attacknode.py file
     autodiscover_attack_modules()
     """
-    package = "node.attacks"
+    package = os.path.basename(os.path.dirname(__file__))
     pkg = importlib.import_module(package)
-    package_path = pkg.__path__  # list-like; pkgutil needs this
+    package_path = pkg.__path__  
     for finder, name, ispkg in pkgutil.iter_modules(package_path):
-        # import module (e.g. node.attacks.poison)
         full_name = f"{package}.{name}"
         importlib.import_module(full_name)

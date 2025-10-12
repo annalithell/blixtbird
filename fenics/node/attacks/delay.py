@@ -11,8 +11,8 @@ from fenics.node.attacks.attackregistry import register_attack
 @register_attack("delay")
 class DelayAttack(BaseAttack):
     """Delay attack that simulates network delay by sleeping."""
-    
-    def __init__(self, node_id: int, logger: Optional[logging.Logger] = None):
+
+    def __init__(self, node_id: int, attack_type: str = "DELAY", logger: Optional[logging.Logger] = None):
         """
         Initialize the delay attack.
         
@@ -23,8 +23,9 @@ class DelayAttack(BaseAttack):
 
         super().__init__(node_id)
         self.attack_round = 0 # Placeholder for potential future use
-        self.attack_type = self.__class__.__attack_type__
-
+        self.__attack_type__ = attack_type
+        self.logger = logger or logging.getLogger()
+        
     @override
     def execute(self) -> float:
         """

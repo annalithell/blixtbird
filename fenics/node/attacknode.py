@@ -1,5 +1,5 @@
 from fenics.node.base import BaseNode, NodeType
-from fenics.node.attacks import delay, poison, freerider
+from fenics.node.attacks.attackregistry import get_attack 
 from typing import Optional, Dict, Type, Callable, override
 import logging
 
@@ -7,7 +7,7 @@ import logging
 
 class AttackNode(BaseNode):
     """ Base class for all attack nodes. """
-    def __init__(self, node_id:int, logger:Optional[logging.Logger]=None):
+    def __init__(self, node_id:int, attack_name : str ="none", logger:Optional[logging.Logger]=None):
         """
         Initialize an attack node
         
@@ -15,10 +15,13 @@ class AttackNode(BaseNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, NodeType.ATTACK, logger)
+        super().__init__(node_id)
+        self.logger = logger or logging.getLogger()
+        self.attack = get_attack(attack_name, node_id=node_id)
+        self.attack_type = self.attack.__attack_type__
+        self.type = NodeType.ATTACK 
     
-    ##def register_attack(name: str = None) -> Callable[[Type], Type]:
-        
+
     @override
     def execute(self, *args, **kwargs):
         """

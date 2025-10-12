@@ -35,6 +35,7 @@ class Simulator2:
                  attacks: List[str],
                  model_type: str = "cnn",
                  logger: Optional[logging.Logger] = None):
+        
         """
         Initialize the simulator.
         
@@ -51,6 +52,7 @@ class Simulator2:
             model_type: Type of model to use (e.g., 'cnn', 'mlp')
             logger: Logger instance
         """
+        
         self.nodes = nodes
         self.node_datasets = node_datasets
         self.test_loaders_per_node = test_loaders_per_node
