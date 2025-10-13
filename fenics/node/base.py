@@ -3,8 +3,7 @@
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
-
-
+    
 class BaseNode(ABC):
     """ A  base node class for all nodes. """    
     
@@ -14,6 +13,7 @@ class BaseNode(ABC):
         
         Args:
             node_id: ID of the node
+            node_type: Type of the node (NORMAL, ATTACK, MITIGATION)-node
             logger: Logger instance
         """
         self.node_id = node_id

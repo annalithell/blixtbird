@@ -2,10 +2,11 @@
 
 import networkx as nx
 from abc import ABC, abstractmethod
-from typing import List
+from typing import List ,Callable , Optional
 
 
-def create_nodes(num_nodes: int) -> List[int]:
+def create_nodes(num_nodes: int,
+                 node_factory: Optional[Callable[[int], object]] = None) -> List[object]:
     """
     Create a list of node indices.
     
@@ -15,7 +16,14 @@ def create_nodes(num_nodes: int) -> List[int]:
     Returns:
         List of node indices from 0 to num_nodes-1
     """
-    return list(range(num_nodes))  # Nodes are represented by integer indices
+
+    nodes = []
+    for i in range(num_nodes):
+        if node_factory is not None:
+            nodes.append(node_factory(i))
+        else:
+            nodes.append(i)
+    return nodes  
 
 
 class TopologyBase(ABC):

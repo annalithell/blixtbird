@@ -1,0 +1,535 @@
+2025-10-05 20:20:10,790 - INFO - Logging is configured.
+2025-10-05 20:20:10,790 - INFO - Logging is configured.
+2025-10-05 20:20:14,124 - INFO - rounds: 5
+2025-10-05 20:20:14,124 - INFO - epochs: 1
+2025-10-05 20:20:14,124 - INFO - num_nodes: 5
+2025-10-05 20:20:14,125 - INFO - num_attackers: 0
+2025-10-05 20:20:14,125 - INFO - attacker_nodes: None
+2025-10-05 20:20:14,125 - INFO - attacks: []
+2025-10-05 20:20:14,125 - INFO - use_attackers: False
+2025-10-05 20:20:14,125 - INFO - max_attacks: None
+2025-10-05 20:20:14,125 - INFO - participation_rate: 0.5
+2025-10-05 20:20:14,126 - INFO - topology: fully_connected
+2025-10-05 20:20:14,126 - INFO - topology_file: None
+2025-10-05 20:20:14,126 - INFO - gossip_steps: 3
+2025-10-05 20:20:14,126 - INFO - protocol: gossip
+2025-10-05 20:20:14,126 - INFO - alpha: 0.5
+2025-10-05 20:20:14,126 - INFO - model_type: cnn
+2025-10-05 20:20:14,126 - INFO - Starting simulation...
+2025-10-05 20:20:14,233 - INFO - node_0 Class Distribution: {np.int64(0): np.int64(2304), np.int64(1): np.int64(155), np.int64(2): np.int64(126), np.int64(3): np.int64(5100), np.int64(4): np.int64(225), np.int64(5): np.int64(67), np.int64(6): np.int64(1), np.int64(7): np.int64(4071), np.int64(8): np.int64(1377), np.int64(9): np.int64(308)}
+2025-10-05 20:20:14,234 - INFO - node_1 Class Distribution: {np.int64(0): np.int64(96), np.int64(1): np.int64(2062), np.int64(2): np.int64(556), np.int64(3): np.int64(226), np.int64(4): np.int64(306), np.int64(5): np.int64(47), np.int64(6): np.int64(734), np.int64(7): np.int64(3), np.int64(8): np.int64(130), np.int64(9): np.int64(423)}
+2025-10-05 20:20:14,235 - INFO - node_2 Class Distribution: {np.int64(0): np.int64(34), np.int64(1): np.int64(94), np.int64(2): np.int64(3732), np.int64(3): np.int64(308), np.int64(4): np.int64(4348), np.int64(5): np.int64(2338), np.int64(6): np.int64(527), np.int64(7): np.int64(1162), np.int64(8): np.int64(2827), np.int64(9): np.int64(384)}
+2025-10-05 20:20:14,237 - INFO - node_3 Class Distribution: {np.int64(0): np.int64(227), np.int64(1): np.int64(1459), np.int64(2): np.int64(481), np.int64(3): np.int64(151), np.int64(4): np.int64(6), np.int64(5): np.int64(2197), np.int64(6): np.int64(4601), np.int64(7): np.int64(455), np.int64(8): np.int64(1374), np.int64(9): np.int64(4812)}
+2025-10-05 20:20:14,238 - INFO - node_4 Class Distribution: {np.int64(0): np.int64(3339), np.int64(1): np.int64(2230), np.int64(2): np.int64(1105), np.int64(3): np.int64(215), np.int64(4): np.int64(1115), np.int64(5): np.int64(1351), np.int64(6): np.int64(137), np.int64(7): np.int64(309), np.int64(8): np.int64(292), np.int64(9): np.int64(73)}
+2025-10-05 20:20:14,900 - INFO - Data distribution plot saved as 'results_1/data_distribution.pdf'.
+2025-10-05 20:20:15,095 - INFO - Network topology plot saved as 'results_1/network_topology.png'.
+2025-10-05 20:20:15,100 - INFO - Data module setup complete
+2025-10-05 20:20:15,101 - INFO - Selected nodes for participation: [2, 1]
+2025-10-05 20:20:15,101 - INFO - Selected nodes for participation: [2, 3]
+2025-10-05 20:20:15,101 - INFO - Selected nodes for participation: [0, 2]
+2025-10-05 20:20:15,101 - INFO - Selected nodes for participation: [4, 3]
+2025-10-05 20:20:15,102 - INFO - Selected nodes for participation: [3, 2]
+2025-10-05 20:20:15,213 - INFO - 
+=== Round 1/5 ===
+2025-10-05 20:20:15,213 - INFO - Participating nodes: [2, 1]
+2025-10-05 20:20:44,052 - INFO - Node 1 completed training in 21.86 seconds.
+2025-10-05 20:20:44,053 - INFO - 
+[Summary] Model parameters for node_1 after local training:
+2025-10-05 20:20:44,053 - INFO -  Layer: conv1.weight         | Mean: -0.003532 | Std: 0.115208
+2025-10-05 20:20:44,053 - INFO -  Layer: conv1.bias           | Mean: -0.002958 | Std: 0.101226
+2025-10-05 20:20:44,054 - INFO -  Layer: conv2.weight         | Mean: -0.001823 | Std: 0.018130
+2025-10-05 20:20:44,054 - INFO -  Layer: conv2.bias           | Mean: 0.000366 | Std: 0.015601
+2025-10-05 20:20:44,058 - INFO -  Layer: conv3.weight         | Mean: -0.001599 | Std: 0.011499
+2025-10-05 20:20:44,060 - INFO -  Layer: conv3.bias           | Mean: 0.002626 | Std: 0.013043
+2025-10-05 20:20:44,062 - INFO -  Layer: fc1.weight           | Mean: -0.000707 | Std: 0.010267
+2025-10-05 20:20:44,063 - INFO -  Layer: fc1.bias             | Mean: -0.000634 | Std: 0.012777
+2025-10-05 20:20:44,063 - INFO -  Layer: fc2.weight           | Mean: -0.004688 | Std: 0.033411
+2025-10-05 20:20:44,063 - INFO -  Layer: fc2.bias             | Mean: 0.011182 | Std: 0.028023
+2025-10-05 20:21:20,667 - INFO - Node 2 completed training in 58.56 seconds.
+2025-10-05 20:21:20,667 - INFO - 
+[Summary] Model parameters for node_2 after local training:
+2025-10-05 20:21:20,667 - INFO -  Layer: conv1.weight         | Mean: -0.005322 | Std: 0.119623
+2025-10-05 20:21:20,668 - INFO -  Layer: conv1.bias           | Mean: 0.008383 | Std: 0.099387
+2025-10-05 20:21:20,668 - INFO -  Layer: conv2.weight         | Mean: -0.003658 | Std: 0.022473
+2025-10-05 20:21:20,668 - INFO -  Layer: conv2.bias           | Mean: -0.000558 | Std: 0.015403
+2025-10-05 20:21:20,670 - INFO -  Layer: conv3.weight         | Mean: -0.002153 | Std: 0.013543
+2025-10-05 20:21:20,670 - INFO -  Layer: conv3.bias           | Mean: 0.001250 | Std: 0.014476
+2025-10-05 20:21:20,671 - INFO -  Layer: fc1.weight           | Mean: -0.000079 | Std: 0.011738
+2025-10-05 20:21:20,671 - INFO -  Layer: fc1.bias             | Mean: 0.001728 | Std: 0.013439
+2025-10-05 20:21:20,671 - INFO -  Layer: fc2.weight           | Mean: -0.007121 | Std: 0.036674
+2025-10-05 20:21:20,671 - INFO -  Layer: fc2.bias             | Mean: -0.024188 | Std: 0.030346
+2025-10-05 20:21:20,672 - INFO - Node 1 finished sending updates in 0.00 seconds.
+2025-10-05 20:21:20,673 - INFO - Node 2 finished sending updates in 0.00 seconds.
+2025-10-05 20:21:20,673 - INFO - Total Sending Time for round 1: 0.00 seconds.
+2025-10-05 20:21:20,676 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:21:20,677 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:21:20,681 - INFO - Global model distributed to all nodes.
+2025-10-05 20:21:20,681 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:21:20,682 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:21:25,855 - INFO - [Round 1] Training Data Evaluation of node_0 -> Loss: 1.4785, Accuracy: 0.6534, F1 Score: 0.4858, Precision: 0.6040, Recall: 0.6573
+2025-10-05 20:21:25,856 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:21:27,252 - INFO - [Round 1] Training Data Evaluation of node_1 -> Loss: 1.4939, Accuracy: 0.7028, F1 Score: 0.5077, Precision: 0.6031, Recall: 0.6911
+2025-10-05 20:21:27,252 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:21:31,918 - INFO - [Round 1] Training Data Evaluation of node_2 -> Loss: 0.9304, Accuracy: 0.8574, F1 Score: 0.7170, Precision: 0.8831, Recall: 0.6895
+2025-10-05 20:21:31,918 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:21:37,354 - INFO - [Round 1] Training Data Evaluation of node_3 -> Loss: 1.2690, Accuracy: 0.5769, F1 Score: 0.4777, Precision: 0.6154, Recall: 0.6783
+2025-10-05 20:21:37,355 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:21:41,020 - INFO - [Round 1] Training Data Evaluation of node_4 -> Loss: 1.5744, Accuracy: 0.5737, F1 Score: 0.6063, Precision: 0.7044, Recall: 0.6647
+2025-10-05 20:21:41,020 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:21:41,020 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:21:41,743 - INFO - [Round 1] Evaluation of node_0 -> Loss: 1.3210, Accuracy: 0.6610, F1 Score: 0.6298, Precision: 0.7385, Recall: 0.6635
+2025-10-05 20:21:41,743 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:21:42,507 - INFO - [Round 1] Evaluation of node_1 -> Loss: 1.2831, Accuracy: 0.6785, F1 Score: 0.6432, Precision: 0.7455, Recall: 0.6763
+2025-10-05 20:21:42,517 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:21:43,217 - INFO - [Round 1] Evaluation of node_2 -> Loss: 1.2958, Accuracy: 0.6785, F1 Score: 0.6403, Precision: 0.7522, Recall: 0.6705
+2025-10-05 20:21:43,217 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:21:43,940 - INFO - [Round 1] Evaluation of node_3 -> Loss: 1.3064, Accuracy: 0.6615, F1 Score: 0.6293, Precision: 0.7364, Recall: 0.6633
+2025-10-05 20:21:43,940 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:21:44,683 - INFO - [Round 1] Evaluation of node_4 -> Loss: 1.3021, Accuracy: 0.6855, F1 Score: 0.6565, Precision: 0.7613, Recall: 0.6903
+2025-10-05 20:21:44,684 - INFO - [Round 1] Time taken: 89.47 seconds
+2025-10-05 20:21:44,684 - INFO - 
+=== Round 2/5 ===
+2025-10-05 20:21:44,685 - INFO - Participating nodes: [2, 3]
+2025-10-05 20:22:55,203 - INFO - Node 3 completed training in 70.17 seconds.
+2025-10-05 20:22:55,203 - INFO - 
+[Summary] Model parameters for node_3 after local training:
+2025-10-05 20:22:55,204 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,204 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,205 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,206 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,210 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,210 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,212 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,212 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,212 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,213 - INFO -  Layer: fc2.bias             | Mean: -0.131620 | Std: 0.337900
+2025-10-05 20:22:55,264 - INFO - Node 2 completed training in 70.24 seconds.
+2025-10-05 20:22:55,265 - INFO - 
+[Summary] Model parameters for node_2 after local training:
+2025-10-05 20:22:55,265 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,265 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,266 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,266 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,267 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,267 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,268 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,268 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,269 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:22:55,269 - INFO -  Layer: fc2.bias             | Mean: -0.098742 | Std: 0.354977
+2025-10-05 20:22:55,270 - INFO - Node 3 finished sending updates in 0.00 seconds.
+2025-10-05 20:22:55,270 - INFO - Node 2 finished sending updates in 0.00 seconds.
+2025-10-05 20:22:55,270 - INFO - Total Sending Time for round 2: 0.00 seconds.
+2025-10-05 20:22:55,274 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:22:55,275 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:22:55,303 - INFO - Global model distributed to all nodes.
+2025-10-05 20:22:55,303 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:22:55,303 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:22:59,578 - INFO - [Round 2] Training Data Evaluation of node_0 -> Loss: 2.5244, Accuracy: 0.0049, F1 Score: 0.0010, Precision: 0.9005, Recall: 0.1000
+2025-10-05 20:22:59,579 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:23:01,083 - INFO - [Round 2] Training Data Evaluation of node_1 -> Loss: 2.3521, Accuracy: 0.0103, F1 Score: 0.0020, Precision: 0.9010, Recall: 0.1000
+2025-10-05 20:23:01,083 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:23:06,288 - INFO - [Round 2] Training Data Evaluation of node_2 -> Loss: 2.2055, Accuracy: 0.1484, F1 Score: 0.0258, Precision: 0.9148, Recall: 0.1000
+2025-10-05 20:23:06,288 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:23:11,773 - INFO - [Round 2] Training Data Evaluation of node_3 -> Loss: 2.2090, Accuracy: 0.1394, F1 Score: 0.0245, Precision: 0.9139, Recall: 0.1000
+2025-10-05 20:23:11,774 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:23:15,259 - INFO - [Round 2] Training Data Evaluation of node_4 -> Loss: 2.4057, Accuracy: 0.1329, F1 Score: 0.0235, Precision: 0.9133, Recall: 0.1000
+2025-10-05 20:23:15,259 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:23:15,259 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:23:15,960 - INFO - [Round 2] Evaluation of node_0 -> Loss: 2.3286, Accuracy: 0.0995, F1 Score: 0.0181, Precision: 0.9099, Recall: 0.1000
+2025-10-05 20:23:15,960 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:23:16,656 - INFO - [Round 2] Evaluation of node_1 -> Loss: 2.3150, Accuracy: 0.1005, F1 Score: 0.0183, Precision: 0.9101, Recall: 0.1000
+2025-10-05 20:23:16,656 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:23:17,349 - INFO - [Round 2] Evaluation of node_2 -> Loss: 2.3221, Accuracy: 0.1035, F1 Score: 0.0188, Precision: 0.9103, Recall: 0.1000
+2025-10-05 20:23:17,349 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:23:18,076 - INFO - [Round 2] Evaluation of node_3 -> Loss: 2.3269, Accuracy: 0.0980, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:23:18,076 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:23:18,785 - INFO - [Round 2] Evaluation of node_4 -> Loss: 2.3302, Accuracy: 0.0985, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:23:18,785 - INFO - [Round 2] Time taken: 94.10 seconds
+2025-10-05 20:23:18,786 - INFO - 
+=== Round 3/5 ===
+2025-10-05 20:23:18,786 - INFO - Participating nodes: [0, 2]
+2025-10-05 20:24:19,298 - INFO - Node 0 completed training in 60.48 seconds.
+2025-10-05 20:24:19,298 - INFO - 
+[Summary] Model parameters for node_0 after local training:
+2025-10-05 20:24:19,299 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,299 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,299 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,299 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,304 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,305 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,306 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,306 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,307 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:19,307 - INFO -  Layer: fc2.bias             | Mean: -0.260299 | Std: 0.211353
+2025-10-05 20:24:23,481 - INFO - Node 2 completed training in 64.66 seconds.
+2025-10-05 20:24:23,481 - INFO - 
+[Summary] Model parameters for node_2 after local training:
+2025-10-05 20:24:23,481 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,481 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,482 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,482 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,483 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,483 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,484 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,484 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,484 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:24:23,484 - INFO -  Layer: fc2.bias             | Mean: -0.218190 | Std: 0.482530
+2025-10-05 20:24:23,484 - INFO - Node 2 finished sending updates in 0.00 seconds.
+2025-10-05 20:24:23,484 - INFO - Node 0 finished sending updates in 0.00 seconds.
+2025-10-05 20:24:23,484 - INFO - Total Sending Time for round 3: 0.00 seconds.
+2025-10-05 20:24:23,488 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:24:23,489 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:24:23,499 - INFO - Global model distributed to all nodes.
+2025-10-05 20:24:23,499 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:24:23,499 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:24:25,606 - INFO - [Round 3] Training Data Evaluation of node_0 -> Loss: 2.4059, Accuracy: 0.1003, F1 Score: 0.0182, Precision: 0.9100, Recall: 0.1000
+2025-10-05 20:24:25,606 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:24:26,300 - INFO - [Round 3] Training Data Evaluation of node_1 -> Loss: 2.5280, Accuracy: 0.0284, F1 Score: 0.0055, Precision: 0.9028, Recall: 0.1000
+2025-10-05 20:24:26,300 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:24:28,668 - INFO - [Round 3] Training Data Evaluation of node_2 -> Loss: 2.1112, Accuracy: 0.1794, F1 Score: 0.0304, Precision: 0.9179, Recall: 0.1000
+2025-10-05 20:24:28,668 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:24:31,026 - INFO - [Round 3] Training Data Evaluation of node_3 -> Loss: 2.3866, Accuracy: 0.0872, F1 Score: 0.0160, Precision: 0.9087, Recall: 0.1000
+2025-10-05 20:24:31,026 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:24:32,542 - INFO - [Round 3] Training Data Evaluation of node_4 -> Loss: 2.4383, Accuracy: 0.0287, F1 Score: 0.0056, Precision: 0.9029, Recall: 0.1000
+2025-10-05 20:24:32,542 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:24:32,542 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:24:32,846 - INFO - [Round 3] Evaluation of node_0 -> Loss: 2.3418, Accuracy: 0.0965, F1 Score: 0.0176, Precision: 0.9097, Recall: 0.1000
+2025-10-05 20:24:32,846 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:24:33,149 - INFO - [Round 3] Evaluation of node_1 -> Loss: 2.3279, Accuracy: 0.1145, F1 Score: 0.0205, Precision: 0.9114, Recall: 0.1000
+2025-10-05 20:24:33,150 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:24:33,456 - INFO - [Round 3] Evaluation of node_2 -> Loss: 2.3412, Accuracy: 0.0925, F1 Score: 0.0169, Precision: 0.9092, Recall: 0.1000
+2025-10-05 20:24:33,456 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:24:33,758 - INFO - [Round 3] Evaluation of node_3 -> Loss: 2.3395, Accuracy: 0.1030, F1 Score: 0.0187, Precision: 0.9103, Recall: 0.1000
+2025-10-05 20:24:33,758 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:24:34,058 - INFO - [Round 3] Evaluation of node_4 -> Loss: 2.3409, Accuracy: 0.0935, F1 Score: 0.0171, Precision: 0.9094, Recall: 0.1000
+2025-10-05 20:24:34,058 - INFO - [Round 3] Time taken: 75.27 seconds
+2025-10-05 20:24:34,058 - INFO - 
+=== Round 4/5 ===
+2025-10-05 20:24:34,059 - INFO - Participating nodes: [4, 3]
+2025-10-05 20:25:01,257 - INFO - Node 4 completed training in 27.17 seconds.
+2025-10-05 20:25:01,257 - INFO - 
+[Summary] Model parameters for node_4 after local training:
+2025-10-05 20:25:01,257 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,257 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,258 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,258 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,259 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,259 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,260 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,260 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,260 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:01,261 - INFO -  Layer: fc2.bias             | Mean: -0.342086 | Std: 0.264390
+2025-10-05 20:25:11,453 - INFO - Node 3 completed training in 37.37 seconds.
+2025-10-05 20:25:11,454 - INFO - 
+[Summary] Model parameters for node_3 after local training:
+2025-10-05 20:25:11,454 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,454 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,454 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,454 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,455 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,455 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,456 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,456 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,456 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:25:11,456 - INFO -  Layer: fc2.bias             | Mean: -0.380115 | Std: 0.354784
+2025-10-05 20:25:11,456 - INFO - Node 3 finished sending updates in 0.00 seconds.
+2025-10-05 20:25:11,456 - INFO - Node 4 finished sending updates in 0.00 seconds.
+2025-10-05 20:25:11,456 - INFO - Total Sending Time for round 4: 0.00 seconds.
+2025-10-05 20:25:11,458 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:25:11,459 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:25:11,493 - INFO - Global model distributed to all nodes.
+2025-10-05 20:25:11,493 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:25:11,493 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:25:13,707 - INFO - [Round 4] Training Data Evaluation of node_0 -> Loss: 2.5728, Accuracy: 0.0049, F1 Score: 0.0010, Precision: 0.9005, Recall: 0.1000
+2025-10-05 20:25:13,707 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:25:14,389 - INFO - [Round 4] Training Data Evaluation of node_1 -> Loss: 2.3512, Accuracy: 0.0103, F1 Score: 0.0020, Precision: 0.9010, Recall: 0.1000
+2025-10-05 20:25:14,389 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:25:16,724 - INFO - [Round 4] Training Data Evaluation of node_2 -> Loss: 2.2087, Accuracy: 0.1484, F1 Score: 0.0258, Precision: 0.9148, Recall: 0.1000
+2025-10-05 20:25:16,725 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:25:19,150 - INFO - [Round 4] Training Data Evaluation of node_3 -> Loss: 2.1992, Accuracy: 0.1394, F1 Score: 0.0245, Precision: 0.9139, Recall: 0.1000
+2025-10-05 20:25:19,150 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:25:20,667 - INFO - [Round 4] Training Data Evaluation of node_4 -> Loss: 2.3956, Accuracy: 0.1329, F1 Score: 0.0235, Precision: 0.9133, Recall: 0.1000
+2025-10-05 20:25:20,667 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:25:20,667 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:25:20,964 - INFO - [Round 4] Evaluation of node_0 -> Loss: 2.3350, Accuracy: 0.0995, F1 Score: 0.0181, Precision: 0.9099, Recall: 0.1000
+2025-10-05 20:25:20,964 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:25:21,262 - INFO - [Round 4] Evaluation of node_1 -> Loss: 2.3233, Accuracy: 0.1005, F1 Score: 0.0183, Precision: 0.9101, Recall: 0.1000
+2025-10-05 20:25:21,262 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:25:21,563 - INFO - [Round 4] Evaluation of node_2 -> Loss: 2.3286, Accuracy: 0.1035, F1 Score: 0.0188, Precision: 0.9103, Recall: 0.1000
+2025-10-05 20:25:21,563 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:25:21,867 - INFO - [Round 4] Evaluation of node_3 -> Loss: 2.3348, Accuracy: 0.0980, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:25:21,868 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:25:22,167 - INFO - [Round 4] Evaluation of node_4 -> Loss: 2.3388, Accuracy: 0.0985, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:25:22,167 - INFO - [Round 4] Time taken: 48.11 seconds
+2025-10-05 20:25:22,168 - INFO - 
+=== Round 5/5 ===
+2025-10-05 20:25:22,168 - INFO - Participating nodes: [3, 2]
+2025-10-05 20:26:04,549 - INFO - Node 3 completed training in 42.35 seconds.
+2025-10-05 20:26:04,549 - INFO - 
+[Summary] Model parameters for node_3 after local training:
+2025-10-05 20:26:04,549 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,549 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,549 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,550 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,553 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,554 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,555 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,555 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,555 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:04,555 - INFO -  Layer: fc2.bias             | Mean: -0.519502 | Std: 0.479481
+2025-10-05 20:26:05,318 - INFO - Node 2 completed training in 43.12 seconds.
+2025-10-05 20:26:05,318 - INFO - 
+[Summary] Model parameters for node_2 after local training:
+2025-10-05 20:26:05,318 - INFO -  Layer: conv1.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,319 - INFO -  Layer: conv1.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,319 - INFO -  Layer: conv2.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,319 - INFO -  Layer: conv2.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,320 - INFO -  Layer: conv3.weight         | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,320 - INFO -  Layer: conv3.bias           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,320 - INFO -  Layer: fc1.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,321 - INFO -  Layer: fc1.bias             | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,321 - INFO -  Layer: fc2.weight           | Mean: 0.000000 | Std: 0.000000
+2025-10-05 20:26:05,321 - INFO -  Layer: fc2.bias             | Mean: -0.478151 | Std: 0.493482
+2025-10-05 20:26:05,321 - INFO - Node 3 finished sending updates in 0.00 seconds.
+2025-10-05 20:26:05,321 - INFO - Node 2 finished sending updates in 0.00 seconds.
+2025-10-05 20:26:05,321 - INFO - Total Sending Time for round 5: 0.00 seconds.
+2025-10-05 20:26:05,323 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:26:05,324 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:26:05,359 - INFO - Global model distributed to all nodes.
+2025-10-05 20:26:05,359 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:26:05,359 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:26:07,689 - INFO - [Round 5] Training Data Evaluation of node_0 -> Loss: 2.7692, Accuracy: 0.0049, F1 Score: 0.0010, Precision: 0.9005, Recall: 0.1000
+2025-10-05 20:26:07,689 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:26:08,389 - INFO - [Round 5] Training Data Evaluation of node_1 -> Loss: 2.3879, Accuracy: 0.0103, F1 Score: 0.0020, Precision: 0.9010, Recall: 0.1000
+2025-10-05 20:26:08,389 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:26:10,845 - INFO - [Round 5] Training Data Evaluation of node_2 -> Loss: 2.1586, Accuracy: 0.1484, F1 Score: 0.0258, Precision: 0.9148, Recall: 0.1000
+2025-10-05 20:26:10,846 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:26:13,285 - INFO - [Round 5] Training Data Evaluation of node_3 -> Loss: 2.1504, Accuracy: 0.1394, F1 Score: 0.0245, Precision: 0.9139, Recall: 0.1000
+2025-10-05 20:26:13,285 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:26:14,977 - INFO - [Round 5] Training Data Evaluation of node_4 -> Loss: 2.5159, Accuracy: 0.1329, F1 Score: 0.0235, Precision: 0.9133, Recall: 0.1000
+2025-10-05 20:26:14,977 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:26:14,977 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:26:15,287 - INFO - [Round 5] Evaluation of node_0 -> Loss: 2.3802, Accuracy: 0.0995, F1 Score: 0.0181, Precision: 0.9099, Recall: 0.1000
+2025-10-05 20:26:15,287 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:26:15,595 - INFO - [Round 5] Evaluation of node_1 -> Loss: 2.3590, Accuracy: 0.1005, F1 Score: 0.0183, Precision: 0.9101, Recall: 0.1000
+2025-10-05 20:26:15,595 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:26:15,901 - INFO - [Round 5] Evaluation of node_2 -> Loss: 2.3682, Accuracy: 0.1035, F1 Score: 0.0188, Precision: 0.9103, Recall: 0.1000
+2025-10-05 20:26:15,901 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:26:16,209 - INFO - [Round 5] Evaluation of node_3 -> Loss: 2.3791, Accuracy: 0.0980, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:26:16,209 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:26:16,514 - INFO - [Round 5] Evaluation of node_4 -> Loss: 2.3849, Accuracy: 0.0985, F1 Score: 0.0179, Precision: 0.9098, Recall: 0.1000
+2025-10-05 20:26:16,514 - INFO - [Round 5] Time taken: 54.35 seconds
+2025-10-05 20:26:17,681 - INFO - Round 1: Total Training Time = 80.43 seconds
+2025-10-05 20:26:17,681 - INFO - Round 1: Total Aggregation Time = 0.00 seconds
+2025-10-05 20:26:17,681 - INFO - Round 2: Total Training Time = 140.41 seconds
+2025-10-05 20:26:17,681 - INFO - Round 2: Total Aggregation Time = 0.00 seconds
+2025-10-05 20:26:17,681 - INFO - Round 3: Total Training Time = 125.15 seconds
+2025-10-05 20:26:17,681 - INFO - Round 3: Total Aggregation Time = 0.00 seconds
+2025-10-05 20:26:17,681 - INFO - Round 4: Total Training Time = 64.54 seconds
+2025-10-05 20:26:17,681 - INFO - Round 4: Total Aggregation Time = 0.00 seconds
+2025-10-05 20:26:17,681 - INFO - Round 5: Total Training Time = 85.48 seconds
+2025-10-05 20:26:17,681 - INFO - Round 5: Total Aggregation Time = 0.00 seconds
+2025-10-05 20:26:17,683 - INFO - Convergence detected at round 4
+2025-10-05 20:26:17,683 - INFO - 
+=== Averaged Training Metrics per Round ===
+2025-10-05 20:26:17,683 - INFO - Round 1: Accuracy=0.6728, F1 Score=0.5589, Precision=0.6820, Recall=0.6762
+2025-10-05 20:26:17,683 - INFO - Round 2: Accuracy=0.0872, F1 Score=0.0154, Precision=0.9087, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 3: Accuracy=0.0848, F1 Score=0.0152, Precision=0.9085, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 4: Accuracy=0.0872, F1 Score=0.0154, Precision=0.9087, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 5: Accuracy=0.0872, F1 Score=0.0154, Precision=0.9087, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - 
+=== Averaged Testing Metrics per Round ===
+2025-10-05 20:26:17,683 - INFO - Round 1: Accuracy=0.6730, F1 Score=0.6398, Precision=0.7468, Recall=0.6728
+2025-10-05 20:26:17,683 - INFO - Round 2: Accuracy=0.1000, F1 Score=0.0182, Precision=0.9100, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 3: Accuracy=0.1000, F1 Score=0.0182, Precision=0.9100, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 4: Accuracy=0.1000, F1 Score=0.0182, Precision=0.9100, Recall=0.1000
+2025-10-05 20:26:17,683 - INFO - Round 5: Accuracy=0.1000, F1 Score=0.0182, Precision=0.9100, Recall=0.1000
+2025-10-05 20:26:17,863 - INFO - Average training metrics bar chart saved as 'results_1/average_training_metrics_bar_chart.pdf'.
+2025-10-05 20:26:18,030 - INFO - Average testing metrics bar chart saved as 'results_1/average_testing_metrics_bar_chart.pdf'.
+2025-10-05 20:26:18,176 - INFO - Average training metrics line plot saved as 'results_1/average_training_metrics_line_plot.pdf'.
+2025-10-05 20:26:18,327 - INFO - Average testing metrics line plot saved as 'results_1/average_testing_metrics_line_plot.pdf'.
+2025-10-05 20:26:18,458 - INFO - Average loss plot saved as 'results_1/average_loss_over_rounds.pdf'.
+2025-10-05 20:26:18,601 - INFO - Training and aggregation times plot saved as 'results_1/training_aggregation_times_per_round.pdf'.
+2025-10-05 20:26:18,726 - INFO - CPU usage plot saved as 'results_1/cpu_usage_over_rounds.pdf'.
+2025-10-05 20:26:18,838 - INFO - Round times plot saved as 'results_1/round_times_over_rounds.pdf'.
+2025-10-05 20:26:18,839 - INFO - 
+Average CPU Usage per Round: 55.92%
+2025-10-05 20:26:18,839 - INFO - Average Time Taken per Round: 72.26 seconds
+2025-10-05 20:26:18,839 - INFO - 
+Average Evaluation Metrics over all nodes and rounds:
+2025-10-05 20:26:18,839 - INFO - Average Test Loss: 2.1342
+2025-10-05 20:26:18,839 - INFO - Average Accuracy: 0.2146
+2025-10-05 20:26:18,839 - INFO - Average F1 Score: 0.1425
+2025-10-05 20:26:18,839 - INFO - Average Precision: 0.8774
+2025-10-05 20:26:18,839 - INFO - Average Recall: 0.2146
+2025-10-05 20:26:18,839 - INFO - 
+Average Training Metrics over all nodes and rounds:
+2025-10-05 20:26:18,839 - INFO - Average Training Loss: 2.1609
+2025-10-05 20:26:18,839 - INFO - Average Training Accuracy: 0.2038
+2025-10-05 20:26:18,839 - INFO - Average Training F1 Score: 0.1240
+2025-10-05 20:26:18,839 - INFO - Average Training Precision: 0.8633
+2025-10-05 20:26:18,839 - INFO - Average Training Recall: 0.2152
+2025-10-05 20:26:18,839 - INFO - 
+Simulation complete. Plots have been saved as PDF files.
+2025-10-05 20:28:54,487 - INFO - rounds: 5
+2025-10-05 20:28:54,487 - INFO - epochs: 1
+2025-10-05 20:28:54,487 - INFO - num_nodes: 5
+2025-10-05 20:28:54,487 - INFO - num_attackers: 0
+2025-10-05 20:28:54,487 - INFO - attacker_nodes: None
+2025-10-05 20:28:54,487 - INFO - attacks: []
+2025-10-05 20:28:54,487 - INFO - use_attackers: False
+2025-10-05 20:28:54,487 - INFO - max_attacks: None
+2025-10-05 20:28:54,487 - INFO - participation_rate: 0.5
+2025-10-05 20:28:54,488 - INFO - topology: fully_connected
+2025-10-05 20:28:54,488 - INFO - topology_file: None
+2025-10-05 20:28:54,488 - INFO - gossip_steps: 3
+2025-10-05 20:28:54,488 - INFO - protocol: gossip
+2025-10-05 20:28:54,488 - INFO - alpha: 0.5
+2025-10-05 20:28:54,488 - INFO - model_type: cnn
+2025-10-05 20:28:54,488 - INFO - Starting simulation...
+2025-10-05 20:28:54,532 - INFO - node_0 Class Distribution: {np.int64(0): np.int64(2304), np.int64(1): np.int64(155), np.int64(2): np.int64(126), np.int64(3): np.int64(5100), np.int64(4): np.int64(225), np.int64(5): np.int64(67), np.int64(6): np.int64(1), np.int64(7): np.int64(4071), np.int64(8): np.int64(1377), np.int64(9): np.int64(308)}
+2025-10-05 20:28:54,532 - INFO - node_1 Class Distribution: {np.int64(0): np.int64(96), np.int64(1): np.int64(2062), np.int64(2): np.int64(556), np.int64(3): np.int64(226), np.int64(4): np.int64(306), np.int64(5): np.int64(47), np.int64(6): np.int64(734), np.int64(7): np.int64(3), np.int64(8): np.int64(130), np.int64(9): np.int64(423)}
+2025-10-05 20:28:54,533 - INFO - node_2 Class Distribution: {np.int64(0): np.int64(34), np.int64(1): np.int64(94), np.int64(2): np.int64(3732), np.int64(3): np.int64(308), np.int64(4): np.int64(4348), np.int64(5): np.int64(2338), np.int64(6): np.int64(527), np.int64(7): np.int64(1162), np.int64(8): np.int64(2827), np.int64(9): np.int64(384)}
+2025-10-05 20:28:54,533 - INFO - node_3 Class Distribution: {np.int64(0): np.int64(227), np.int64(1): np.int64(1459), np.int64(2): np.int64(481), np.int64(3): np.int64(151), np.int64(4): np.int64(6), np.int64(5): np.int64(2197), np.int64(6): np.int64(4601), np.int64(7): np.int64(455), np.int64(8): np.int64(1374), np.int64(9): np.int64(4812)}
+2025-10-05 20:28:54,534 - INFO - node_4 Class Distribution: {np.int64(0): np.int64(3339), np.int64(1): np.int64(2230), np.int64(2): np.int64(1105), np.int64(3): np.int64(215), np.int64(4): np.int64(1115), np.int64(5): np.int64(1351), np.int64(6): np.int64(137), np.int64(7): np.int64(309), np.int64(8): np.int64(292), np.int64(9): np.int64(73)}
+2025-10-05 20:28:54,684 - INFO - Data distribution plot saved as 'results_1/data_distribution.pdf'.
+2025-10-05 20:28:54,767 - INFO - Network topology plot saved as 'results_1/network_topology.png'.
+2025-10-05 20:28:54,769 - INFO - Data module setup complete
+2025-10-05 20:28:54,769 - INFO - Selected nodes for participation: [2, 1]
+2025-10-05 20:28:54,770 - INFO - Selected nodes for participation: [2, 3]
+2025-10-05 20:28:54,770 - INFO - Selected nodes for participation: [0, 2]
+2025-10-05 20:28:54,770 - INFO - Selected nodes for participation: [4, 3]
+2025-10-05 20:28:54,770 - INFO - Selected nodes for participation: [3, 2]
+2025-10-05 20:28:54,806 - INFO - 
+=== Round 1/5 ===
+2025-10-05 20:28:54,807 - INFO - Participating nodes: [2, 1]
+2025-10-05 20:29:10,728 - INFO - Node 1 completed training in 12.67 seconds.
+2025-10-05 20:29:10,728 - INFO - 
+[Summary] Model parameters for node_1 after local training:
+2025-10-05 20:29:10,728 - INFO -  Layer: conv1.weight         | Mean: -0.003421 | Std: 0.115193
+2025-10-05 20:29:10,728 - INFO -  Layer: conv1.bias           | Mean: -0.003421 | Std: 0.098473
+2025-10-05 20:29:10,729 - INFO -  Layer: conv2.weight         | Mean: -0.002207 | Std: 0.018641
+2025-10-05 20:29:10,729 - INFO -  Layer: conv2.bias           | Mean: 0.001202 | Std: 0.014753
+2025-10-05 20:29:10,731 - INFO -  Layer: conv3.weight         | Mean: -0.001595 | Std: 0.011783
+2025-10-05 20:29:10,731 - INFO -  Layer: conv3.bias           | Mean: 0.000467 | Std: 0.011300
+2025-10-05 20:29:10,733 - INFO -  Layer: fc1.weight           | Mean: -0.000552 | Std: 0.010302
+2025-10-05 20:29:10,733 - INFO -  Layer: fc1.bias             | Mean: -0.000879 | Std: 0.012508
+2025-10-05 20:29:10,733 - INFO -  Layer: fc2.weight           | Mean: -0.004809 | Std: 0.033991
+2025-10-05 20:29:10,733 - INFO -  Layer: fc2.bias             | Mean: 0.012314 | Std: 0.029303
+2025-10-05 20:29:31,789 - INFO - Node 2 completed training in 33.74 seconds.
+2025-10-05 20:29:31,789 - INFO - 
+[Summary] Model parameters for node_2 after local training:
+2025-10-05 20:29:31,790 - INFO -  Layer: conv1.weight         | Mean: -0.005029 | Std: 0.121160
+2025-10-05 20:29:31,790 - INFO -  Layer: conv1.bias           | Mean: 0.011580 | Std: 0.097785
+2025-10-05 20:29:31,790 - INFO -  Layer: conv2.weight         | Mean: -0.003490 | Std: 0.021680
+2025-10-05 20:29:31,790 - INFO -  Layer: conv2.bias           | Mean: 0.001719 | Std: 0.016389
+2025-10-05 20:29:31,791 - INFO -  Layer: conv3.weight         | Mean: -0.002241 | Std: 0.013058
+2025-10-05 20:29:31,791 - INFO -  Layer: conv3.bias           | Mean: 0.001922 | Std: 0.014640
+2025-10-05 20:29:31,792 - INFO -  Layer: fc1.weight           | Mean: -0.000159 | Std: 0.012144
+2025-10-05 20:29:31,792 - INFO -  Layer: fc1.bias             | Mean: 0.001641 | Std: 0.014641
+2025-10-05 20:29:31,792 - INFO -  Layer: fc2.weight           | Mean: -0.007199 | Std: 0.037665
+2025-10-05 20:29:31,792 - INFO -  Layer: fc2.bias             | Mean: -0.024374 | Std: 0.028476
+2025-10-05 20:29:31,792 - INFO - Node 2 finished sending updates in 0.00 seconds.
+2025-10-05 20:29:31,793 - INFO - Node 1 finished sending updates in 0.00 seconds.
+2025-10-05 20:29:31,793 - INFO - Total Sending Time for round 1: 0.00 seconds.
+2025-10-05 20:29:31,796 - INFO - Aggregation using Weighted Federated Averaging (FedAvg) completed successfully.
+2025-10-05 20:29:31,797 - INFO - Global model updated using Weighted Federated Averaging (FedAvg).
+2025-10-05 20:29:31,801 - INFO - Global model distributed to all nodes.
+2025-10-05 20:29:31,802 - INFO - 
+=== Evaluation Phase of training data ===
+2025-10-05 20:29:31,802 - INFO - 
+Evaluating model for node_0 on training data...
+2025-10-05 20:29:33,974 - INFO - [Round 1] Training Data Evaluation of node_0 -> Loss: 1.4892, Accuracy: 0.6881, F1 Score: 0.5046, Precision: 0.5715, Recall: 0.6933
+2025-10-05 20:29:33,975 - INFO - 
+Evaluating model for node_1 on training data...
+2025-10-05 20:29:34,647 - INFO - [Round 1] Training Data Evaluation of node_1 -> Loss: 1.4798, Accuracy: 0.7369, F1 Score: 0.5559, Precision: 0.6318, Recall: 0.7095
+2025-10-05 20:29:34,647 - INFO - 
+Evaluating model for node_2 on training data...
+2025-10-05 20:29:36,943 - INFO - [Round 1] Training Data Evaluation of node_2 -> Loss: 1.0394, Accuracy: 0.8774, F1 Score: 0.7314, Precision: 0.8673, Recall: 0.7253
+2025-10-05 20:29:36,943 - INFO - 
+Evaluating model for node_3 on training data...
+2025-10-05 20:29:39,213 - INFO - [Round 1] Training Data Evaluation of node_3 -> Loss: 1.3151, Accuracy: 0.6633, F1 Score: 0.5154, Precision: 0.6372, Recall: 0.7267
+2025-10-05 20:29:39,214 - INFO - 
+Evaluating model for node_4 on training data...
+2025-10-05 20:29:40,666 - INFO - [Round 1] Training Data Evaluation of node_4 -> Loss: 1.6398, Accuracy: 0.5795, F1 Score: 0.5973, Precision: 0.6722, Recall: 0.6994
+2025-10-05 20:29:40,666 - INFO - 
+=== Evaluation Phase of testing data ===
+2025-10-05 20:29:40,666 - INFO - 
+Evaluating model for node_0 on testing data...
+2025-10-05 20:29:40,956 - INFO - [Round 1] Evaluation of node_0 -> Loss: 1.3679, Accuracy: 0.6970, F1 Score: 0.6560, Precision: 0.7349, Recall: 0.6981
+2025-10-05 20:29:40,956 - INFO - 
+Evaluating model for node_1 on testing data...
+2025-10-05 20:29:41,247 - INFO - [Round 1] Evaluation of node_1 -> Loss: 1.3320, Accuracy: 0.7210, F1 Score: 0.6757, Precision: 0.7530, Recall: 0.7178
+2025-10-05 20:29:41,247 - INFO - 
+Evaluating model for node_2 on testing data...
+2025-10-05 20:29:41,535 - INFO - [Round 1] Evaluation of node_2 -> Loss: 1.3491, Accuracy: 0.7245, F1 Score: 0.6792, Precision: 0.7586, Recall: 0.7176
+2025-10-05 20:29:41,535 - INFO - 
+Evaluating model for node_3 on testing data...
+2025-10-05 20:29:41,824 - INFO - [Round 1] Evaluation of node_3 -> Loss: 1.3597, Accuracy: 0.7140, F1 Score: 0.6737, Precision: 0.7504, Recall: 0.7185
+2025-10-05 20:29:41,824 - INFO - 
+Evaluating model for node_4 on testing data...
+2025-10-05 20:29:42,114 - INFO - [Round 1] Evaluation of node_4 -> Loss: 1.3593, Accuracy: 0.7030, F1 Score: 0.6658, Precision: 0.7443, Recall: 0.7080
+2025-10-05 20:29:42,114 - INFO - [Round 1] Time taken: 47.31 seconds
+2025-10-05 20:29:42,115 - INFO - 
+=== Round 2/5 ===
+2025-10-05 20:29:42,115 - INFO - Participating nodes: [2, 3]

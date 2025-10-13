@@ -2,27 +2,32 @@
 
 import torch
 import logging
-from typing import Optional
-
-from fenics.node.base import BaseNode
+from typing import Optional, override
 
 
-#class FreeRiderAttack(BaseNode, attack_type='freerider'):
-class FreeRiderAttack(BaseNode):
+from fenics.node.attacks.base import BaseAttack
+from fenics.node.attacks.attackregistry import register_attack
+
+
+@register_attack("freerider")
+class FreeRiderAttack(BaseAttack):
     """ Free-rider attack that intercepts model parameters without participating in training. """
-    
-    def __init__(self, node_id: int, logger: Optional[logging.Logger] = None):
+
+    def __init__(self, node_id: int, attack_type: str = "FREERIDER", logger: Optional[logging.Logger] = None):
         """
         Initialize the free-rider attack
         
         Args:
             node_id: ID of the attacker node
             logger: Logger instance
+            self.attack_type = FREERIDER
         """
-        super().__init__(node_id, logger)
+        super().__init__(node_id)
         self.attack_round = 0 # Placeholder for potential future use
-        self.attack_type = 'freerider'
+        self.__attack_type__ = attack_type
+        self.logger = logger or logging.getLogger()
         
+    @override
     def execute(self, model: torch.nn.Module):
         """
         Execute the free-rider attack by learning model parameters while doing no work. 
