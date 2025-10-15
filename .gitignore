@@ -3,3 +3,6 @@ data
 results*
 fenics.egg-info
 venv
+__pycache__
+/results*
+*/FashionMNIST/raw
