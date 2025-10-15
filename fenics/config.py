@@ -35,29 +35,29 @@ class SimulationConfig(BaseModel):
     # Model parameters
     model_type: str = Field("cnn", description="Model type to use: cnn, mlp, custom")
     
-    @field_validator('participation_rate')
-    def validate_participation_rate(cls, v):
-        if not (0 < v <= 1):
-            raise ValueError("participation_rate must be between 0 and 1")
-        return v
+    # @field_validator('participation_rate')
+    # def validate_participation_rate(cls, v):
+    #     if not (0 < v <= 1):
+    #         raise ValueError("participation_rate must be between 0 and 1")
+    #     return v
     
-    @field_validator('node_type_map')
-    def validate_num_attackers(cls, v, values):
-        if 'num_nodes' in values and len(v) > values.get['num_nodes']:
-            raise ValueError("Attacker nodes cannot exceed num_nodes")
-        return v
+    # @field_validator('node_type_map')
+    # def validate_num_attackers(cls, v, values):
+    #     if 'num_nodes' in values and len(v) > values.get['num_nodes']:
+    #         raise ValueError("Attacker nodes cannot exceed num_nodes")
+    #     return v
     
-    @field_validator('topology_file')
-    def validate_topology_file(cls, v, values):
-        if values.get('topology') == 'custom' and not v:
-            raise ValueError("topology_file must be provided when topology is 'custom'")
-        return v
+    # @field_validator('topology_file')
+    # def validate_topology_file(cls, v, values):
+    #     if values.get('topology') == 'custom' and not v:
+    #         raise ValueError("topology_file must be provided when topology is 'custom'")
+    #     return v
     
-    @field_validator('protocol')
-    def validate_protocol(cls, v):
-        if v not in ['gossip', 'neighboring']:
-            raise ValueError("protocol must be either 'gossip' or 'neighboring'")
-        return v
+    # @field_validator('protocol')
+    # def validate_protocol(cls, v):
+    #     if v not in ['gossip', 'neighboring']:
+    #         raise ValueError("protocol must be either 'gossip' or 'neighboring'")
+    #     return v
     
     class Config:
         # Allow extra fields for flexibility
@@ -91,7 +91,6 @@ def load_config_from_file(config_file: Union[str, Path], simulation_name: Option
         
         simulation_config = simulations[simulation_name]
         return SimulationConfig(**simulation_config)
-    
     # If no simulation name is provided, try to load the config directly
     return SimulationConfig(**config_data)
 
@@ -106,14 +105,12 @@ def parse_cli_args(args=None) -> Dict[str, Any]:
         Dictionary of parsed arguments
     """
     parser = argparse.ArgumentParser(description="Fenics Decentralized Federated Learning Simulator")
-    
     # Add only the essential arguments for loading config
     parser.add_argument("--config", type=str, help="Path to configuration file")
     parser.add_argument("--simulation_name", type=str, help="Name of the simulation configuration to use")
     
     # Parse known arguments first
     parsed_args, _ = parser.parse_known_args(args)
-    
     return vars(parsed_args)
 
 
