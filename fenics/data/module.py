@@ -11,6 +11,9 @@ from fenics.data.handler import load_datasets_dirichlet, print_class_distributio
 from fenics.topology import create_nodes, build_topology, visualize_and_save_topology
 from fenics.plotting import visualize_data_distribution
 from fenics.utils import calculate_selection_probabilities
+from fenics.node.node import Node
+from fenics.node.attacknode import AttackNode
+from fenics.node.attacks.attackregistry import ATTACK_REGISTRY
 
 
 class DataModule:
@@ -20,6 +23,7 @@ class DataModule:
     
     def __init__(self, 
                  num_nodes: int, 
+                 node_type_map: Dict[int, str], ### TO BE ADDED IN THE COMMAND.PY isnide run_simulation_command() ### TODO PRESUMED STRUCTURE {0:"normal", 1:"attack", 2:"mitigation"}
                  alpha: float, 
                  topology: str,
                  topology_file: Optional[str] = None,
@@ -41,6 +45,7 @@ class DataModule:
             random_seed: Random seed for reproducibility
         """
         self.num_nodes = num_nodes
+        self.node_type_map = node_type_map  ### TODO PRESUMED STRUCTURE {0:"normal", 1:"attack", 2:"mitigation"}
         self.alpha = alpha
         self.topology = topology
         self.topology_file = topology_file
@@ -64,6 +69,7 @@ class DataModule:
         self.test_loaders_per_node = None
         
     def setup(self) -> None:
+        # TODO think about this when distributing data_training sets
         """
         Set up the data module by loading datasets and creating network topology.
         """
@@ -86,9 +92,18 @@ class DataModule:
             self.output_dir, 
             self.logger
         )
-        
+
+        def factory(node_id: int):
+            for i in range(len(self.node_type_map)):
+                if self.node_type_map[i].lower() in ATTACK_REGISTRY: ## SHOULD I CHECK keys() ??
+                    return AttackNode(node_id, attack_name=self.node_type_map[i].lower())
+                else:
+                    return Node(node_id)
+        #TODO INCLUDE ONE FOR MITIGATION NODE
+
         # Create nodes and build topology
-        self.nodes = create_nodes(self.num_nodes)
+        self.nodes = create_nodes(self.num_nodes, node_factory=factory)
+
         self.G = build_topology(self.num_nodes, self.topology, self.topology_file)
         visualize_and_save_topology(self.G, self.topology, self.output_dir)
         

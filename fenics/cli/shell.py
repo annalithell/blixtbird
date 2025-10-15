@@ -45,17 +45,27 @@ class FenicsShell(cmd.Cmd):
         """
         try:
             args = parse_arguments(shlex.split(arg))
-            
-            # Print parsed arguments
+            ## TAKEN FROM do_list_simulations TO LOAD CONFIG IF PROVIDED
+
+            if self.simulation_args and hasattr(self.simulation_args, 'config') and self.simulation_args.config:
+                if args.config and args.simulation_name:
+                    from fenics.config import load_config_from_file
+                    yaml_args = load_config_from_file(args.config, args.simulation_name)
+                    print(Fore.BLUE + f"Loaded configuration '{args.simulation_name}' from '{args.config}'")
+                    for key, value in vars(yaml_args).items():
+                        print(Fore.BLUE + f"{key.replace('_', ' ').capitalize()}: {value}")
+                        # Initialize logging if not already done
+                        if not self.logger:
+                            self.logger = logging.getLogger()
+                        self.logger.info(f"{key}: {value}")
             print(Fore.BLUE + "Parsed Arguments:")
+            
             for arg_name, arg_value in vars(args).items():
                 print(Fore.BLUE + f"{arg_name.replace('_', ' ').capitalize()}: {arg_value}")
-                
-                # Initialize logging if not already done
-                if not self.logger:
+            
+            if not self.logger:
                     self.logger = logging.getLogger()
-                self.logger.info(f"{arg_name}: {arg_value}")
-
+                    self.logger.info("Simulation arguments loaded successfully.")
             # Create output directory and setup logging
             self.output_dir = setup_environment(self.logger)
             
@@ -119,6 +129,7 @@ class FenicsShell(cmd.Cmd):
     
     def complete_setup(self, text, line, begidx, endidx):
         """Provide tab completion for setup command."""
+        # TODO: Change options
         options = ['--rounds', '--epochs', '--topology', '--participation_rate', '--gossip_steps', 
                    '--protocol', '--use_attackers', '--num_attackers', '--attacks', '--alpha', 
                    '--config', '--simulation_name', '--model_type']

@@ -16,7 +16,7 @@ def evaluate(model, test_loader):
     Returns:
         Tuple of (test loss, accuracy, f1 score, precision, recall)
     """
-    device = torch.device("cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
     model.eval()
     all_preds = []
