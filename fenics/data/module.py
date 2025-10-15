@@ -69,7 +69,7 @@ class DataModule:
         """
         # Load datasets with Dirichlet distribution
         self.train_datasets, self.test_dataset, self.labels = load_datasets_dirichlet(
-            self.num_nodes, alpha=self.alpha
+            self.num_nodes, alpha=self.alpha, save_to_file=True, output_dir=self.output_dir
         )
         
         # Print and visualize class distribution

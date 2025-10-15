@@ -12,6 +12,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_compl
 from tqdm import tqdm
 from typing import Dict, List, Tuple, Any, Optional, Set
 
+from fenics.local_data_manipulation.csv_metric import make_pandas_df, make_csv
 from fenics.models import ModelFactory
 from fenics.training import local_train, evaluate, summarize_model_parameters, load_datasets
 from fenics.communication import send_update
@@ -34,6 +35,7 @@ class Simulator:
                  epochs: int,
                  attacks: List[str],
                  model_type: str = "cnn",
+                 output_dir: str = "results",
                  logger: Optional[logging.Logger] = None):
         """
         Initialize the simulator.
@@ -53,7 +55,7 @@ class Simulator:
         """
         self.nodes = nodes
         #self.node_datasets = node_datasets
-        self.node_datasets = load_datasets(nodes)
+        self.node_datasets = load_datasets(nodes, output_dir)
         self.test_loaders_per_node = test_loaders_per_node
         self.participating_nodes_per_round = participating_nodes_per_round
         self.attacker_node_ids = attacker_node_ids
@@ -62,6 +64,7 @@ class Simulator:
         self.epochs = epochs
         self.attacks = attacks
         self.model_type = model_type
+        self.output_dir = output_dir
         self.logger = logger or logging.getLogger()
 
     def run_simulation(self) -> Tuple[Dict, List[float], List[float], List[float], List[float], float]:
@@ -81,6 +84,13 @@ class Simulator:
         random.seed(0)
         np.random.seed(0)
 
+        #metrics test local
+        metrics_train = {}
+        metrics_test = {}
+        for node in self.nodes:
+            metrics_train[node] = []
+            metrics_test[node] = []
+        
         metrics = defaultdict(lambda: defaultdict(list))
         cpu_usages = []
         round_times = []
@@ -235,6 +245,12 @@ class Simulator:
                         metrics[node]['train_f1_score'].append(train_f1)
                         metrics[node]['train_precision'].append(train_precision)
                         metrics[node]['train_recall'].append(train_recall)
+                        
+                        metrics_train[node].append({'train_loss': train_loss,
+                                            'train_accuracy': train_accuracy,
+                                            'train_f1_score': train_f1,
+                                            'train_precision': train_precision,
+                                            'train_recall':train_recall})
 
                     # Evaluation phase: testing data
                     self.logger.info("\n=== Evaluation Phase of testing data ===")
@@ -252,6 +268,12 @@ class Simulator:
                         metrics[node]['precision'].append(precision)
                         metrics[node]['recall'].append(recall)
 
+                        metrics_test[node].append({'test_loss': loss,
+                            'test_accuracy': accuracy,
+                            'test_f1_score': f1,
+                            'test_precision':precision,
+                            'test_recall':recall})
+
                     # Finalize round timing
                     end_time_round = time.time()
                     round_time = end_time_round - start_time_round
@@ -265,5 +287,14 @@ class Simulator:
 
         simulation_end_time = time.time()
         total_execution_time = simulation_end_time - simulation_start_time
+
+        #saving metrics locally
+        for node in self.nodes:
+            train_df = make_pandas_df(metrics_train[node])
+            test_df = make_pandas_df(metrics_test[node])
+            #save_files
+            make_csv(train_df, node, "train", self.output_dir)
+            make_csv(test_df, node, "test", self.output_dir)
+
 
         return metrics, cpu_usages, round_times, total_training_time_per_round, total_aggregation_time_per_round, total_execution_time

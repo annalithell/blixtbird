@@ -2,4 +2,3 @@ data
 **/__pycache__/
 results*
 fenics.egg-info
-federated_data

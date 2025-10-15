@@ -134,6 +134,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         epochs=simulation_args.epochs,
         attacks=simulation_args.attacks,
         model_type=getattr(simulation_args, 'model_type', 'cnn'),
+        output_dir=output_dir,
         logger=logger
     )
     

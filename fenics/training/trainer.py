@@ -56,12 +56,14 @@ def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
     # Return updated model parameters and training time
     return model.state_dict(), training_time  # Return tuple
 
-def load_datasets(nodes_ids, save_path='./federated_data'):
+def load_datasets(nodes_ids, output_dir):
 
     node_datasets = {}
 
+    federated_data_folder = f'{output_dir}/federated_data'
+
     for node_id in nodes_ids:
-        file_name = os.path.join(save_path, f'node_{node_id}_train_data.pt')
+        file_name = os.path.join(federated_data_folder, f'node_{node_id}_train_data.pt')
         if not os.path.exists(file_name):
             raise FileNotFoundError(f"File for node {node_id} not found: {file_name}")
         node_dataset = torch.load(file_name, weights_only=False)
