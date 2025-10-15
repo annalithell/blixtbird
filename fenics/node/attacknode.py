@@ -1,4 +1,5 @@
-from fenics.node.base import BaseNode, NodeType
+from fenics.node.base import BaseNode
+from fenics.node.nodetype import NodeType
 from fenics.node.attacks.attackregistry import get_attack 
 from typing import Optional, Dict, Type, Callable, override
 import logging

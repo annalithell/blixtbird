@@ -3,7 +3,6 @@
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
-from fenics.node.attacktype import AttackType
 from fenics.node.nodetype import NodeType
 
 
