@@ -5,8 +5,8 @@ from abc import ABC, abstractmethod
 from typing import List ,Callable , Optional
 
 
-def create_nodes(num_nodes: int,
-                 node_factory: Optional[Callable[[int], object]] = None) -> List[object]:
+def create_nodes(num_nodes: int) -> List[int]:
+                 #node_factory: Optional[Callable[[int], object]] = None) -> List[object]:
     """
     Create a list of node indices.
     
@@ -19,10 +19,11 @@ def create_nodes(num_nodes: int,
 
     nodes = []
     for i in range(num_nodes):
-        if node_factory is not None:
-            nodes.append(node_factory(i))
-        else:
-            nodes.append(i)
+        nodes.append(i)
+        #if node_factory is not None:
+        #    nodes.append(node_factory(i))
+        #else:
+        #   nodes.append(i)
     return nodes  
 
 

@@ -43,7 +43,6 @@ def get_attack(name: str, *args, **kwargs):
     """
     __DESCRIPTION__:
     Instantiate attack strategy by name (case-insensitive).
-    in the attack node this is called in the execute function
 
     __USAGE__:
     attack_instance = get_attack("attack name", arg1, arg2, kwarg1=value1)
@@ -64,7 +63,8 @@ def autodiscover_attack_modules():
     it triggers the decorators in those modules to execute which then populates the registry automatically
     
     __USAGE__:
-    call this in the attacknode.py file
+    # TODO check this
+    call this for each simulator instance
     autodiscover_attack_modules()
     """
     #package = os.path.basename(os.path.dirname(__file__))

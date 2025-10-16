@@ -18,5 +18,9 @@ node_simulator = Simulator_MPI(
     neighbors=neighbors
     )
 
+# TESTER - see if simulator is initialized properly for each node
 node_simulator.get_own_info()
+
+# Execute training and attack logic for each node
+node_simulator.run_simulator()
 

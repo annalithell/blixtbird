@@ -21,8 +21,12 @@ class Simulator_MPI:
         self.neighbors = neighbors
         self.attack_type = attack_type
 
+        # TODO
+        # self.simulation_rounds = simulation_rounds # TODO add in config.py
+
         # create the correct node instance 
         # either attack node or base node
+        # TODO: CHANGE WHEN TO CALL THIS, SHOULD HAPPEN ONLY ONCE??
         autodiscover_attack_modules()
 
         # TODO: future implementation include mitigation type
@@ -39,13 +43,30 @@ class Simulator_MPI:
 
         if self.type in ATTACK_REGISTRY.keys():
             node_instance = get_attack(self.type, node_id=self.node_id)
+            # TODO fix to include this in logger
+            print(f'Node: {self.node_id} created node instance:{node_instance}')
 
         else: 
             node_instance = Node(
                 node_id=self.node_id,
-                #dataset_path=self.node_dataset_path,
+                data_path=self.node_dataset_path,
                 logger=logger
             )
+            # TODO fix to include this in logger
+            print(f'Node: {self.node_id} created node instance:{node_instance}')
 
         return node_instance
+    
+    def run_simulator(self):
+        """
+        This method will initialize the model training and any eventual attacks. 
+        """
+        # STEP 0: Iterate for self.simulation_rounds 
+        # for round in range(self.simulation_rounds):
+
+        # STEP 1: Call execute for node instance. 
+        self.node.execute()
+
+        # STEP 2: AGGREGATION
+        # Wait until params from neighbors have been collected
 

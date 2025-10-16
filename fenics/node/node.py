@@ -11,7 +11,7 @@ from fenics.node.base import BaseNode
 class Node(BaseNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
-    def __init__(self, node_id: int, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str, logger: Optional[logging.Logger] = None):
         """
         Initialize a standard node
         
@@ -19,15 +19,28 @@ class Node(BaseNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, logger)
+        super().__init__(node_id, data_path, logger)
         self.type = NodeType.NORMAL
-        
-    def execute(self, model: torch.nn.Module):
+
+    def train_model(self):
         """
-        Execution function for a standard node.
-        
+        Standard training of model. 
+
         Returns:
             Model parameters of the node
+        
         """
-        self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
-        return model.parameters()
+
+
+        return
+        
+    def execute(self):
+        """
+        Execution function:
+            - Calls the train_model() function for a standard node
+
+        """
+        self.params = self.train_model()
+
+        #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
+        #return model.parameters()

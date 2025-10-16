@@ -27,16 +27,16 @@ class FreeRiderAttack(BaseAttack):
         self.__attack_type__ = attack_type
         self.logger = logger or logging.getLogger()
         
-    @override
-    def execute(self, model: torch.nn.Module):
+    #@override
+    def execute(self):
         """
         Execute the free-rider attack by learning model parameters while doing no work. 
         
         Args:
             model: Model to intercept
         """
-        self.logger.info(f"[node_{self.node_id}] is a freer-rider: intercepts {model.parameters()}")
-        return model.state_dict()
+        #self.logger.info(f"[node_{self.node_id}] is a freer-rider: intercepts {model.parameters()}")
+        return 
 
 
 ## This is done explicitly in attack_factory.py

@@ -93,25 +93,25 @@ class DataModule:
             self.logger
         )
 
-        def factory(node_id: int):
-            for i in range(len(self.node_type_map)):
-                if self.node_type_map[i].lower() in ATTACK_REGISTRY: ## SHOULD I CHECK keys() ??
-                    return AttackNode(node_id, attack_name=self.node_type_map[i].lower())
-                else:
-                    return Node(node_id)
+        #def factory(node_id: int):
+        #    for i in range(len(self.node_type_map)):
+        #        if self.node_type_map[i].lower() in ATTACK_REGISTRY: ## SHOULD I CHECK keys() ??
+        #            return AttackNode(node_id, attack_name=self.node_type_map[i].lower())
+        #        else:
+        #            return Node(node_id)
         #TODO INCLUDE ONE FOR MITIGATION NODE
 
         # Create nodes and build topology
-        self.nodes = create_nodes(self.num_nodes, node_factory=factory)
+        self.nodes = create_nodes(self.num_nodes)
 
         #TODO idk it should be temporary only to start code working correctly
-        self.nodes_ids = [node.node_id for node in self.nodes]
+        self.nodes_ids = [i for i in self.nodes]
 
         self.G = build_topology(self.num_nodes, self.topology, self.topology_file)
         visualize_and_save_topology(self.G, self.topology, self.output_dir)
         
         # Map datasets to nodes
-        self.node_datasets = {node_id: self.train_datasets[node_id] for node_id in self.nodes_ids}
+        #self.node_datasets = {node_id: self.train_datasets[node_id] for node_id in self.nodes_ids}
         
         # Create test loaders for each node
         self._create_test_loaders()

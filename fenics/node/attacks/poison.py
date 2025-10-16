@@ -24,16 +24,17 @@ class PoisonAttack(BaseAttack):
         self.__attack_type__ = attack_type
         self.logger = logger or logging.getLogger()
         
-    @override
-    def execute(self, model: torch.nn.Module) -> None:
+    #@override
+    def execute(self) -> None:
         """
         Execute the poison attack by adding noise to model parameters.
         
         Args:
             model: Model to poison
         """
-        with torch.no_grad():
-            for param in model.parameters():
-                param.add_(torch.randn(param.size()) * 0.5)  # Add significant noise
+        #with torch.no_grad():
+        #    for param in model.parameters():
+        #        param.add_(torch.randn(param.size()) * 0.5)  # Add significant noise
         
-        self.logger.info(f"[node_{self.node_id}] Model poisoned.")
+        #self.logger.info(f"[node_{self.node_id}] Model poisoned.")
+        return
