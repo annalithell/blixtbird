@@ -17,8 +17,8 @@ class BaseNode(ABC):
             logger: Logger instance
         """
         self.node_id = node_id
-        self.training_data = None  # Placeholder for training data
-        self.model_params = None  # Placeholder for model parameters
+        #self.training_data = None  # Placeholder for training data
+        #self.model_params = None  # Placeholder for model parameters
         self.logger = logger or logging.getLogger()
     
     @abstractmethod

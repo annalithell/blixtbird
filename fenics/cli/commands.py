@@ -101,15 +101,15 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     )
     
     # Calculate selection probabilities based on data size
-    selection_probabilities = data_module.calculate_selection_probabilities()
+    #selection_probabilities = data_module.calculate_selection_probabilities()
     
     # Precompute participating nodes for all rounds
     # TODO double check this still works!!
     # TODO I think we don't need this
-    participating_nodes_per_round = client_selector.precompute_participating_nodes(
-        num_rounds=simulation_args.rounds,
-        probabilities=selection_probabilities
-    )
+    #participating_nodes_per_round = client_selector.precompute_participating_nodes(
+    #    num_rounds=simulation_args.rounds,
+    #    probabilities=selection_probabilities
+    #)
     
     #TODO Do we need to set attacks in new version?
     # # Set up attack manager
@@ -151,7 +151,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     #     logger=logger
     # )
     
-    #TODO run MPI real simpulation
+    #TODO run MPI real simulation
     command = [
         'mpiexec',
         '-n',

@@ -67,7 +67,8 @@ def autodiscover_attack_modules():
     call this in the attacknode.py file
     autodiscover_attack_modules()
     """
-    package = os.path.basename(os.path.dirname(__file__))
+    #package = os.path.basename(os.path.dirname(__file__))
+    package = __package__
     pkg = importlib.import_module(package)
     package_path = pkg.__path__  
     for finder, name, ispkg in pkgutil.iter_modules(package_path):
