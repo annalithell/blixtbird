@@ -2,7 +2,7 @@ simulations:
   simulation1:
     rounds: 3                  # Number of training rounds
     epochs: 1                  # Number of epochs per round
-    num_nodes: 7                # Total number of nodes in the simulation
+    num_nodes: 4                # Total number of nodes in the simulation
     # num_attackers: 3            # Number of attacker nodes ## DELETE
     # attacker_nodes: [3]         # Specific nodes designated as attackers  ## CHANGE TO DICT
     # attacks: ['freerider', 'poison']           # Types of attacks to simulate ## DELETE
@@ -11,9 +11,9 @@ simulations:
       1: 'base'
       2: 'freerider'
       3: 'freerider' 
-      4: 'poison'
-      5: 'base'
-      6: 'base'
+      #4: 'poison'
+      #5: 'base'
+      #6: 'base'
     use_attackers: true         # Flag to enable or disable attacker simulation 
     participation_rate: 0.6     # Fraction of nodes participating each round ## DELETE
     topology: fully_connected   # Network topology type
