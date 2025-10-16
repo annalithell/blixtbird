@@ -104,11 +104,14 @@ class DataModule:
         # Create nodes and build topology
         self.nodes = create_nodes(self.num_nodes, node_factory=factory)
 
+        #TODO idk it should be temporary only to start code working correctly
+        self.nodes_ids = [node.node_id for node in self.nodes]
+
         self.G = build_topology(self.num_nodes, self.topology, self.topology_file)
         visualize_and_save_topology(self.G, self.topology, self.output_dir)
         
         # Map datasets to nodes
-        self.node_datasets = {node: self.train_datasets[node] for node in self.nodes}
+        self.node_datasets = {node_id: self.train_datasets[node_id] for node_id in self.nodes_ids}
         
         # Create test loaders for each node
         self._create_test_loaders()

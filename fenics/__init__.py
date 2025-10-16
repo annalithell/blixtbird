@@ -24,6 +24,9 @@ from fenics.node.attacks.delay import DelayAttack
 from fenics.node.attacks.poison import PoisonAttack
 from fenics.node.attacks.freerider import FreeRiderAttack
 from fenics.plotting import visualize_data_distribution, plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
+from fenics.simulator_mpi import Simulator_MPI
+from fenics.local_data_manipulation.csv_metric import make_csv, make_pandas_df
+from fenics.local_data_manipulation.yaml_maker import create_yaml, get_node_data, get_neighbors, get_output_dir
 
 __all__ = [
     # CLI
@@ -83,6 +86,7 @@ __all__ = [
 
     # Simulation
     'Simulator',
+    'Simulator_MPI',
 
     # Attack
     'AttackManager',
@@ -97,6 +101,14 @@ __all__ = [
     'plot_loss_line',
     'plot_training_aggregation_times',
     'plot_additional_metrics',
+
+    # Local Data Functions
+    'make_csv',
+    'make_pandas_df',
+    'create_yaml',
+    'get_node_data',
+    'get_neighbors',
+    'get_output_dir'
 ]
 
 # Initialize default logging if not already set up

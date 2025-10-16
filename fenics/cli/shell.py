@@ -88,12 +88,12 @@ class FenicsShell(cmd.Cmd):
             print(Fore.RED + "Please run the 'setup' command first with desired configurations.")
             return
         
-        try:
-            # Run the simulation command
-            run_simulation_command(arg, self.simulation_args, self.output_dir, self.logger)
-        except Exception as e:
-            self.logger.error(f"An error occurred during execution: {e}")
-            print(Fore.RED + f"An error occurred during execution: {e}")
+        # try:
+        # Run the simulation command
+        run_simulation_command(arg, self.simulation_args, self.output_dir, self.logger)
+        # except Exception as e:
+        #     self.logger.error(f"An error occurred during execution: {e}")
+        #     print(Fore.RED + f"An error occurred during execution: {e}")
     
     def do_list_simulations(self, arg):
         """List all available simulation configurations."""
