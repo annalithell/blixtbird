@@ -11,7 +11,6 @@ import subprocess
 from fenics.config import parse_arguments, SimulationConfig, load_config_from_file
 from fenics.data import DataModule
 #from fenics.client_selection import ClientSelector
-from fenics.attack import AttackManager
 #from fenics.simulator import Simulator
 from fenics.utils import setup_logging
 from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics

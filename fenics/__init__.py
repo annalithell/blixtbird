@@ -18,7 +18,6 @@ from fenics.training import local_train, evaluate, summarize_model_parameters
 #from fenics.client_selection import ClientSelector, select_clients_md_sampling, SelectionFactory
 from fenics.utils import setup_logging, calculate_selection_probabilities, detect_convergence
 #from fenics.simulator import Simulator
-from fenics.attack import AttackManager, AttackFactory, Attack #, PoisonAttack, DelayAttack
 from fenics.node.abstract import AbstractNode
 from fenics.node.normal_node import NormalNode
 from fenics.node.attacks.delay import DelayAttack
