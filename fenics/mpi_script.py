@@ -20,3 +20,11 @@ node_simulator = Simulator_MPI(
 
 node_simulator.get_own_info()
 
+"""
+Fake simulation for testing metrics
+"""
+node_simulator.run_simulation()
+
+node_simulator.make_local_metrics()
+    
+
