@@ -49,6 +49,7 @@ class Simulator_MPI:
         else: 
             node_instance = Node(
                 node_id=self.node_id,
+                neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
                 logger=logger
             )

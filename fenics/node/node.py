@@ -13,7 +13,7 @@ from fenics.node.base import BaseNode
 class Node(BaseNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
-    def __init__(self, node_id: int,neighbors: [int], data_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
         """
         Initialize a standard node
         
@@ -21,11 +21,13 @@ class Node(BaseNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id,neighbors, data_path, logger)
+        super().__init__(node_id, neighbors, data_path, logger)
         self.type = NodeType.NORMAL
         self.comm = MPI.COMM_WORLD
         #Hard to learn an old dog new tricks
         self.neighbor_models = {}
+
+
     def train_model(self):
         """
         Standard training of model. 
@@ -51,11 +53,12 @@ class Node(BaseNode):
 
     def aggregate(self):
         pass
+
     def send(self):
         send_data = pickle.dumps(self.model_params,protocol=-1)
         for i in self.neighbors:
             #implement protocols here, if you dont want to send data to every node just send them an empty message.
-            self.comm.Isend(send_data,i,0)
+            self.comm.Isend(send_data, i, 0)
             
     def recv(self):
         status = MPI.Status()
@@ -65,7 +68,7 @@ class Node(BaseNode):
         recv_buffer = {}
         for i in self.neighbors:
             #Probe the incoming message for size
-            self.comm.Probe(source=i,tag=0,status=status)
+            self.comm.Probe(source=i, tag=0, status=status)
             count = status.Get_count(MPI.BYTE)
             #Create a buffer with the right size
             recv_buffer[i] = bytearray(count)

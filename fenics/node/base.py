@@ -7,7 +7,7 @@ from typing import Any, Optional
 class BaseNode(ABC):
     """ A  base node class for all nodes. """    
     
-    def __init__(self, node_id: int, data_path: Optional[str] = None, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: Optional[str] = None, neighbors: Optional[int] = None, logger: Optional[logging.Logger] = None):
         """
         Initialize the node
         
@@ -18,6 +18,7 @@ class BaseNode(ABC):
         """
         self.node_id = node_id
         self.data_path = data_path
+        self.neighbors = neighbors
         self.model_params = None  # Placeholder for model parameters
         self.logger = logger or logging.getLogger()
     
