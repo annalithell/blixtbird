@@ -12,12 +12,12 @@ from fenics.models import Net, ModelBase, ModelFactory
 from fenics.data import load_datasets_dirichlet, print_class_distribution, DataModule
 from fenics.topology import create_nodes, build_topology, visualize_and_save_topology, TopologyFactory
 from fenics.training import local_train, evaluate, summarize_model_parameters
-from fenics.communication import send_update, gossip_step, neighboring_step, CommunicationProtocol, ProtocolFactory
-from fenics.aggregation import FedAvgStrategy, AggregationStrategy, AggregationFactory
+#from fenics.communication import send_update, gossip_step, neighboring_step, CommunicationProtocol, ProtocolFactory
+#from fenics.aggregation import FedAvgStrategy, AggregationStrategy, AggregationFactory
 # from fenics.client_selection import ClientSelector, select_clients_uniform, select_clients_md_sampling, SelectionFactory
-from fenics.client_selection import ClientSelector, select_clients_md_sampling, SelectionFactory
+#from fenics.client_selection import ClientSelector, select_clients_md_sampling, SelectionFactory
 from fenics.utils import setup_logging, calculate_selection_probabilities, detect_convergence
-from fenics.simulator import Simulator
+#from fenics.simulator import Simulator
 from fenics.attack import AttackManager, AttackFactory, Attack #, PoisonAttack, DelayAttack
 from fenics.node.base import BaseNode
 from fenics.node.attacks.delay import DelayAttack

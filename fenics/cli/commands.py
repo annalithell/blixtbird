@@ -10,9 +10,9 @@ import subprocess
 
 from fenics.config import parse_arguments, SimulationConfig, load_config_from_file
 from fenics.data import DataModule
-from fenics.client_selection import ClientSelector
+#from fenics.client_selection import ClientSelector
 from fenics.attack import AttackManager
-from fenics.simulator import Simulator
+#from fenics.simulator import Simulator
 from fenics.utils import setup_logging
 from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
 from fenics.node.attacks.attackregistry import autodiscover_attack_modules
@@ -93,12 +93,14 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     )
     data_module.setup()
     
+
+    # Murder this in the future??
     # Set up client selector
-    client_selector = ClientSelector(
-        nodes=data_module.nodes,
-        participation_rate=simulation_args.participation_rate,
-        logger=logger
-    )
+    #client_selector = ClientSelector(
+    #    nodes=data_module.nodes,
+    #    participation_rate=simulation_args.participation_rate,
+    #    logger=logger
+    #)
     
     # Calculate selection probabilities based on data size
     #selection_probabilities = data_module.calculate_selection_probabilities()
