@@ -1,10 +1,10 @@
 from typing import List, Optional
 import logging
 
-from fenics.node.node import Node
-from fenics.node.nodetype import NodeType
-from fenics.node.attacknode import AttackNode
-from fenics.node.attacks.attackregistry import autodiscover_attack_modules, get_attack, ATTACK_REGISTRY
+from fenics.node.normal_node import NormalNode
+from fenics.node.node_type import NodeType
+from fenics.node.attacks.old.attacknode import AttackNode
+from fenics.node.attacks.attack_registry import autodiscover_attack_modules, get_attack, ATTACK_REGISTRY
 
 class Simulator_MPI:
     
@@ -19,7 +19,7 @@ class Simulator_MPI:
         self.node_dataset_path = node_dataset_path
         self.type = type
         self.neighbors = neighbors
-        self.attack_type = attack_type
+        self.attack_type = attack_type # TODO: This is never used, fix?
 
         # TODO
         # self.simulation_rounds = simulation_rounds # TODO add in config.py
@@ -42,20 +42,27 @@ class Simulator_MPI:
         logger = logging.getLogger(f"Node_{self.node_id}")
 
         if self.type in ATTACK_REGISTRY.keys():
-            node_instance = get_attack(self.type, node_id=self.node_id)
-            # TODO fix to include this in logger
-            print(f'Node: {self.node_id} created node instance:{node_instance}')
-
-        else: 
-            node_instance = Node(
+            attack_type = get_attack(self.type)
+            node_instance=attack_type (
+                node_id=self.node_id,
+                neighbors=self.neighbors,
+                data_path=self.node_dataset_path,
+                logger=logger    
+            )
+            print(f'Node: {self.node_id} created node instance:{self.type}')
+ 
+        elif self.type == "base": # TODO fix proper elif statement (config.yaml)
+            node_instance = NormalNode(
                 node_id=self.node_id,
                 neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
                 logger=logger
             )
             # TODO fix to include this in logger
-            print(f'Node: {self.node_id} created node instance:{node_instance}')
-
+            print(f'Node: {self.node_id} created node instance:{self.type}')
+        else:
+            # TODO add proper error handling
+            print(f"{self.type} not implemented.")
         return node_instance
     
     def run_simulator(self):
@@ -67,6 +74,11 @@ class Simulator_MPI:
 
         # STEP 1: Call execute for node instance. 
         self.node.execute()
+
+        # self.params = Training model (i nod)
+        # aggregation(Self.node.params)
+        # 
+
 
         # STEP 2: AGGREGATION
         # Wait until params from neighbors have been collected

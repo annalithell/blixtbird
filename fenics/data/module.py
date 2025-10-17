@@ -11,9 +11,9 @@ from fenics.data.handler import load_datasets_dirichlet, print_class_distributio
 from fenics.topology import create_nodes, build_topology, visualize_and_save_topology
 from fenics.plotting import visualize_data_distribution
 from fenics.utils import calculate_selection_probabilities
-from fenics.node.node import Node
-from fenics.node.attacknode import AttackNode
-from fenics.node.attacks.attackregistry import ATTACK_REGISTRY
+from fenics.node.normal_node import NormalNode
+from fenics.node.attacks.old.attacknode import AttackNode
+from fenics.node.attacks.attack_registry import ATTACK_REGISTRY
 
 
 class DataModule:

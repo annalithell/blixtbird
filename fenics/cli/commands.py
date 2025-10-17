@@ -15,7 +15,7 @@ from fenics.attack import AttackManager
 #from fenics.simulator import Simulator
 from fenics.utils import setup_logging
 from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
-from fenics.node.attacks.attackregistry import autodiscover_attack_modules
+from fenics.node.attacks.attack_registry import autodiscover_attack_modules
 from fenics.local_data_manipulation.yaml_maker import create_yaml
 
 def setup_environment(logger=None):

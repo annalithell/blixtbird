@@ -5,12 +5,11 @@ import logging
 from mpi4py import MPI
 import pickle
 from typing import Optional
-from fenics.node.nodetype import NodeType
+from fenics.node.node_type import NodeType
 
-from fenics.node.base import BaseNode
+from fenics.node.abstract import AbstractNode
 
-
-class Node(BaseNode):
+class NormalNode(AbstractNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
     def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
@@ -22,10 +21,10 @@ class Node(BaseNode):
             logger: Logger instance
         """
         super().__init__(node_id, neighbors, data_path, logger)
-        self.type = NodeType.NORMAL
+        self.node_type = NodeType.NORMAL
         self.comm = MPI.COMM_WORLD
-        #Hard to learn an old dog new tricks
-        self.neighbor_models = {}
+
+        self.neighbor_models = {} # TODO do we need this??
 
 
     def train_model(self):

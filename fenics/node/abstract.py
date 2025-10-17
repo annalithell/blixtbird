@@ -3,8 +3,9 @@
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
+#from fenics.node.node_type import NodeType
     
-class BaseNode(ABC):
+class AbstractNode(ABC):
     """ A  base node class for all nodes. """    
     
     def __init__(self, node_id: int, data_path: Optional[str] = None, neighbors: Optional[int] = None, logger: Optional[logging.Logger] = None):
@@ -18,8 +19,8 @@ class BaseNode(ABC):
         """
         self.node_id = node_id
         self.data_path = data_path
-        self.neighbors = neighbors
         self.model_params = None  # Placeholder for model parameters
+        self.neighbors = neighbors
         self.logger = logger or logging.getLogger()
     
     @abstractmethod

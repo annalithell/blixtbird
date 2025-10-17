@@ -19,7 +19,8 @@ from fenics.training import local_train, evaluate, summarize_model_parameters
 from fenics.utils import setup_logging, calculate_selection_probabilities, detect_convergence
 #from fenics.simulator import Simulator
 from fenics.attack import AttackManager, AttackFactory, Attack #, PoisonAttack, DelayAttack
-from fenics.node.base import BaseNode
+from fenics.node.abstract import AbstractNode
+from fenics.node.normal_node import NormalNode
 from fenics.node.attacks.delay import DelayAttack
 from fenics.node.attacks.poison import PoisonAttack
 from fenics.node.attacks.freerider import FreeRiderAttack

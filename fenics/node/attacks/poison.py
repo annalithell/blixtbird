@@ -4,14 +4,14 @@ import torch
 import logging
 from typing import Optional, override
 
-from fenics.node.attacks.base import BaseAttack
-from fenics.node.attacks.attackregistry import register_attack
+from fenics.node.attacks.attack_node import AttackNode
+from fenics.node.attacks.attack_registry import register_attack
 
 @register_attack("poison")
-class PoisonAttack(BaseAttack):
+class PoisonAttack(AttackNode):
     """Model poisoning attack that adds significant noise to model parameters."""
 
-    def __init__(self, node_id: int, attack_type: str = "POISON", logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, attack_type: str = "poison", logger: Optional[logging.Logger] = None):
         """
         Initialize the poison attack.
         
@@ -19,11 +19,11 @@ class PoisonAttack(BaseAttack):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id)
+        super().__init__(node_id, neighbors, data_path, logger)
         self.attack_round = 0 # Placeholder for potential future use
         self.__attack_type__ = attack_type
         self.logger = logger or logging.getLogger()
-        
+    
     #@override
     def execute(self) -> None:
         """

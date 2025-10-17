@@ -1,9 +1,9 @@
 # fenics/attack/__init__.py
 
-from fenics.node.node import Node
-from fenics.node.attacknode import AttackNode
+from fenics.node.normal_node import NormalNode
+from fenics.node.attacks.attack_node import AttackNode
 
 __all__ = [
-    'Node',
+    'NormalNode',
     'AttackNode'
 ]
