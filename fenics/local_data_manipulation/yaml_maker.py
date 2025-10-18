@@ -5,8 +5,6 @@ from typing import Dict
 
 def create_yaml(G, node_type_map: Dict[int, str], output_dir: str):
 
-    node_type_map
-
     mpi_config_folder = f'{output_dir}/mpi_config'
 
     if not os.path.exists(mpi_config_folder):

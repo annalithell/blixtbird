@@ -54,7 +54,7 @@ def visualize_data_distribution(train_datasets, num_nodes, class_names, output_d
     logger.info(f"Data distribution plot saved as '{data_dist_path}'.")
 
 
-def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger):
+def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger, all_nodes, node_id):
     """
     Plot metrics with convergence detection.
     
@@ -64,7 +64,12 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
         total_execution_time: Total execution time of the simulation
         output_dir: Directory to save the plots
         logger: Logger instance
+        all_nodes: bool if plot is for all nodes or for single one
     """
+
+    if all_nodes is False:
+        create_node_metrics_folder(output_dir, node_id)
+    
     # Prepare data for training metrics
     avg_metrics_train = {
         'Accuracy': [],
@@ -83,17 +88,30 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     for rnd in rounds_range:
         acc_train, f1_train, prec_train, rec_train = [], [], [], []
         acc_test, f1_test, prec_test, rec_test = [], [], [], []
-        for node in metrics:
-            if len(metrics[node]['train_accuracy']) >= rnd:
-                acc_train.append(metrics[node]['train_accuracy'][rnd-1])
-                f1_train.append(metrics[node]['train_f1_score'][rnd-1])
-                prec_train.append(metrics[node]['train_precision'][rnd-1])
-                rec_train.append(metrics[node]['train_recall'][rnd-1])
-            if len(metrics[node]['accuracy']) >= rnd:
-                acc_test.append(metrics[node]['accuracy'][rnd-1])
-                f1_test.append(metrics[node]['f1_score'][rnd-1])
-                prec_test.append(metrics[node]['precision'][rnd-1])
-                rec_test.append(metrics[node]['recall'][rnd-1])
+
+        if all_nodes: 
+            for node in metrics:
+                if len(metrics[node]['train_accuracy']) >= rnd:
+                    acc_train.append(metrics[node]['train_accuracy'][rnd-1])
+                    f1_train.append(metrics[node]['train_f1_score'][rnd-1])
+                    prec_train.append(metrics[node]['train_precision'][rnd-1])
+                    rec_train.append(metrics[node]['train_recall'][rnd-1])
+                if len(metrics[node]['test_accuracy']) >= rnd:
+                    acc_test.append(metrics[node]['test_accuracy'][rnd-1])
+                    f1_test.append(metrics[node]['test_f1_score'][rnd-1])
+                    prec_test.append(metrics[node]['test_precision'][rnd-1])
+                    rec_test.append(metrics[node]['test_recall'][rnd-1])
+        else:
+            if len(metrics['train_accuracy']) >= rnd:
+                acc_train.append(metrics['train_accuracy'][rnd-1])
+                f1_train.append(metrics['train_f1_score'][rnd-1])
+                prec_train.append(metrics['train_precision'][rnd-1])
+                rec_train.append(metrics['train_recall'][rnd-1])
+            if len(metrics['test_accuracy']) >= rnd:
+                acc_test.append(metrics['test_accuracy'][rnd-1])
+                f1_test.append(metrics['test_f1_score'][rnd-1])
+                prec_test.append(metrics['test_precision'][rnd-1])
+                rec_test.append(metrics['test_recall'][rnd-1])
         # Compute average metrics over all nodes for this round
         avg_metrics_train['Accuracy'].append(np.nanmean(acc_train) if acc_train else 0)
         avg_metrics_train['F1 Score'].append(np.nanmean(f1_train) if f1_train else 0)
@@ -153,7 +171,12 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     plt.legend()
     plt.grid(axis='y')
     plt.tight_layout()
-    training_bar_path = os.path.join(output_dir, 'average_training_metrics_bar_chart.pdf')
+    if all_nodes:
+        training_bar_path = os.path.join(output_dir, 'average_training_metrics_bar_chart.pdf')
+    else:
+        path_template = os.path.join('metrics', f'node_{node_id}', 
+                            f'node_{node_id}_average_training_metrics_bar_chart.pdf')
+        training_bar_path = os.path.join(output_dir, path_template)
     plt.savefig(training_bar_path, format='pdf')
     plt.close()
     logger.info(f"Average training metrics bar chart saved as '{training_bar_path}'.")
@@ -174,7 +197,12 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     plt.legend()
     plt.grid(axis='y')
     plt.tight_layout()
-    testing_bar_path = os.path.join(output_dir, 'average_testing_metrics_bar_chart.pdf')
+    if all_nodes:
+        testing_bar_path = os.path.join(output_dir, 'average_testing_metrics_bar_chart.pdf')
+    else:
+        path_template = os.path.join('metrics', f'node_{node_id}', 
+                            f'node_{node_id}_average_testing_metrics_bar_chart.pdf')
+        testing_bar_path = os.path.join(output_dir, path_template)
     plt.savefig(testing_bar_path, format='pdf')
     plt.close()
     logger.info(f"Average testing metrics bar chart saved as '{testing_bar_path}'.")
@@ -210,7 +238,12 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    training_line_path = os.path.join(output_dir, 'average_training_metrics_line_plot.pdf')
+    if all_nodes:
+        training_line_path = os.path.join(output_dir, 'average_training_metrics_line_plot.pdf')
+    else:
+        path_template = os.path.join('metrics', f'node_{node_id}', 
+                                 f'node_{node_id}_average_training_metrics_line_plot.pdf')
+        training_line_path = os.path.join(output_dir, path_template)
     plt.savefig(training_line_path, format='pdf')
     plt.close()
     logger.info(f"Average training metrics line plot saved as '{training_line_path}'.")
@@ -240,13 +273,18 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     plt.legend(markerscale=0.8, prop={'size': 10})
     plt.grid(True)
     plt.tight_layout()
-    testing_line_path = os.path.join(output_dir, 'average_testing_metrics_line_plot.pdf')
+    if all_nodes:
+        testing_line_path = os.path.join(output_dir, 'average_testing_metrics_line_plot.pdf')
+    else:
+        path_template = os.path.join('metrics', f'node_{node_id}', 
+                                 f'node_{node_id}_average_testing_metrics_line_plot.pdf')
+        testing_line_path = os.path.join(output_dir, path_template)
     plt.savefig(testing_line_path, format='pdf')
     plt.close()
     logger.info(f"Average testing metrics line plot saved as '{testing_line_path}'.")
 
 
-def plot_loss_line(metrics, rounds_range, output_dir, logger):
+def plot_loss_line(metrics, rounds_range, output_dir, logger, all_nodes, node_id):
     """
     Plot loss lines over rounds.
     
@@ -256,16 +294,26 @@ def plot_loss_line(metrics, rounds_range, output_dir, logger):
         output_dir: Directory to save the plots
         logger: Logger instance
     """
+
+    if all_nodes is False:
+        create_node_metrics_folder(output_dir, node_id)
+
     avg_loss_per_round = []
     avg_train_loss_per_round = []
     for rnd in rounds_range:
         losses = []
         train_losses = []
-        for node in metrics:
-            if len(metrics[node]['loss']) >= rnd:
-                losses.append(metrics[node]['loss'][rnd-1])
-            if len(metrics[node]['train_loss']) >= rnd:
-                train_losses.append(metrics[node]['train_loss'][rnd-1])
+        if all_nodes:
+            for node in metrics:
+                if len(metrics[node]['test_loss']) >= rnd:
+                    losses.append(metrics[node]['test_loss'][rnd-1])
+                if len(metrics[node]['train_loss']) >= rnd:
+                    train_losses.append(metrics[node]['train_loss'][rnd-1])
+        else:
+            if len(metrics['test_loss']) >= rnd:
+                    losses.append(metrics['test_loss'][rnd-1])
+            if len(metrics['train_loss']) >= rnd:
+                train_losses.append(metrics['train_loss'][rnd-1])
         avg_loss = np.nanmean(losses) if losses else np.nan
         avg_train_loss = np.nanmean(train_losses) if train_losses else np.nan
         avg_loss_per_round.append(avg_loss)
@@ -281,7 +329,12 @@ def plot_loss_line(metrics, rounds_range, output_dir, logger):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    loss_plot_path = os.path.join(output_dir, 'average_loss_over_rounds.pdf')
+    if all_nodes:
+        loss_plot_path = os.path.join(output_dir, 'average_loss_over_rounds.pdf')
+    else:
+        path_template = os.path.join('metrics', f'node_{node_id}', 
+                                 f'node_{node_id}_average_loss_over_rounds.pdf')
+        loss_plot_path = os.path.join(output_dir, path_template)
     plt.savefig(loss_plot_path, format='pdf')
     plt.close()
     logger.info(f"Average loss plot saved as '{loss_plot_path}'.")
@@ -364,3 +417,8 @@ def plot_additional_metrics(rounds_range, cpu_usages, round_times, output_dir, l
     plt.savefig(round_time_plot_path, format='pdf')
     plt.close()
     logger.info(f"Round times plot saved as '{round_time_plot_path}'.")
+
+def create_node_metrics_folder(output_dir, node_id):
+    metrics_folder = f'{output_dir}/metrics/node_{node_id}'
+    if not os.path.exists(metrics_folder):
+        os.makedirs(metrics_folder)

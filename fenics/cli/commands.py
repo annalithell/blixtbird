@@ -17,6 +17,7 @@ from fenics.utils import setup_logging
 from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
 from fenics.node.attacks.attackregistry import autodiscover_attack_modules
 from fenics.local_data_manipulation.yaml_maker import create_yaml
+from fenics.local_data_manipulation.csv_metric import load_csv
 
 def setup_environment(logger=None):
     """
@@ -198,23 +199,41 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     except Exception as e:
         print(f"\n--- OTHER ERROR ---")
         print(f"An unexpected error occurred: {e}")
+    
     # # Run the simulation
     # metrics, cpu_usages, round_times, total_training_time_per_round, total_aggregation_time_per_round, total_execution_time = simulator.run_simulation()
     
     #TODO For now all metrics are comment!
-    # # After all rounds, compute training and aggregation times per round
-    # rounds_range = range(1, simulation_args.rounds + 1)
+    # After all rounds, compute training and aggregation times per round
+    rounds_range = range(1, simulation_args.rounds + 1)
+    
+    """
+    Local metrics plotting! - This is moment where MPI scripts aren't working anymore.
+    """
+
+    metrics = {}
+    total_execution_time = 2000 #TODO change to real time
+
+    for node_id, _ in (simulation_args.node_type_map).items():
+        metric = load_csv(node_id)
+        metrics[node_id] = metric
+
+        plot_metrics_with_convergence(metric, rounds_range, total_execution_time, output_dir, logger, False, node_id)
+        plot_loss_line(metric, rounds_range, output_dir, logger, False, node_id)
     
     # # Log total training and aggregation times per round
     # for rnd, (train_time, agg_time) in enumerate(zip(total_training_time_per_round, total_aggregation_time_per_round), start=1):
     #     logger.info(f"Round {rnd}: Total Training Time = {train_time:.2f} seconds")
     #     logger.info(f"Round {rnd}: Total Aggregation Time = {agg_time:.2f} seconds")
     
-    # # Plot the metrics with convergence and execution time annotations
-    # plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger)
-    # plot_loss_line(metrics, rounds_range, output_dir, logger)
-    # plot_training_aggregation_times(rounds_range, total_training_time_per_round, total_aggregation_time_per_round, total_execution_time, output_dir, logger)
-    # plot_additional_metrics(rounds_range, cpu_usages, round_times, output_dir, logger)
+    # Plot the metrics with convergence and execution time annotations
+    all_nodes = True
+    node_id = None
+
+    plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger, all_nodes, node_id)
+    plot_loss_line(metrics, rounds_range, output_dir, logger, all_nodes, node_id)
+    #plot_training_aggregation_times(rounds_range, total_training_time_per_round, total_aggregation_time_per_round, total_execution_time, output_dir, logger)
+    #plot_additional_metrics(rounds_range, cpu_usages, round_times, output_dir, logger)
     
     # # Calculate and log detailed statistics
     # if cpu_usages and round_times:
