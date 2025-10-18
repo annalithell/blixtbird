@@ -6,6 +6,7 @@ import time
 import logging
 import os
 
+from fenics.local_data_manipulation.yaml_maker import get_output_dir
 
 def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
     """
@@ -63,8 +64,26 @@ def local_train(node_id, local_model, train_dataset, epochs, attacker_type):
     # Return updated model parameters and training time
     return model.state_dict(), training_time  # Return tuple
 
-def load_datasets(nodes_ids, output_dir):
+def load_dataset(node_id):
+    """
+    Function loads dataset from specyfic file related to node_id
+    """
+    
+    output_dir = get_output_dir()
 
+    federated_data_folder = f'{output_dir}/federated_data'
+
+    file_name = os.path.join(federated_data_folder, f'node_{node_id}_train_data.pt')
+    if not os.path.exists(file_name):
+        raise FileNotFoundError(f"File for node {node_id} not found: {file_name}")
+    node_dataset = torch.load(file_name, weights_only=False)
+    
+    return node_dataset
+
+def load_datasets(nodes_ids, output_dir):
+    """
+    function used in old version of simulator
+    """
     node_datasets = {}
 
     federated_data_folder = f'{output_dir}/federated_data'
