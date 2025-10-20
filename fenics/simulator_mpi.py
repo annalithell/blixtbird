@@ -19,7 +19,6 @@ class Simulator_MPI:
                  type: str,
                  neighbors: List[int], 
                  attack_type: Optional[str] = None):
-        
         self.node_id = node_id
         self.node_dataset_path = node_dataset_path
         self.type = type
@@ -33,10 +32,9 @@ class Simulator_MPI:
         # either attack node or base node
         # TODO: CHANGE WHEN TO CALL THIS, SHOULD HAPPEN ONLY ONCE??
         autodiscover_attack_modules()
-
         # TODO: future implementation include mitigation type
-        self.node = self.make_node()
         self.node_dataset = load_dataset(node_id)
+        self.node = self.make_node()
         self.metrics_train = []
         self.metrics_test = []
     
@@ -64,6 +62,9 @@ class Simulator_MPI:
                 node_id=self.node_id,
                 neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
+                data_set=self.node_dataset,
+                #TODO make this read from the file
+                model_type="cnn",
                 logger=logger
             )
             # TODO fix to include this in logger
@@ -81,8 +82,7 @@ class Simulator_MPI:
         # for round in range(self.simulation_rounds):
 
         # STEP 1: Call execute for node instance. 
-        self.node.execute()
-
+        
         # self.params = Training model (i nod)
         # aggregation(Self.node.params)
         # 
@@ -97,8 +97,9 @@ class Simulator_MPI:
         This function is for TEST METRICS!!!
         similar layout as in old simulation
         """
+        epochs = 2
+        self.node.execute(epochs)
 
-        epochs = 5
 
         # Evaluation phase: training data
 

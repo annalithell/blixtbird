@@ -46,6 +46,7 @@ class NormalNode(AbstractNode):
             Model parameters of the node
         
         """
+
         device = torch.device("cpu")
         self.model.to(device)
         #TODO lr should defenitly be modular
@@ -53,7 +54,7 @@ class NormalNode(AbstractNode):
         criterion = nn.NLLLoss()
         self.model.train()
         train_loader = torch.utils.data.DataLoader(self.train_dataset, batch_size=32, shuffle=True)
-
+        #print("hello",flush=true)
         for epoch in range(epochs):
             for data, target in train_loader:
                 data, target = data.to(device), target.to(device)
@@ -72,7 +73,7 @@ class NormalNode(AbstractNode):
             - Calls the train_model() function for a standard node
 
         """
-        self.model = self.train_model(self,epochs = epoch)
+        self.model = self.train_model(epochs = epoch)
 
         #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
         #return model.parameters()

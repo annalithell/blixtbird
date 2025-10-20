@@ -28,7 +28,7 @@ class FreeRiderAttack(AttackNode):
         self.logger = logger or logging.getLogger()
 
     #@override
-    def execute(self):
+    def execute(self,epochs):
         """
         Execute the free-rider attack by learning model parameters while doing no work. 
         
