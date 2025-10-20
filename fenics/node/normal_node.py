@@ -7,6 +7,7 @@ import pickle
 from typing import Optional
 import time
 from mpi4py import MPI
+from torchvision import datasets, transforms
 
 from fenics.node.node_type import NodeType
 from fenics.node.abstract import AbstractNode
@@ -40,6 +41,11 @@ class NormalNode(AbstractNode):
         optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3, weight_decay=1e-4)
         criterion = nn.NLLLoss()
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
+        
+        # Create test DataLoader
+        transform = transforms.Compose([transforms.ToTensor()])
+        test_dataset = datasets.FashionMNIST('./data', train=False, download=True, transform=transform)
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
 
         start_time = time.time()
         self.model.train()
@@ -60,11 +66,11 @@ class NormalNode(AbstractNode):
             self.append_training_metrics(self.model, train_loader)
 
         # after each epoch evaluate test
-        #TODO
-        #self.append_test_metrics()
+        self.append_test_metrics(self.model, epochs, test_loader)
 
         training_time = time.time() - start_time
         return self.model.state_dict(), training_time # NOT NEEDED??
+    
     
     def append_training_metrics(self, model, train_loader):
         # Evaluation phase: training data
@@ -76,25 +82,19 @@ class NormalNode(AbstractNode):
                                 'train_precision': train_precision,
                                 'train_recall':train_recall})
         
-    """  
-    def append_test_metrics(self, epochs):
+
+    def append_test_metrics(self, model, epochs, test_loader):
         # Evaluation phase: testing data
         for _ in range(0, epochs):
-            #TODO change evaluate function - adapt to new data
-            #loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
 
-            loss = np.random.random(1)[0]
-            accuracy = np.random.random(1)[0]
-            f1 = np.random.random(1)[0]
-            precision = np.random.random(1)[0]
-            recall = np.random.random(1)[0]
+            loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
 
             self.metrics_test.append({'test_loss': loss,
                                     'test_accuracy': accuracy,
                                     'test_f1_score': f1,
                                     'test_precision': precision,
                                     'test_recall': recall})
-    """ 
+
 
     def execute(self, epochs):
         """

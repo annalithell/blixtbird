@@ -88,10 +88,8 @@ class Simulator_MPI:
         # STEP 1: Call execute for node instance.
         self.node.execute(self.epochs)
 
-
         # self.params = Training model (in node)
         # aggregation(Self.node.params)
-        # 
 
         # STEP 2: AGGREGATION
         # Wait until params from neighbors have been collected

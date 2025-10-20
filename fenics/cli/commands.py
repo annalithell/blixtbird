@@ -91,6 +91,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         output_dir=output_dir,
         logger=logger
     )
+    
     data_module.setup()
     
 
