@@ -58,7 +58,7 @@ class Simulator_MPI:
                 logger=logger    
             )
             print(f'Node: {self.node_id} created node instance:{self.type}')
- 
+
         elif self.type == "base": # TODO fix proper elif statement (config.yaml)
             node_instance = NormalNode(
                 node_id=self.node_id,

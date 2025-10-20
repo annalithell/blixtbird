@@ -1,18 +1,19 @@
 # fenics/node/attacks/freerider.py
 
 import torch
+import torch.nn as nn
 import logging
 from mpi4py import MPI
 import pickle
 from typing import Optional
 from fenics.node.node_type import NodeType
-
+from fenics.models import ModelFactory
 from fenics.node.abstract import AbstractNode
 
 class NormalNode(AbstractNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
-    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, data_set ,model_type , logger: Optional[logging.Logger] = None):
         """
         Initialize a standard node
         
@@ -20,21 +21,25 @@ class NormalNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        #Model unga bunga
-        self.model
+        #Model unga
+        self.train_dataset = data_set
+        self.model = ModelFactory.get_model(model_type)
         super().__init__(node_id, neighbors, data_path, logger)
         self.node_type = NodeType.NORMAL
         self.comm = MPI.COMM_WORLD
         #Hard to learn an old dog new tricks
         #Map form node ids to neigbouring models
-        self.neighbor_models = {}
+        self.neighbor_statedicts = {}
         #a map of from ndoe ids to data sizes for you and your neighbors
         self.data_sizes = {}
         self.data_sizes[self.node_id] = 0 #insert len of data here
 
 
-    def train_model(self):
+    def train_model(self, epochs:int):
+        
         """
+        TODO
+        This should 99% be modular but mvp is the way to go atm
         Standard training of model. 
 
         Returns:
@@ -42,18 +47,32 @@ class NormalNode(AbstractNode):
         
         """
         device = torch.device("cpu")
-        self.model_params.to(device)
-        optimizer = torch.optim.Adam(model)
+        self.model.to(device)
+        #TODO lr should defenitly be modular
+        optimizer = torch.optim.Adam(self.model.parameters(),lr=1e-4,weight_decay=1e-4)
+        criterion = nn.NLLLoss()
+        self.model.train()
+        train_loader = torch.utils.data.DataLoader(self.train_dataset, batch_size=32, shuffle=True)
+
+        for epoch in range(epochs):
+            for data, target in train_loader:
+                data, target = data.to(device), target.to(device)
+                optimizer.zero_grad()
+                output = self.model(data)
+                loss = criterion(output, target)
+                loss.backward()
+                optimizer.step()
+
 
         return
         
-    def execute(self):
+    def execute(self, epoch: int):
         """
         Execution function:
             - Calls the train_model() function for a standard node
 
         """
-        self.model_params = self.train_model()
+        self.model = self.train_model(self,epochs = epoch)
 
         #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
         #return model.parameters()
@@ -71,26 +90,26 @@ class NormalNode(AbstractNode):
         
         # Get the list of all parameter keys
         #param_keys = list(models_state_dicts[0].keys())
-        param_keys = list(self.model_params.keys())
+        param_keys = list(self.model.parameters.keys())
         
         for key in param_keys:
             # Initialize a tensor for the weighted sum
             #weighted_sum = torch.zeros_like(models_state_dicts[0][key])
-            weighted_sum = torch.zeros_like(self.model_params[key])
+            weighted_sum = torch.zeros_like(self.model.state_dict()[key])
             #add your own weights first
-            weighted_sum+=self.model_params[key] * self.data_sizes[self.node_id]
+            weighted_sum+=self.model.state_dict()[key] * self.data_sizes[self.node_id]
             #for state_dict, size in zip(models_state_dicts, data_sizes):
             #add your neighbours weights
-            for model_id in self.neighbor_models:
-                weighted_sum += self.neighbor_models[model_id][key] * self.data_sizes[model_id]
+            for model_id in self.neighbor_statedicts:
+                weighted_sum += self.neighbor_statedicts[model_id][key] * self.data_sizes[model_id]
             #for neighbor_model,size in zip(self.neighbor_models,self.data_sizes):
                 #weighted_sum += neighbor_model[key] * size
             # Compute the weighted average
-            self.model_params[key] = weighted_sum / total_data
+            self.model.state_dict()[key] = weighted_sum / total_data
         
 
     def send(self):
-        send_data = pickle.dumps(self.model_params,protocol=-1)
+        send_data = pickle.dumps(self.model.state_dict(),protocol=-1)
         for i in self.neighbors:
             #implement protocols here, if you dont want to send data to every node just send them an empty message and 0 in data length.
             self.comm.Isend(send_data, i, 0)
@@ -122,13 +141,13 @@ class NormalNode(AbstractNode):
         #convert the bytestreams to statedict
         for i in self.neighbors:
             try:
-                self.neighbor_models[i] = pickle.loads(bytes(recv_buffer_model[i]))
+                self.neighbor_statedicts[i] = pickle.loads(bytes(recv_buffer_model[i]))
                 self.data_sizes[i] = recv_buffer_datalen[i]
                 if (self.data_sizes[i] == 0):
-                    self.neighbor_models[i] = None
+                    self.neighbor_statedicts[i] = None
             except:
                 print("Error unpickling model from neigbhor {i}")
-                self.neighbor_models[i] = None
+                self.neighbor_statedicts[i] = None
 
         """
         #This is exeperimental as fuck no clue what im doing
