@@ -1,0 +1,69 @@
+2025-10-20 17:27:13,426 - INFO - Logging is configured.
+2025-10-20 17:27:13,427 - INFO - Logging is configured.
+2025-10-20 17:27:14,701 - INFO - rounds: 3
+2025-10-20 17:27:14,701 - INFO - epochs: 1
+2025-10-20 17:27:14,702 - INFO - num_nodes: 2
+2025-10-20 17:27:14,702 - INFO - node_type_map: {0: 'base', 1: 'base'}
+2025-10-20 17:27:14,702 - INFO - use_attackers: True
+2025-10-20 17:27:14,703 - INFO - max_attacks: 5
+2025-10-20 17:27:14,703 - INFO - participation_rate: 0.6
+2025-10-20 17:27:14,703 - INFO - topology: fully_connected
+2025-10-20 17:27:14,703 - INFO - topology_file: None
+2025-10-20 17:27:14,705 - INFO - gossip_steps: 3
+2025-10-20 17:27:14,705 - INFO - protocol: neighboring
+2025-10-20 17:27:14,706 - INFO - alpha: 0.5
+2025-10-20 17:27:14,706 - INFO - model_type: cnn
+2025-10-20 17:27:14,706 - INFO - Starting simulation...
+2025-10-20 17:27:14,942 - INFO - node_0 Class Distribution: {np.int64(0): np.int64(5763), np.int64(1): np.int64(1661), np.int64(2): np.int64(1106), np.int64(3): np.int64(1007), np.int64(4): np.int64(2614), np.int64(5): np.int64(5621), np.int64(6): np.int64(5861), np.int64(7): np.int64(233), np.int64(8): np.int64(5941), np.int64(9): np.int64(5461)}
+2025-10-20 17:27:14,943 - INFO - node_1 Class Distribution: {np.int64(0): np.int64(237), np.int64(1): np.int64(4339), np.int64(2): np.int64(4894), np.int64(3): np.int64(4993), np.int64(4): np.int64(3386), np.int64(5): np.int64(379), np.int64(6): np.int64(139), np.int64(7): np.int64(5767), np.int64(8): np.int64(59), np.int64(9): np.int64(539)}
+2025-10-20 17:27:15,399 - INFO - Data distribution plot saved as 'results_58\data_distribution.pdf'.
+2025-10-20 17:27:15,531 - INFO - Network topology plot saved as 'results_58\network_topology.png'.
+2025-10-20 17:27:15,536 - INFO - Data module setup complete
+2025-10-20 17:40:13,411 - INFO - Convergence not detected within the given rounds.
+2025-10-20 17:40:13,411 - INFO - 
+=== Averaged Training Metrics per Round ===
+2025-10-20 17:40:13,411 - INFO - Round 1: Accuracy=0.8897, F1 Score=0.8344, Precision=0.8710, Recall=0.8215
+2025-10-20 17:40:13,411 - INFO - Round 2: Accuracy=0.9165, F1 Score=0.8818, Precision=0.8940, Recall=0.8730
+2025-10-20 17:40:13,411 - INFO - Round 3: Accuracy=0.9291, F1 Score=0.8988, Precision=0.9206, Recall=0.8845
+2025-10-20 17:40:13,411 - INFO - 
+=== Averaged Testing Metrics per Round ===
+2025-10-20 17:40:13,411 - INFO - Round 1: Accuracy=0.8065, F1 Score=0.7985, Precision=0.8326, Recall=0.8065
+2025-10-20 17:40:13,412 - INFO - Round 2: Accuracy=0.8473, F1 Score=0.8464, Precision=0.8608, Recall=0.8473
+2025-10-20 17:40:13,412 - INFO - Round 3: Accuracy=0.8486, F1 Score=0.8479, Precision=0.8669, Recall=0.8486
+2025-10-20 17:40:13,658 - INFO - Average training metrics bar chart saved as 'results_58\metrics\node_0\node_0_average_training_metrics_bar_chart.pdf'.
+2025-10-20 17:40:13,875 - INFO - Average testing metrics bar chart saved as 'results_58\metrics\node_0\node_0_average_testing_metrics_bar_chart.pdf'.
+2025-10-20 17:40:14,089 - INFO - Average training metrics line plot saved as 'results_58\metrics\node_0\node_0_average_training_metrics_line_plot.pdf'.
+2025-10-20 17:40:14,266 - INFO - Average testing metrics line plot saved as 'results_58\metrics\node_0\node_0_average_testing_metrics_line_plot.pdf'.
+2025-10-20 17:40:14,456 - INFO - Average loss plot saved as 'results_58\metrics\node_0\node_0_average_loss_over_rounds.pdf'.
+2025-10-20 17:40:14,474 - INFO - Convergence not detected within the given rounds.
+2025-10-20 17:40:14,474 - INFO - 
+=== Averaged Training Metrics per Round ===
+2025-10-20 17:40:14,474 - INFO - Round 1: Accuracy=0.9246, F1 Score=0.7786, Precision=0.9098, Recall=0.7611
+2025-10-20 17:40:14,474 - INFO - Round 2: Accuracy=0.9382, F1 Score=0.8154, Precision=0.9238, Recall=0.8097
+2025-10-20 17:40:14,474 - INFO - Round 3: Accuracy=0.9506, F1 Score=0.8509, Precision=0.9356, Recall=0.8394
+2025-10-20 17:40:14,474 - INFO - 
+=== Averaged Testing Metrics per Round ===
+2025-10-20 17:40:14,474 - INFO - Round 1: Accuracy=0.7293, F1 Score=0.6932, Precision=0.8107, Recall=0.7293
+2025-10-20 17:40:14,474 - INFO - Round 2: Accuracy=0.7853, F1 Score=0.7497, Precision=0.8357, Recall=0.7853
+2025-10-20 17:40:14,474 - INFO - Round 3: Accuracy=0.7991, F1 Score=0.7695, Precision=0.8182, Recall=0.7991
+2025-10-20 17:40:14,653 - INFO - Average training metrics bar chart saved as 'results_58\metrics\node_1\node_1_average_training_metrics_bar_chart.pdf'.
+2025-10-20 17:40:14,842 - INFO - Average testing metrics bar chart saved as 'results_58\metrics\node_1\node_1_average_testing_metrics_bar_chart.pdf'.
+2025-10-20 17:40:15,028 - INFO - Average training metrics line plot saved as 'results_58\metrics\node_1\node_1_average_training_metrics_line_plot.pdf'.
+2025-10-20 17:40:15,206 - INFO - Average testing metrics line plot saved as 'results_58\metrics\node_1\node_1_average_testing_metrics_line_plot.pdf'.
+2025-10-20 17:40:15,423 - INFO - Average loss plot saved as 'results_58\metrics\node_1\node_1_average_loss_over_rounds.pdf'.
+2025-10-20 17:40:15,424 - INFO - Convergence not detected within the given rounds.
+2025-10-20 17:40:15,424 - INFO - 
+=== Averaged Training Metrics per Round ===
+2025-10-20 17:40:15,424 - INFO - Round 1: Accuracy=0.9071, F1 Score=0.8065, Precision=0.8904, Recall=0.7913
+2025-10-20 17:40:15,424 - INFO - Round 2: Accuracy=0.9273, F1 Score=0.8486, Precision=0.9089, Recall=0.8414
+2025-10-20 17:40:15,424 - INFO - Round 3: Accuracy=0.9399, F1 Score=0.8748, Precision=0.9281, Recall=0.8619
+2025-10-20 17:40:15,424 - INFO - 
+=== Averaged Testing Metrics per Round ===
+2025-10-20 17:40:15,424 - INFO - Round 1: Accuracy=0.7679, F1 Score=0.7458, Precision=0.8217, Recall=0.7679
+2025-10-20 17:40:15,424 - INFO - Round 2: Accuracy=0.8163, F1 Score=0.7981, Precision=0.8483, Recall=0.8163
+2025-10-20 17:40:15,424 - INFO - Round 3: Accuracy=0.8238, F1 Score=0.8087, Precision=0.8426, Recall=0.8238
+2025-10-20 17:40:15,592 - INFO - Average training metrics bar chart saved as 'results_58\average_training_metrics_bar_chart.pdf'.
+2025-10-20 17:40:15,756 - INFO - Average testing metrics bar chart saved as 'results_58\average_testing_metrics_bar_chart.pdf'.
+2025-10-20 17:40:15,927 - INFO - Average training metrics line plot saved as 'results_58\average_training_metrics_line_plot.pdf'.
+2025-10-20 17:40:16,121 - INFO - Average testing metrics line plot saved as 'results_58\average_testing_metrics_line_plot.pdf'.
+2025-10-20 17:40:16,302 - INFO - Average loss plot saved as 'results_58\average_loss_over_rounds.pdf'.

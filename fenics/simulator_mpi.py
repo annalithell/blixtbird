@@ -18,7 +18,8 @@ class Simulator_MPI:
                  node_dataset_path: str,
                  type: str,
                  neighbors: List[int], 
-                 epochs: int,  
+                 epochs: int, 
+                 rounds: int, 
                  model: str):
         
         self.node_id = node_id
@@ -26,6 +27,7 @@ class Simulator_MPI:
         self.type = type
         self.neighbors = neighbors
         self.epochs = epochs
+        self.simulation_rounds = rounds
         self.model = model
         #self.attack_type = attack_type # TODO: This is never used, fix?
 
@@ -83,16 +85,15 @@ class Simulator_MPI:
         This method will initialize the model training and any eventual attacks. 
         """
         # STEP 0: Iterate for self.simulation_rounds 
-        # for round in range(self.simulation_rounds):
+        for round in range(self.simulation_rounds):
 
-        # STEP 1: Call execute for node instance.
-        self.node.execute(self.epochs)
+            # STEP 1: Call execute for node instance.
+            self.node.execute(self.epochs)
 
-        # self.params = Training model (in node)
-        # aggregation(Self.node.params)
+            # aggregation(Self.node.params)
 
-        # STEP 2: AGGREGATION
-        # Wait until params from neighbors have been collected
+            # STEP 2: AGGREGATION
+            # Wait until params from neighbors have been collected
 
 
     def run_simulation(self):

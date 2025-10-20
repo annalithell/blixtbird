@@ -8,9 +8,9 @@ import time
 
 from mpi4py import MPI
 from typing import Optional
+from torchvision import datasets, transforms
+
 from fenics.node.node_type import NodeType
-from fenics.node.attacks.attack_registry import get_attack 
-from fenics.training.trainer import local_train
 from fenics.training.evaluator import evaluate
 from fenics.node.abstract import AbstractNode
 
@@ -44,6 +44,11 @@ class AttackNode(AbstractNode):
         criterion = nn.NLLLoss()
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
+        # Create test DataLoader
+        transform = transforms.Compose([transforms.ToTensor()])
+        test_dataset = datasets.FashionMNIST('./data', train=False, download=True, transform=transform)
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
+
         start_time = time.time()
         self.model.train()
         self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
@@ -63,11 +68,10 @@ class AttackNode(AbstractNode):
             self.append_training_metrics(self.model, train_loader)
 
         # after each epoch evaluate test
-        #TODO
-        #self.append_test_metrics()
+        self.append_test_metrics(self.model, epochs, test_loader)
 
         training_time = time.time() - start_time
-        return self.model.state_dict(), training_time # NOT NEEDED??
+        return self.model.state_dict(), training_time # TODO training time NEEDED??
     
 
     def append_training_metrics(self, model, train_loader):
@@ -81,6 +85,19 @@ class AttackNode(AbstractNode):
                                 'train_precision': train_precision,
                                 'train_recall':train_recall})
     
+
+    def append_test_metrics(self, model, epochs, test_loader):
+        # Evaluation phase: testing data
+        for _ in range(0, epochs):
+
+            loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
+
+            self.metrics_test.append({'test_loss': loss,
+                                    'test_accuracy': accuracy,
+                                    'test_f1_score': f1,
+                                    'test_precision': precision,
+                                    'test_recall': recall})
+
 
     def execute(self, epochs):
         """

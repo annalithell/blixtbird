@@ -9,7 +9,6 @@ import numpy as np
 
 from fenics.node.attacks.attack_node import AttackNode
 from fenics.node.attacks.attack_registry import register_attack
-from fenics.models import ModelFactory
 
 @register_attack("freerider")
 class FreeRiderAttack(AttackNode):

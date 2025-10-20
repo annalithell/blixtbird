@@ -9,7 +9,7 @@ rank = comm.Get_rank()
 node_id = rank
 
 output_dir = get_output_dir()
-node_type, neighbors, dataset_path, epochs, model  = get_node_data(node_id, output_dir)
+node_type, neighbors, dataset_path, epochs, rounds, model  = get_node_data(node_id, output_dir)
 
 node_simulator = Simulator_MPI(
     node_id=node_id,
@@ -17,6 +17,7 @@ node_simulator = Simulator_MPI(
     type=node_type,
     neighbors=neighbors,
     epochs = epochs,
+    rounds = rounds,
     model=model
     )
 
