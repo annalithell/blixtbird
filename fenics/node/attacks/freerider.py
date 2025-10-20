@@ -38,19 +38,17 @@ class FreeRiderAttack(AttackNode):
             Model parameters of the node
         
         """
-        model = self.model
-
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
         start_time = time.time()
         self.logger.info(f"[Free-rider node {self.node_id}] fakes training...")
 
         #  Use random metrics
-        self.append_training_metrics(model, train_loader)
+        self.append_training_metrics(self.model, train_loader)
         self.append_test_metrics
 
         training_time = time.time() - start_time
-        return model.state_dict(), training_time # NOT NEEDED??
+        return self.model.state_dict(), training_time # NOT NEEDED??
 
     def append_training_metrics(self):
         # Evaluation phase: training data

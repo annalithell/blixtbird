@@ -30,7 +30,7 @@ class AttackNode(AbstractNode):
         self.node_type = NodeType.ATTACK
     
 
-    def train_model(self, train_dataset, epochs=5):
+    def train_model(self, train_dataset, epochs):
         """
         Standard training of model. 
 
@@ -38,22 +38,21 @@ class AttackNode(AbstractNode):
             Model parameters of the node
         
         """
-        model = self.model
         device = torch.device("cpu")
 
-        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
+        optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3, weight_decay=1e-4)
         criterion = nn.NLLLoss()
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
         start_time = time.time()
-        model.train()
+        self.model.train()
         self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
 
         for epoch in range(epochs):
             for data, target in train_loader:
                 data, target = data.to(device), target.to(device)
                 optimizer.zero_grad()
-                output = model(data)
+                output = self.model(data)
                 loss = criterion(output, target)
                 loss.backward()
                 optimizer.step()
@@ -61,14 +60,14 @@ class AttackNode(AbstractNode):
             self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
 
             #  After each epoch append training metrics
-            self.append_training_metrics(model, train_loader)
+            self.append_training_metrics(self.model, train_loader)
 
         # after each epoch evaluate test
         #TODO
         #self.append_test_metrics()
 
         training_time = time.time() - start_time
-        return model.state_dict(), training_time # NOT NEEDED??
+        return self.model.state_dict(), training_time # NOT NEEDED??
     
 
     def append_training_metrics(self, model, train_loader):
