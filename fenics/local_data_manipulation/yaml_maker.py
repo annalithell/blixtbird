@@ -3,7 +3,7 @@ import networkx as nx
 import os
 from typing import Dict
 
-def create_yaml(G, node_type_map: Dict[int, str], output_dir: str):
+def create_yaml(G, node_type_map: Dict[int, str], output_dir: str, epochs: int, rounds: int, model: str):
 
     mpi_config_folder = f'{output_dir}/mpi_config'
 
@@ -18,6 +18,9 @@ def create_yaml(G, node_type_map: Dict[int, str], output_dir: str):
         data['nodes'][node_id]['type'] = node_type
         data['nodes'][node_id]['neighbors'] = get_neighbors(node_id, G)
         data['nodes'][node_id]['dataset'] = f'./{output_dir}/federated_data/node_{node_id}_train_data.pt'
+        data['nodes'][node_id]['epochs'] = int(epochs)
+        data['nodes'][node_id]['rounds'] = int(rounds)
+        data['nodes'][node_id]['model'] = str(model)
 
     # Writing the data to a YAML file
     with open(f'./{mpi_config_folder}/local_config.yaml', 'w') as file:
@@ -35,8 +38,11 @@ def get_node_data(node_id: int, output_dir: str):
         dataset_path = nodes[node_id]['dataset']
         neighbors = nodes[node_id]['neighbors']
         type = nodes[node_id]['type']
+        epochs = nodes[node_id]['epochs']
+        rounds = nodes[node_id]['rounds']
+        model = nodes[node_id]['model']
 
-        return type, neighbors, dataset_path
+        return type, neighbors, dataset_path, epochs, rounds, model
 
 def get_neighbors(node_id, G):
     return list(G.adj[node_id])
@@ -51,7 +57,10 @@ def get_output_dir():
             new_dir = f"{base_dir}_{i}"
             if not os.path.exists(new_dir):
                 current_dir_num = i-1
-                output_dir = f"{base_dir}_{current_dir_num}"
+                if current_dir_num == 0:
+                    output_dir = base_dir
+                else:
+                    output_dir =  f"{base_dir}{current_dir_num}"
                 break
             i += 1
     

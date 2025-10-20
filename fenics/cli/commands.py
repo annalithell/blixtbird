@@ -91,6 +91,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         output_dir=output_dir,
         logger=logger
     )
+    
     data_module.setup()
     
 
@@ -133,7 +134,10 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     create_yaml(
         G = data_module.G,
         node_type_map=simulation_args.node_type_map,
-        output_dir = output_dir
+        output_dir = output_dir,
+        epochs = simulation_args.epochs,
+        rounds = simulation_args.rounds, 
+        model = simulation_args.model_type
         )
 
     #TODO new simulator!!!!

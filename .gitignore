@@ -1,8 +1,13 @@
+# Ignore data folders
+*/FashionMNIST/raw
 data
+
+# ignore cache and environment artifact
 **/__pycache__/
-results*
 fenics.egg-info
 venv
 __pycache__
-/results*
-*/FashionMNIST/raw
+.vscode
+
+# Ignore all results folders except final_results/
+results*

@@ -1,20 +1,24 @@
 # fenics/node/baseattack.py
 
 import torch
+import torch.nn as nn
 import logging
-from mpi4py import MPI
 import pickle
-from typing import Optional
-from fenics.node.node_type import NodeType
-from fenics.node.attacks.attack_registry import get_attack 
+import time
 
+from mpi4py import MPI
+from typing import Optional
+from torchvision import datasets, transforms
+
+from fenics.node.node_type import NodeType
+from fenics.training.evaluator import evaluate
 from fenics.node.abstract import AbstractNode
 
 
 class AttackNode(AbstractNode):
     """ A  base attack class for all attacks. """    
     
-    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str,  neighbors: Optional[int], model_type: str, logger: Optional[logging.Logger] = None):
         """
         Initialize the attack
         
@@ -22,15 +26,11 @@ class AttackNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, neighbors, data_path, logger)
+        super().__init__(node_id, data_path, neighbors, model_type, logger)
         self.node_type = NodeType.ATTACK
-        
-        #self.attack = get_attack(attack_name, node_id=node_id)
-        #self.attack_type = self.attack.__attack_type__
-        self.comm = MPI.COMM_WORLD
+    
 
-
-    def train_model(self):
+    def train_model(self, train_dataset, epochs):
         """
         Standard training of model. 
 
@@ -38,17 +38,73 @@ class AttackNode(AbstractNode):
             Model parameters of the node
         
         """
+        device = torch.device("cpu")
 
-        return
+        optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3, weight_decay=1e-4)
+        criterion = nn.NLLLoss()
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
+
+        # Create test DataLoader
+        transform = transforms.Compose([transforms.ToTensor()])
+        test_dataset = datasets.FashionMNIST('./data', train=False, download=True, transform=transform)
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
+
+        start_time = time.time()
+        self.model.train()
+        self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
+
+        for epoch in range(epochs):
+            for data, target in train_loader:
+                data, target = data.to(device), target.to(device)
+                optimizer.zero_grad()
+                output = self.model(data)
+                loss = criterion(output, target)
+                loss.backward()
+                optimizer.step()
+
+            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
+
+            #  After each epoch append training metrics
+            self.append_training_metrics(self.model, train_loader)
+
+        # after each epoch evaluate test
+        self.append_test_metrics(self.model, epochs, test_loader)
+
+        training_time = time.time() - start_time
+        return self.model.state_dict(), training_time # TODO training time NEEDED??
     
 
-    def execute(self):
+    def append_training_metrics(self, model, train_loader):
+        # Evaluation phase: training data
+
+        train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
+
+        self.metrics_train.append({'train_loss': train_loss,
+                                'train_accuracy': train_accuracy,
+                                'train_f1_score': train_f1,
+                                'train_precision': train_precision,
+                                'train_recall':train_recall})
+    
+
+    def append_test_metrics(self, model, epochs, test_loader):
+        # Evaluation phase: testing data
+        for _ in range(0, epochs):
+
+            loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
+
+            self.metrics_test.append({'test_loss': loss,
+                                    'test_accuracy': accuracy,
+                                    'test_f1_score': f1,
+                                    'test_precision': precision,
+                                    'test_recall': recall})
+
+
+    def execute(self, epochs):
         """
         Execution function:
             - Calls the train_model() function for a standard node
 
         """
-        self.model_params = self.train_model()
-
-        #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
-        #return model.parameters()
+        train_dataset = torch.load(self.data_path, weights_only=False)
+        self.model_params, self.training_time = self.train_model(train_dataset, epochs)
+        self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")

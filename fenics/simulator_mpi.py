@@ -18,13 +18,18 @@ class Simulator_MPI:
                  node_dataset_path: str,
                  type: str,
                  neighbors: List[int], 
-                 attack_type: Optional[str] = None):
+                 epochs: int, 
+                 rounds: int, 
+                 model: str):
         
         self.node_id = node_id
         self.node_dataset_path = node_dataset_path
         self.type = type
         self.neighbors = neighbors
-        self.attack_type = attack_type # TODO: This is never used, fix?
+        self.epochs = epochs
+        self.simulation_rounds = rounds
+        self.model = model
+        #self.attack_type = attack_type # TODO: This is never used, fix?
 
         # TODO
         # self.simulation_rounds = simulation_rounds # TODO add in config.py
@@ -41,7 +46,7 @@ class Simulator_MPI:
         self.metrics_test = []
     
     def get_own_info(self):
-        print(f'Node: {self.node_id} with negighbors:{self.neighbors}, type: {self.type} and data_path: {self.node_dataset_path}')
+        print(f'Node: {self.node_id} with negighbors:{self.neighbors}, type: {self.type}, data_path: {self.node_dataset_path} and epochs: {self.epochs}')
 
     def make_node(self):
         """ 
@@ -53,18 +58,20 @@ class Simulator_MPI:
             attack_type = get_attack(self.type)
             node_instance=attack_type (
                 node_id=self.node_id,
-                neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
+                neighbors=self.neighbors,
+                model_type=self.model,
                 logger=logger    
             )
             print(f'Node: {self.node_id} created node instance:{self.type}')
  
         elif self.type == "base": # TODO fix proper elif statement (config.yaml)
-            node_instance = NormalNode(
+            node_instance = NormalNode( 
                 node_id=self.node_id,
-                neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
-                logger=logger
+                neighbors=self.neighbors,
+                model_type=self.model,
+                logger=logger    
             )
             # TODO fix to include this in logger
             print(f'Node: {self.node_id} created node instance:{self.type}')
@@ -78,18 +85,15 @@ class Simulator_MPI:
         This method will initialize the model training and any eventual attacks. 
         """
         # STEP 0: Iterate for self.simulation_rounds 
-        # for round in range(self.simulation_rounds):
+        for round in range(self.simulation_rounds):
 
-        # STEP 1: Call execute for node instance. 
-        self.node.execute()
+            # STEP 1: Call execute for node instance.
+            self.node.execute(self.epochs)
 
-        # self.params = Training model (i nod)
-        # aggregation(Self.node.params)
-        # 
+            # aggregation(Self.node.params)
 
-
-        # STEP 2: AGGREGATION
-        # Wait until params from neighbors have been collected
+            # STEP 2: AGGREGATION
+            # Wait until params from neighbors have been collected
 
 
     def run_simulation(self):
@@ -140,8 +144,8 @@ class Simulator_MPI:
 
     def make_local_metrics(self):
 
-        train_df = make_pandas_df(self.metrics_train)
-        test_df = make_pandas_df(self.metrics_test)
+        train_df = make_pandas_df(self.node.metrics_train)
+        test_df = make_pandas_df(self.node.metrics_test)
 
         df = concat_pandas_df(train_df, test_df)
 
