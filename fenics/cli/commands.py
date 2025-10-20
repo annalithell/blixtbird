@@ -134,7 +134,8 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         G = data_module.G,
         node_type_map=simulation_args.node_type_map,
         output_dir = output_dir,
-        epochs = simulation_args.epochs
+        epochs = simulation_args.epochs,
+        model = simulation_args.model_type
         )
 
     #TODO new simulator!!!!
