@@ -83,7 +83,7 @@ class Simulator_MPI:
         # STEP 1: Call execute for node instance. 
         self.node.execute()
 
-        # self.params = Training model (i nod)
+        # self.params = Training model (in node)
         # aggregation(Self.node.params)
         # 
 

@@ -7,6 +7,7 @@ import pickle
 from typing import Optional
 from fenics.node.node_type import NodeType
 from fenics.node.attacks.attack_registry import get_attack 
+from fenics.training.trainer import local_train
 
 from fenics.node.abstract import AbstractNode
 

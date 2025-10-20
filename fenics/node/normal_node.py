@@ -1,11 +1,14 @@
 # fenics/node/attacks/freerider.py
 
 import torch
+import torch.nn as nn
 import logging
 from mpi4py import MPI
 import pickle
 from typing import Optional
 from fenics.node.node_type import NodeType
+from fenics.models.cnn import Net
+import time
 
 from fenics.node.abstract import AbstractNode
 
@@ -27,11 +30,12 @@ class NormalNode(AbstractNode):
         #Map form node ids to neigbouring models
         self.neighbor_models = {}
         #a map of from ndoe ids to data sizes for you and your neighbors
+        self.model = Net() # TODO change s.t. this is determined by user-defined config.yaml
         self.data_sizes = {}
         self.data_sizes[self.node_id] = 0 #insert len of data here
 
 
-    def train_model(self):
+    def train_model(self, train_dataset, epochs=5):
         """
         Standard training of model. 
 
@@ -39,18 +43,41 @@ class NormalNode(AbstractNode):
             Model parameters of the node
         
         """
+        model = self.model
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+        optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
+        criterion = nn.NLLLoss()
+        train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
-        return
+        start_time = time.time()
+        model.train()
+        self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
+
+        for epoch in range(epochs):
+            for data, target in train_loader:
+                data, target = data.to(device), target.to(device)
+                optimizer.zero_grad()
+                output = model(data)
+                loss = criterion(output, target)
+                loss.backward()
+                optimizer.step()
+
+            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}, Loss: {avg_loss:.4f}")
+
+        training_time = time.time() - start_time
+        return model.state_dict(), training_time
         
-    def execute(self):
+    def execute(self, epochs=5):
         """
         Execution function:
             - Calls the train_model() function for a standard node
 
         """
-        self.model_params = self.train_model()
-
+        train_dataset = torch.load(self.data_path, weights_only=False)
+        self.model_params, self.training_time = self.train_model(train_dataset, epochs)
+        self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        
         #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
         #return model.parameters()
 
