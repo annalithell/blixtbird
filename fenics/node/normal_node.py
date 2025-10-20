@@ -6,8 +6,8 @@ import logging
 import pickle
 from typing import Optional
 import time
+from mpi4py import MPI
 
-from fenics.models import ModelFactory
 from fenics.node.node_type import NodeType
 from fenics.node.abstract import AbstractNode
 from fenics.training.evaluator import evaluate
@@ -36,7 +36,7 @@ class NormalNode(AbstractNode):
         
         """
         model = self.model
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        device = torch.device("cpu")
 
         optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
         criterion = nn.NLLLoss()
@@ -69,17 +69,6 @@ class NormalNode(AbstractNode):
     
     def append_training_metrics(self, model, train_loader):
         # Evaluation phase: training data
-
-        #for _ in range(0, epochs):
-            #TODO change evaluate function - adapt to new data
-            #train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
-
-        #train_loss = np.random.random(1)[0]
-        #train_accuracy = np.random.random(1)[0]
-        #train_f1 = np.random.random(1)[0]
-        #train_precision = np.random.random(1)[0]
-        #train_recall = np.random.random(1)[0]
-
         train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
 
         self.metrics_train.append({'train_loss': train_loss,
