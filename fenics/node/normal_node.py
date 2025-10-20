@@ -20,6 +20,8 @@ class NormalNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
+        #Model unga bunga
+        self.model
         super().__init__(node_id, neighbors, data_path, logger)
         self.node_type = NodeType.NORMAL
         self.comm = MPI.COMM_WORLD
@@ -39,7 +41,9 @@ class NormalNode(AbstractNode):
             Model parameters of the node
         
         """
-
+        device = torch.device("cpu")
+        self.model_params.to(device)
+        optimizer = torch.optim.Adam(model)
 
         return
         
