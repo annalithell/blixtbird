@@ -3,19 +3,19 @@
 import torch
 import torch.nn as nn
 import logging
-from mpi4py import MPI
 import pickle
 from typing import Optional
-from fenics.node.node_type import NodeType
-from fenics.models.cnn import Net
 import time
 
+from fenics.models import ModelFactory
+from fenics.node.node_type import NodeType
 from fenics.node.abstract import AbstractNode
+from fenics.training.evaluator import evaluate
 
 class NormalNode(AbstractNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
-    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str, neighbors: Optional[int], model_type, logger: Optional[logging.Logger] = None):
         """
         Initialize a standard node
         
@@ -23,16 +23,8 @@ class NormalNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, neighbors, data_path, logger)
+        super().__init__(node_id, data_path, neighbors, model_type, logger)
         self.node_type = NodeType.NORMAL
-        self.comm = MPI.COMM_WORLD
-        #Hard to learn an old dog new tricks
-        #Map form node ids to neigbouring models
-        self.neighbor_models = {}
-        #a map of from ndoe ids to data sizes for you and your neighbors
-        self.model = Net() # TODO change s.t. this is determined by user-defined config.yaml
-        self.data_sizes = {}
-        self.data_sizes[self.node_id] = 0 #insert len of data here
 
 
     def train_model(self, train_dataset, epochs=5):
@@ -63,11 +55,59 @@ class NormalNode(AbstractNode):
                 loss.backward()
                 optimizer.step()
 
-            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}, Loss: {avg_loss:.4f}")
+            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
+
+            #  After each epoch append training metrics
+            self.append_training_metrics(model, train_loader)
+
+        # after each epoch evaluate test
+        #TODO
+        #self.append_test_metrics()
 
         training_time = time.time() - start_time
-        return model.state_dict(), training_time
+        return model.state_dict(), training_time # NOT NEEDED??
+    
+    def append_training_metrics(self, model, train_loader):
+        # Evaluation phase: training data
+
+        #for _ in range(0, epochs):
+            #TODO change evaluate function - adapt to new data
+            #train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
+
+        #train_loss = np.random.random(1)[0]
+        #train_accuracy = np.random.random(1)[0]
+        #train_f1 = np.random.random(1)[0]
+        #train_precision = np.random.random(1)[0]
+        #train_recall = np.random.random(1)[0]
+
+        train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
+
+        self.metrics_train.append({'train_loss': train_loss,
+                                'train_accuracy': train_accuracy,
+                                'train_f1_score': train_f1,
+                                'train_precision': train_precision,
+                                'train_recall':train_recall})
         
+    """  
+    def append_test_metrics(self, epochs):
+        # Evaluation phase: testing data
+        for _ in range(0, epochs):
+            #TODO change evaluate function - adapt to new data
+            #loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
+
+            loss = np.random.random(1)[0]
+            accuracy = np.random.random(1)[0]
+            f1 = np.random.random(1)[0]
+            precision = np.random.random(1)[0]
+            recall = np.random.random(1)[0]
+
+            self.metrics_test.append({'test_loss': loss,
+                                    'test_accuracy': accuracy,
+                                    'test_f1_score': f1,
+                                    'test_precision': precision,
+                                    'test_recall': recall})
+    """ 
+
     def execute(self, epochs=5):
         """
         Execution function:
@@ -110,7 +150,6 @@ class NormalNode(AbstractNode):
                 #weighted_sum += neighbor_model[key] * size
             # Compute the weighted average
             self.model_params[key] = weighted_sum / total_data
-        
 
     def send(self):
         send_data = pickle.dumps(self.model_params,protocol=-1)

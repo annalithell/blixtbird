@@ -15,7 +15,7 @@ from fenics.node.abstract import AbstractNode
 class AttackNode(AbstractNode):
     """ A  base attack class for all attacks. """    
     
-    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str,  neighbors: Optional[int], model_type: str, logger: Optional[logging.Logger] = None):
         """
         Initialize the attack
         
@@ -23,13 +23,9 @@ class AttackNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, neighbors, data_path, logger)
+        super().__init__(node_id, data_path, neighbors, model_type, logger)
         self.node_type = NodeType.ATTACK
-        
-        #self.attack = get_attack(attack_name, node_id=node_id)
-        #self.attack_type = self.attack.__attack_type__
-        self.comm = MPI.COMM_WORLD
-
+    
 
     def train_model(self):
         """

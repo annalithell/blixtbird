@@ -53,18 +53,20 @@ class Simulator_MPI:
             attack_type = get_attack(self.type)
             node_instance=attack_type (
                 node_id=self.node_id,
-                neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
+                neighbors=self.neighbors,
+                model_type="cnn",
                 logger=logger    
             )
             print(f'Node: {self.node_id} created node instance:{self.type}')
  
         elif self.type == "base": # TODO fix proper elif statement (config.yaml)
-            node_instance = NormalNode(
+            node_instance = NormalNode( 
                 node_id=self.node_id,
-                neighbors=self.neighbors,
                 data_path=self.node_dataset_path,
-                logger=logger
+                neighbors=self.neighbors,
+                model_type="cnn",
+                logger=logger    
             )
             # TODO fix to include this in logger
             print(f'Node: {self.node_id} created node instance:{self.type}')
@@ -80,13 +82,13 @@ class Simulator_MPI:
         # STEP 0: Iterate for self.simulation_rounds 
         # for round in range(self.simulation_rounds):
 
-        # STEP 1: Call execute for node instance. 
+        # STEP 1: Call execute for node instance.
         self.node.execute()
+
 
         # self.params = Training model (in node)
         # aggregation(Self.node.params)
         # 
-
 
         # STEP 2: AGGREGATION
         # Wait until params from neighbors have been collected
@@ -140,8 +142,8 @@ class Simulator_MPI:
 
     def make_local_metrics(self):
 
-        train_df = make_pandas_df(self.metrics_train)
-        test_df = make_pandas_df(self.metrics_test)
+        train_df = make_pandas_df(self.node.metrics_train)
+        test_df = make_pandas_df(self.node.metrics_test)
 
         df = concat_pandas_df(train_df, test_df)
 

@@ -17,14 +17,19 @@ def save_datasets(train_datasets, output_dir):
         save_path: Path for folder where data will be saved.
     """
 
-    federated_data_folder = f'{output_dir}/federated_data'
+    #federated_data_folder = f'{output_dir}/federated_data'
+    federated_data_folder = os.path.join(output_dir, 'federated_data')
+    #os.makedirs(federated_data_folder, exist_ok=True)
 
     if not os.path.exists(federated_data_folder):
         os.makedirs(federated_data_folder)
+
+    os.chmod(federated_data_folder, 0o777)
     
     for i, dataset in enumerate(train_datasets):
         file_name = os.path.join(federated_data_folder, f'node_{i}_train_data.pt')
         torch.save(dataset, file_name)
+        os.chmod(file_name, 0o666) 
 
 
 def distribute_data_dirichlet(labels, num_nodes, alpha):
