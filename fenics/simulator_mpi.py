@@ -18,13 +18,14 @@ class Simulator_MPI:
                  node_dataset_path: str,
                  type: str,
                  neighbors: List[int], 
-                 attack_type: Optional[str] = None):
+                 epochs: int):
         
         self.node_id = node_id
         self.node_dataset_path = node_dataset_path
         self.type = type
         self.neighbors = neighbors
-        self.attack_type = attack_type # TODO: This is never used, fix?
+        self.epochs = epochs
+        #self.attack_type = attack_type # TODO: This is never used, fix?
 
         # TODO
         # self.simulation_rounds = simulation_rounds # TODO add in config.py
@@ -41,7 +42,7 @@ class Simulator_MPI:
         self.metrics_test = []
     
     def get_own_info(self):
-        print(f'Node: {self.node_id} with negighbors:{self.neighbors}, type: {self.type} and data_path: {self.node_dataset_path}')
+        print(f'Node: {self.node_id} with negighbors:{self.neighbors}, type: {self.type}, data_path: {self.node_dataset_path} and epochs: {self.epochs}')
 
     def make_node(self):
         """ 
@@ -83,7 +84,7 @@ class Simulator_MPI:
         # for round in range(self.simulation_rounds):
 
         # STEP 1: Call execute for node instance.
-        self.node.execute()
+        self.node.execute(self.epochs)
 
 
         # self.params = Training model (in node)

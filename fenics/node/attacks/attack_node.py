@@ -82,7 +82,7 @@ class AttackNode(AbstractNode):
                                 'train_recall':train_recall})
     
 
-    def execute(self, epochs=5):
+    def execute(self, epochs):
         """
         Execution function:
             - Calls the train_model() function for a standard node

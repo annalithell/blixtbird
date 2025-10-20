@@ -27,7 +27,7 @@ class NormalNode(AbstractNode):
         self.node_type = NodeType.NORMAL
 
 
-    def train_model(self, train_dataset, epochs=5):
+    def train_model(self, train_dataset, epochs):
         """
         Standard training of model. 
 
@@ -96,7 +96,7 @@ class NormalNode(AbstractNode):
                                     'test_recall': recall})
     """ 
 
-    def execute(self, epochs=5):
+    def execute(self, epochs):
         """
         Execution function:
             - Calls the train_model() function for a standard node
