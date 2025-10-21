@@ -47,10 +47,12 @@ class FreeRiderAttack(AttackNode):
         self.append_training_metrics()
         self.append_test_metrics()
 
+        # TODO: manipulate training time
         training_time = time.time() - start_time
         return self.model.state_dict(), training_time # NOT NEEDED??
 
     def append_training_metrics(self):
+        # TODO maybe not generate random data here. (when data has been aggregated)
         # Evaluation phase: training data
         train_loss = np.random.random(1)[0]
         train_accuracy = np.random.random(1)[0]
