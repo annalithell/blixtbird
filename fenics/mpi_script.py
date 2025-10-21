@@ -5,7 +5,6 @@ from fenics.simulator_mpi import Simulator_MPI
 
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
-
 node_id = rank
 
 output_dir = get_output_dir()
