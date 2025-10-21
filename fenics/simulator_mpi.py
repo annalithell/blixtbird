@@ -31,9 +31,6 @@ class Simulator_MPI:
         self.model = model
         #self.attack_type = attack_type # TODO: This is never used, fix?
 
-        # TODO
-        # self.simulation_rounds = simulation_rounds # TODO add in config.py
-
         # create the correct node instance 
         # either attack node or base node
         # TODO: CHANGE WHEN TO CALL THIS, SHOULD HAPPEN ONLY ONCE??
@@ -61,6 +58,7 @@ class Simulator_MPI:
                 data_path=self.node_dataset_path,
                 neighbors=self.neighbors,
                 model_type=self.model,
+                epochs = self.epochs, 
                 logger=logger    
             )
             print(f'Node: {self.node_id} created node instance:{self.type}')
@@ -71,6 +69,7 @@ class Simulator_MPI:
                 data_path=self.node_dataset_path,
                 neighbors=self.neighbors,
                 model_type=self.model,
+                epochs = self.epochs,
                 logger=logger    
             )
             # TODO fix to include this in logger
@@ -88,7 +87,8 @@ class Simulator_MPI:
         for round in range(self.simulation_rounds):
 
             # STEP 1: Call execute for node instance.
-            self.node.execute(self.epochs)
+            # execute includes training + potential attack.
+            self.node.execute()
 
             # aggregation(Self.node.params)
 

@@ -32,4 +32,3 @@ node_simulator.run_simulator()
 
 node_simulator.make_local_metrics()
     
-
