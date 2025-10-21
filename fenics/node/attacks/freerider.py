@@ -14,7 +14,7 @@ from fenics.node.attacks.attack_registry import register_attack
 class FreeRiderAttack(AttackNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
 
-    def __init__(self, node_id: int, neighbors: Optional[int], data_path: str, model_type, attack_type: str = "freerider", logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str, neighbors: Optional[int], model_type, epochs, logger: Optional[logging.Logger] = None):
         """
         Initialize the free-rider attack
         
@@ -23,12 +23,12 @@ class FreeRiderAttack(AttackNode):
             logger: Logger instance
             self.attack_type = freerider
         """
-        super().__init__(node_id, neighbors, data_path, model_type, logger)
+        super().__init__(node_id, data_path, neighbors, model_type, epochs, logger)
         self.attack_round = 0 # Placeholder for potential future use
-        self.__attack_type__ = attack_type
+        #self.__attack_type__ = attack_type
 
 
-    def train_model(self, train_dataset):
+    def train_model(self):
         """
         Free-rider attack:
             - When a node participates in the network without training a model.  
@@ -37,14 +37,15 @@ class FreeRiderAttack(AttackNode):
             Model parameters of the node
         
         """
+        train_dataset = torch.load(self.data_path, weights_only=False)
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
         start_time = time.time()
         self.logger.info(f"[Free-rider node {self.node_id}] fakes training...")
 
         #  Use random metrics
-        self.append_training_metrics(self.model, train_loader)
-        self.append_test_metrics
+        self.append_training_metrics()
+        self.append_test_metrics()
 
         training_time = time.time() - start_time
         return self.model.state_dict(), training_time # NOT NEEDED??
@@ -85,8 +86,7 @@ class FreeRiderAttack(AttackNode):
         Args:
             model: Model to intercept
         """
-        train_dataset = torch.load(self.data_path, weights_only=False)
-        self.model_params, self.training_time = self.train_model(train_dataset)
+        self.model_params, self.training_time = self.train_model()
         self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
         
 
