@@ -47,10 +47,11 @@ class PoisonAttack(AttackNode):
             model: Model to poison
         """
         self.model_params, self.training_time = self.train_model()
-        self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
 
         if not isinstance(self.model_params, dict):
-            self.logger.error("Unexpected model_params type: %s", type(self.model_params))
+            print(f"Unexpected model_params type: %s", type(self.model_params))
+            #self.logger.error("Unexpected model_params type: %s", type(self.model_params))
             return self.model_params, self.training_time
         
         poisoned_params = self._poison_state_dict(self.model_params)
