@@ -122,25 +122,26 @@ class NormalNode(AbstractNode):
         
         # Get the list of all parameter keys
         #param_keys = list(models_state_dicts[0].keys())
-        param_keys = list(self.model_params.keys())
+        param_keys = list(self.model.parameters.keys())
         
         for key in param_keys:
             # Initialize a tensor for the weighted sum
             #weighted_sum = torch.zeros_like(models_state_dicts[0][key])
-            weighted_sum = torch.zeros_like(self.model_params[key])
+            weighted_sum = torch.zeros_like(self.model.state_dict()[key])
             #add your own weights first
-            weighted_sum+=self.model_params[key] * self.data_sizes[self.node_id]
+            weighted_sum+=self.model.state_dict()[key] * self.data_sizes[self.node_id]
             #for state_dict, size in zip(models_state_dicts, data_sizes):
             #add your neighbours weights
-            for model_id in self.neighbor_models:
-                weighted_sum += self.neighbor_models[model_id][key] * self.data_sizes[model_id]
+            for model_id in self.neighbor_statedicts:
+                weighted_sum += self.neighbor_statedicts[model_id][key] * self.data_sizes[model_id]
             #for neighbor_model,size in zip(self.neighbor_models,self.data_sizes):
                 #weighted_sum += neighbor_model[key] * size
             # Compute the weighted average
-            self.model_params[key] = weighted_sum / total_data
+            self.model.state_dict()[key] = weighted_sum / total_data
+        
 
     def send(self):
-        send_data = pickle.dumps(self.model_params,protocol=-1)
+        send_data = pickle.dumps(self.model.state_dict(),protocol=-1)
         for i in self.neighbors:
             #implement protocols here, if you dont want to send data to every node just send them an empty message and 0 in data length.
             self.comm.Isend(send_data, i, 0)
@@ -172,13 +173,13 @@ class NormalNode(AbstractNode):
         #convert the bytestreams to statedict
         for i in self.neighbors:
             try:
-                self.neighbor_models[i] = pickle.loads(bytes(recv_buffer_model[i]))
+                self.neighbor_statedicts[i] = pickle.loads(bytes(recv_buffer_model[i]))
                 self.data_sizes[i] = recv_buffer_datalen[i]
                 if (self.data_sizes[i] == 0):
-                    self.neighbor_models[i] = None
+                    self.neighbor_statedicts[i] = None
             except:
                 print("Error unpickling model from neigbhor {i}")
-                self.neighbor_models[i] = None
+                self.neighbor_statedicts[i] = None
 
         """
         #This is exeperimental as fuck no clue what im doing
