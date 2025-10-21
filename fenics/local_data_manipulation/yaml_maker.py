@@ -60,7 +60,7 @@ def get_output_dir():
                 if current_dir_num == 0:
                     output_dir = base_dir
                 else:
-                    output_dir =  f"{base_dir}{current_dir_num}"
+                    output_dir =  f"{base_dir}_{current_dir_num}"
                 break
             i += 1
     
