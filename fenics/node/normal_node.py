@@ -16,7 +16,7 @@ from fenics.training.evaluator import evaluate
 class NormalNode(AbstractNode):
     """ Free-rider attack that intercepts model parameters without participating in training. """
     
-    def __init__(self, node_id: int, data_path: str, neighbors: Optional[int], model_type, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: str, neighbors: Optional[int], model_type, epochs, logger: Optional[logging.Logger] = None):
         """
         Initialize a standard node
         
@@ -24,11 +24,11 @@ class NormalNode(AbstractNode):
             node_id: ID of the attacker node
             logger: Logger instance
         """
-        super().__init__(node_id, data_path, neighbors, model_type, logger)
+        super().__init__(node_id, data_path, neighbors, model_type, epochs, logger)
         self.node_type = NodeType.NORMAL
 
 
-    def train_model(self, train_dataset, epochs):
+    def train_model(self):
         """
         Standard training of model. 
 
@@ -36,6 +36,7 @@ class NormalNode(AbstractNode):
             Model parameters of the node
         
         """
+        train_dataset = torch.load(self.data_path, weights_only=False)
         device = torch.device("cpu")
 
         optimizer = torch.optim.Adam(self.model.parameters(), lr=1e-3, weight_decay=1e-4)
@@ -50,9 +51,9 @@ class NormalNode(AbstractNode):
         start_time = time.time()
         self.model.train()
         #self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
-        print((f"[Node {self.node_id}] Training for {epochs} epochs..."))
+        print((f"[Node {self.node_id}] Training for {self.epochs} epochs..."))
 
-        for epoch in range(epochs):
+        for epoch in range(self.epochs):
             for data, target in train_loader:
                 data, target = data.to(device), target.to(device)
                 optimizer.zero_grad()
@@ -62,21 +63,21 @@ class NormalNode(AbstractNode):
                 optimizer.step()
 
             #self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
-            print(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
+            print(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
 
             #  After each epoch append training metrics
-            self.append_training_metrics(self.model, train_loader)
+            self.append_training_metrics(train_loader)
 
         # after each epoch evaluate test
-        self.append_test_metrics(self.model, epochs, test_loader)
+        self.append_test_metrics(test_loader)
 
         training_time = time.time() - start_time
         return self.model.state_dict(), training_time # NOT NEEDED??
     
     
-    def append_training_metrics(self, model, train_loader):
+    def append_training_metrics(self, train_loader):
         # Evaluation phase: training data
-        train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
+        train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(self.model, train_loader)
 
         self.metrics_train.append({'train_loss': train_loss,
                                 'train_accuracy': train_accuracy,
@@ -85,11 +86,11 @@ class NormalNode(AbstractNode):
                                 'train_recall':train_recall})
         
 
-    def append_test_metrics(self, model, epochs, test_loader):
+    def append_test_metrics(self, test_loader):
         # Evaluation phase: testing data
-        for _ in range(0, epochs):
+        for _ in range(0, self.epochs):
 
-            loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
+            loss, accuracy, f1, precision, recall = evaluate(self.model, test_loader)
 
             self.metrics_test.append({'test_loss': loss,
                                     'test_accuracy': accuracy,
@@ -98,16 +99,18 @@ class NormalNode(AbstractNode):
                                     'test_recall': recall})
 
 
-    def execute(self, epochs):
+    def execute(self):
         """
         Execution function:
             - Calls the train_model() function for a standard node
 
         """
-        train_dataset = torch.load(self.data_path, weights_only=False)
-        self.model_params, self.training_time = self.train_model(train_dataset, epochs)
+
+        self.model_params, self.training_time = self.train_model()
         #self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
         print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+
+        # TODO aggregation
         
         #self.logger.info(f"[node_{self.node_id}] is a normal node and do nothing")
         #return model.parameters()
@@ -125,25 +128,26 @@ class NormalNode(AbstractNode):
         
         # Get the list of all parameter keys
         #param_keys = list(models_state_dicts[0].keys())
-        param_keys = list(self.model_params.keys())
+        param_keys = list(self.model.parameters.keys())
         
         for key in param_keys:
             # Initialize a tensor for the weighted sum
             #weighted_sum = torch.zeros_like(models_state_dicts[0][key])
-            weighted_sum = torch.zeros_like(self.model_params[key])
+            weighted_sum = torch.zeros_like(self.model.state_dict()[key])
             #add your own weights first
-            weighted_sum+=self.model_params[key] * self.data_sizes[self.node_id]
+            weighted_sum+=self.model.state_dict()[key] * self.data_sizes[self.node_id]
             #for state_dict, size in zip(models_state_dicts, data_sizes):
             #add your neighbours weights
-            for model_id in self.neighbor_models:
-                weighted_sum += self.neighbor_models[model_id][key] * self.data_sizes[model_id]
+            for model_id in self.neighbor_statedicts:
+                weighted_sum += self.neighbor_statedicts[model_id][key] * self.data_sizes[model_id]
             #for neighbor_model,size in zip(self.neighbor_models,self.data_sizes):
                 #weighted_sum += neighbor_model[key] * size
             # Compute the weighted average
-            self.model_params[key] = weighted_sum / total_data
+            self.model.state_dict()[key] = weighted_sum / total_data
+        
 
     def send(self):
-        send_data = pickle.dumps(self.model_params,protocol=-1)
+        send_data = pickle.dumps(self.model.state_dict(),protocol=-1)
         for i in self.neighbors:
             #implement protocols here, if you dont want to send data to every node just send them an empty message and 0 in data length.
             self.comm.Isend(send_data, i, 0)
@@ -175,13 +179,13 @@ class NormalNode(AbstractNode):
         #convert the bytestreams to statedict
         for i in self.neighbors:
             try:
-                self.neighbor_models[i] = pickle.loads(bytes(recv_buffer_model[i]))
+                self.neighbor_statedicts[i] = pickle.loads(bytes(recv_buffer_model[i]))
                 self.data_sizes[i] = recv_buffer_datalen[i]
                 if (self.data_sizes[i] == 0):
-                    self.neighbor_models[i] = None
+                    self.neighbor_statedicts[i] = None
             except:
                 print("Error unpickling model from neigbhor {i}")
-                self.neighbor_models[i] = None
+                self.neighbor_statedicts[i] = None
 
         """
         #This is exeperimental as fuck no clue what im doing

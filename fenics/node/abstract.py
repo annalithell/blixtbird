@@ -11,7 +11,7 @@ from fenics.models import ModelFactory
 class AbstractNode(ABC):
     """ A  base node class for all nodes. """    
     
-    def __init__(self, node_id: int, data_path: Optional[str] = None, neighbors: Optional[int] = None, model_type: Optional[str] = None, logger: Optional[logging.Logger] = None):
+    def __init__(self, node_id: int, data_path: Optional[str] = None, neighbors: Optional[int] = None, model_type: Optional[str] = None, epochs: Optional[int] = None, logger: Optional[logging.Logger] = None):
         """
         Initialize the node
         
@@ -35,6 +35,7 @@ class AbstractNode(ABC):
         self.model = ModelFactory.get_model(model_type)
         self.metrics_train = []
         self.metrics_test = []
+        self.epochs = epochs
 
         self.logger = logger or logging.getLogger()
     
