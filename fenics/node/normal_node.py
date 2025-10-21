@@ -1,4 +1,4 @@
-# fenics/node/attacks/freerider.py
+# fenics/node/normal_node.py
 
 import torch
 import torch.nn as nn
@@ -8,6 +8,7 @@ from typing import Optional
 import time
 from mpi4py import MPI
 from torchvision import datasets, transforms
+import numpy as np
 
 from fenics.node.node_type import NodeType
 from fenics.node.abstract import AbstractNode
@@ -148,10 +149,16 @@ class NormalNode(AbstractNode):
 
     def send(self):
         send_data = pickle.dumps(self.model.state_dict(),protocol=-1)
+        send_size = len(send_data)
         for i in self.neighbors:
             #implement protocols here, if you dont want to send data to every node just send them an empty message and 0 in data length.
-            self.comm.Isend(send_data, i, 0)
-            self.comm.Isend(self.data_sizes[i],i,1)
+            self.comm.Isend([send_data,send_size,MPI.BYTE], i, 0)
+            #MPI needs cant send an obect so we have to wrap it in a an array because ahahhahahhahahah
+            send_buffer = np.array([self.data_sizes[i]], dtype=np.int32)
+            self.comm.Isend([send_buffer,1,MPI.INT],i,1)
+        #time.sleep(3)
+        #print("hello",flush=true)
+
             
     def recv(self):
         status = MPI.Status()
