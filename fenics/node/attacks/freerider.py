@@ -54,6 +54,7 @@ class FreeRiderAttack(AttackNode):
         self.append_training_metrics(train_loader)
         self.append_test_metrics(test_loader)
 
+        # TODO: manipulate training time
         training_time = time.time() - start_time
         return self.model.state_dict(), training_time
 

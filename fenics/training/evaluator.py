@@ -34,7 +34,7 @@ def evaluate(model, test_loader):
             correct += pred.eq(target).sum().item()
             all_preds.extend(pred.cpu().numpy())
             all_targets.extend(target.cpu().numpy())
-    test_loss /= len(test_loader.dataset)
+    test_loss /= len(test_loader.dataset) # compute average test loss
     accuracy = correct / len(test_loader.dataset)
 
     f1 = f1_score(all_targets, all_preds, average='macro', zero_division=1)
