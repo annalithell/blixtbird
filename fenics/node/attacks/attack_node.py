@@ -52,7 +52,8 @@ class AttackNode(AbstractNode):
 
         start_time = time.time()
         self.model.train()
-        self.logger.info(f"[Node {self.node_id}] Training for {self.epochs} epochs...")
+        #self.logger.info(f"[Node {self.node_id}] Training for {self.epochs} epochs...")
+        print(f"[Node {self.node_id}] Training for {self.epochs} epochs...")
 
         for epoch in range(self.epochs):
             for data, target in train_loader:
@@ -63,8 +64,8 @@ class AttackNode(AbstractNode):
                 loss.backward()
                 optimizer.step()
 
-            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
-
+            #self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
+            print(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
             #  After each epoch append training metrics
             self.append_training_metrics(train_loader)  
 
@@ -108,4 +109,5 @@ class AttackNode(AbstractNode):
         """
         #train_dataset = torch.load(self.data_path, weights_only=False)
         self.model_params, self.training_time = self.train_model()
-        self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        #self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        print((f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s"))

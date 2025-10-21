@@ -50,7 +50,8 @@ class NormalNode(AbstractNode):
 
         start_time = time.time()
         self.model.train()
-        self.logger.info(f"[Node {self.node_id}] Training for {self.epochs} epochs...")
+        #self.logger.info(f"[Node {self.node_id}] Training for {epochs} epochs...")
+        print((f"[Node {self.node_id}] Training for {self.epochs} epochs..."))
 
         for epoch in range(self.epochs):
             for data, target in train_loader:
@@ -61,7 +62,8 @@ class NormalNode(AbstractNode):
                 loss.backward()
                 optimizer.step()
 
-            self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
+            #self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{epochs}")
+            print(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
 
             #  After each epoch append training metrics
             self.append_training_metrics(train_loader)
@@ -103,8 +105,10 @@ class NormalNode(AbstractNode):
             - Calls the train_model() function for a standard node
 
         """
+
         self.model_params, self.training_time = self.train_model()
-        self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        #self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
+        print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
 
         # TODO aggregation
         

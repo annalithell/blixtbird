@@ -7,6 +7,7 @@ import numpy as np
 import yaml
 from colorama import Fore
 import subprocess
+import sys
 
 from fenics.config import parse_arguments, SimulationConfig, load_config_from_file
 from fenics.data import DataModule
@@ -158,6 +159,11 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     # )
     
     #TODO run MPI real simulation
+
+    #Some python buffer variable that helps print stdout in realtime
+    env = os.environ.copy()
+    env['PYTHONUNBUFFERED'] = '1'
+
     command = [
         'mpiexec',
         '-n',
@@ -167,46 +173,43 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         'fenics.mpi_script'
     ]
 
-    settings = {
-        'check': True,             # Raises an exception if mpiexec finishes unsuccessfully (non-zero exit code)
-        'capture_output': True,    # Captures stdout and stderr
-        'text': True               # Decodes the output as text (strings)
-    }
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        bufsize=1,
+        env=env
+    )
 
-    #TODO change error handling to something more readable
-    try:
-        # Execute the command
-        result = subprocess.run(command, **settings)
+    stdout_lines = []
+    stderr_lines = []
 
-        print("\n--- Execution Successful ---")
-        print(f"Exit Code: {result.returncode}")
-        print("\nStandard Output (stdout):")
-        print(result.stdout)
-
-        # Display stderr only if something was found there, despite success
-        if result.stderr:
-            print("\nStandard Errors (stderr):")
-            print(result.stderr)
-
-    except subprocess.CalledProcessError as e:
-        # Occurs in case of a non-zero exit code (error in mpiexec or test_mpi.py)
-        print("\n--- EXECUTION ERROR ---")
-        print(f"An error occurred in the process. Exit Code: {e.returncode}")
-        print("\nStdout output (may contain debug messages):")
-        print(e.stdout)
-        print("\nStderr output (error messages):")
-        print(e.stderr)
-
-    except FileNotFoundError:
-        # Occurs if 'mpiexec' is not found in the system path
-        print("\n--- SYSTEM ERROR ---")
-        print("Command 'mpiexec' not found. Ensure it is installed and added to the PATH.")
-    except Exception as e:
-        print(f"\n--- OTHER ERROR ---")
-        print(f"An unexpected error occurred: {e}")
+    print(Fore.GREEN + f"\n--- Standard Output (stdout): Starting MPI---")
     
-    # # Run the simulation
-    # metrics, cpu_usages, round_times, total_training_time_per_round, total_aggregation_time_per_round, total_execution_time = simulator.run_simulation()
+    #Print stdout in real time
+    while process.poll() is None or process.stdout.readable():
+        line = process.stdout.readline()
+        if line:
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            stdout_lines.append(line)
+        if not line and process.poll() is not None:
+            break
+    
+    process.wait()
+
+    stderr_output = process.stderr.read()
+    if stderr_output:
+        stderr_lines.append(stderr_output)
+
+    print(Fore.GREEN,"\n--- End of MPI part ---")
+    print(f"Exit Code: {process.returncode}")
+
+    full_stderr = "".join(stderr_lines).strip()
+    if full_stderr:
+        print(Fore.RED, "\n--- Standard Errors (stderr): ---")
+        print(Fore.RED, full_stderr)
     
     #TODO For now all metrics are comment!
     # After all rounds, compute training and aggregation times per round
