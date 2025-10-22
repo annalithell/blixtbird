@@ -1,6 +1,6 @@
 simulations:
   simulation1:
-    rounds: 3                  # Number of training rounds
+    rounds: 4                  # Number of training rounds
     epochs: 1                  # Number of epochs per round
     num_nodes: 4                # Total number of nodes in the simulation
     # num_attackers: 3            # Number of attacker nodes ## DELETE
@@ -9,8 +9,8 @@ simulations:
     node_type_map: 
       0: 'base'
       1: 'base'
-      2: 'freerider'
-      3: 'poison' 
+      2: 'base'
+      3: 'base' 
       #4: 'poison'
       #5: 'base'
       #6: 'base'
