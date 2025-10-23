@@ -39,6 +39,7 @@ class FreeRiderAttack(AttackNode):
         
         """
         train_dataset = torch.load(self.data_path, weights_only=False)
+        self.data_sizes[self.node_id] = len(train_dataset)
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
         start_time = time.time()
@@ -55,8 +56,7 @@ class FreeRiderAttack(AttackNode):
         self.append_test_metrics(test_loader)
 
         # TODO: manipulate training time
-        training_time = time.time() - start_time
-        return self.model.state_dict(), training_time
+        self.training_time = time.time() - start_time
 
 
     def execute(self):
@@ -66,9 +66,17 @@ class FreeRiderAttack(AttackNode):
         Args:
             model: Model to intercept
         """
-        self.model_params, self.training_time = self.train_model()
+        self.train_model()
         #self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
         print((f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s"))
+
+        print(f"[Node {self.node_id}] will now start sending data")
+        self.send()
+        print(f"[Node {self.node_id}] has completed sending, now stating the recieve operation")
+        self.recv()
+        print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")
+        self.aggregate()
+
         
 
 ## This is done explicitly in attack_factory.py

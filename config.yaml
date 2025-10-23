@@ -7,9 +7,9 @@ simulations:
     # attacker_nodes: [3]         # Specific nodes designated as attackers  ## CHANGE TO DICT
     # attacks: ['freerider', 'poison']           # Types of attacks to simulate ## DELETE
     node_type_map: 
-      0: 'base'
+      0: 'poison'
       1: 'base'
-      2: 'base'
+      2: 'freerider'
       3: 'base' 
       #4: 'poison'
       #5: 'base'

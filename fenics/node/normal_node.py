@@ -26,7 +26,6 @@ class NormalNode(AbstractNode):
             logger: Logger instance
         """
         super().__init__(node_id, data_path, neighbors, model_type, epochs, logger)
-        self.send_requests = []
         self.node_type = NodeType.NORMAL
 
 
@@ -73,9 +72,8 @@ class NormalNode(AbstractNode):
         # after each epoch evaluate test
         self.append_test_metrics(test_loader)
 
-        training_time = time.time() - start_time
-        #TODO look this over?
-        return self.model.state_dict(), training_time # NOT NEEDED??
+        self.training_time = time.time() - start_time
+
     
     
     def append_training_metrics(self, train_loader):
@@ -109,7 +107,7 @@ class NormalNode(AbstractNode):
 
         """
 
-        self.model_params, self.training_time = self.train_model()
+        self.train_model()
         print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
         # TODO aggregation
         print(f"[Node {self.node_id}] will now start sending data")

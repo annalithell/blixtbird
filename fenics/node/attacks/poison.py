@@ -23,8 +23,8 @@ class PoisonAttack(AttackNode):
         self.attack_round = 0 # Placeholder for potential future use
         self.logger = logger or logging.getLogger()
     
-    def _poison_state_dict(self, state_dict):
-        for _, param in state_dict.items():
+    def _poison_state_dict(self):
+        for _, param in self.model.state_dict.items():
             
             if param is None:
                 continue
@@ -37,7 +37,6 @@ class PoisonAttack(AttackNode):
             with torch.no_grad():
                 param.add_(noise)
 
-        return state_dict
 
     def execute(self) -> None:
         """
@@ -46,17 +45,24 @@ class PoisonAttack(AttackNode):
         Args:
             model: Model to poison
         """
-        self.model_params, self.training_time = self.train_model()
+        self.train_model()
         print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
 
-        if not isinstance(self.model_params, dict):
-            print(f"Unexpected model_params type: %s", type(self.model_params))
-            #self.logger.error("Unexpected model_params type: %s", type(self.model_params))
-            return self.model_params, self.training_time
+        if not isinstance(self.model.state_dict(), dict):
+            print(f"Unexpected model_state_dict type: %s", type(self.model.state_dict()))
+            return self.model.state_dictx(), self.training_time
         
-        poisoned_params = self._poison_state_dict(self.model_params)
-
+        self._poison_state_dict()
+        """
         try:
-            self.model_params = poisoned_params
+            self. = poisoned_params
         except Exception as e:
             self.logger.debug(f"Could not load poisoned params into model: {e}")
+        """
+
+        print(f"[Node {self.node_id}] will now start sending data")
+        self.send()
+        print(f"[Node {self.node_id}] has completed sending, now stating the recieve operation")
+        self.recv()
+        print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")
+        self.aggregate()

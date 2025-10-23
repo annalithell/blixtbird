@@ -22,7 +22,6 @@ class AbstractNode(ABC):
         """
         self.node_id = node_id
         self.data_path = data_path
-        self.model_params = None  # Placeholder for model parameters
         self.neighbors = neighbors
 
         self.neighbor_models = {}
@@ -30,11 +29,11 @@ class AbstractNode(ABC):
         self.comm = MPI.COMM_WORLD
 
         self.data_sizes = {}
-        self.data_sizes[self.node_id] = 0 
 
         self.model = ModelFactory.get_model(model_type)
         self.metrics_train = []
         self.metrics_test = []
+        self.send_requests = []
         self.epochs = epochs
 
         self.logger = logger or logging.getLogger()
