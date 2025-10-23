@@ -16,9 +16,6 @@ def make_csv(df, node_id: int):
     output_dir = get_output_dir()
     metrics_folder = f'{output_dir}/metrics'
 
-    if not os.path.exists(metrics_folder):
-        os.makedirs(metrics_folder)
-
     df.to_csv(f'{metrics_folder}/node_{node_id}_metrics.csv', index=False)
 
 def load_csv(node_id):

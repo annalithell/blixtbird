@@ -24,7 +24,7 @@ class PoisonAttack(AttackNode):
         self.logger = logger or logging.getLogger()
     
     def _poison_state_dict(self):
-        for _, param in self.model.state_dict.items():
+        for _, param in self.model.state_dict().items():
             
             if param is None:
                 continue

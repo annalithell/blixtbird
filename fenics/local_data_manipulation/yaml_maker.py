@@ -6,9 +6,13 @@ from typing import Dict
 def create_yaml(G, node_type_map: Dict[int, str], output_dir: str, epochs: int, rounds: int, model: str):
 
     mpi_config_folder = f'{output_dir}/mpi_config'
+    metrics_folder = f'{output_dir}/metrics'
 
     if not os.path.exists(mpi_config_folder):
         os.makedirs(mpi_config_folder)
+
+    if not os.path.exists(metrics_folder):
+        os.makedirs(metrics_folder)
 
     node_type = None
 
