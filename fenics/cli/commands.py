@@ -14,7 +14,7 @@ from fenics.data import DataModule
 #from fenics.client_selection import ClientSelector
 #from fenics.simulator import Simulator
 from fenics.utils import setup_logging
-from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
+from fenics.plotting import plot_metrics_with_convergence, plot_loss_line, plot_metrics_for_data_after_aggregation, plot_training_aggregation_times, plot_additional_metrics
 from fenics.node.attacks.attack_registry import autodiscover_attack_modules
 from fenics.local_data_manipulation.yaml_maker import create_yaml
 from fenics.local_data_manipulation.csv_metric import load_csv
@@ -227,6 +227,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         metrics[node_id] = metric
 
         plot_metrics_with_convergence(metric, rounds_range, total_execution_time, output_dir, logger, False, node_id)
+        plot_metrics_for_data_after_aggregation(metric, rounds_range, output_dir, node_id)
         plot_loss_line(metric, rounds_range, output_dir, logger, False, node_id)
     
     # # Log total training and aggregation times per round

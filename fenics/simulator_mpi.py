@@ -94,60 +94,15 @@ class Simulator_MPI:
 
             # STEP 2: AGGREGATION
             # Wait until params from neighbors have been collected
-
-
-    def run_simulation(self):
-        """
-        This function is for TEST METRICS!!!
-        similar layout as in old simulation
-        """
-
-        epochs = 5
-
-        # Evaluation phase: training data
-
-        for _ in range(0, epochs):
-            #TODO change evaluate function - adapt to new data
-            #train_loss, train_accuracy, train_f1, train_precision, train_recall = evaluate(model, train_loader)
-
-            train_loss = np.random.random(1)[0]
-            train_accuracy = np.random.random(1)[0]
-            train_f1 = np.random.random(1)[0]
-            train_precision = np.random.random(1)[0]
-            train_recall = np.random.random(1)[0]
-
-            self.metrics_train.append({'train_loss': train_loss,
-                                    'train_accuracy': train_accuracy,
-                                    'train_f1_score': train_f1,
-                                    'train_precision': train_precision,
-                                    'train_recall':train_recall})
-            
-        # Evaluation phase: testing data
-        for _ in range(0, epochs):
-            #TODO change evaluate function - adapt to new data
-            #loss, accuracy, f1, precision, recall = evaluate(model, test_loader)
-
-            loss = np.random.random(1)[0]
-            accuracy = np.random.random(1)[0]
-            f1 = np.random.random(1)[0]
-            precision = np.random.random(1)[0]
-            recall = np.random.random(1)[0]
-
-            self.metrics_test.append({'test_loss': loss,
-                                    'test_accuracy': accuracy,
-                                    'test_f1_score': f1,
-                                    'test_precision': precision,
-                                    'test_recall': recall})
-            
-        return
         
 
     def make_local_metrics(self):
 
         train_df = make_pandas_df(self.node.metrics_train)
         test_df = make_pandas_df(self.node.metrics_test)
+        test_df_aa = make_pandas_df(self.node.metrics_test_after_aggregation)
 
-        df = concat_pandas_df(train_df, test_df)
+        df = concat_pandas_df(concat_pandas_df(train_df, test_df), test_df_aa)
 
         make_csv(df, self.node_id)
 

@@ -23,7 +23,7 @@ from fenics.node.normal_node import NormalNode
 from fenics.node.attacks.delay import DelayAttack
 from fenics.node.attacks.poison import PoisonAttack
 from fenics.node.attacks.freerider import FreeRiderAttack
-from fenics.plotting import visualize_data_distribution, plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics
+from fenics.plotting import visualize_data_distribution, plot_metrics_with_convergence, plot_loss_line, plot_training_aggregation_times, plot_additional_metrics, plot_metrics_for_data_after_aggregation
 from fenics.simulator_mpi import Simulator_MPI
 from fenics.local_data_manipulation.csv_metric import make_csv, make_pandas_df
 from fenics.local_data_manipulation.yaml_maker import create_yaml, get_node_data, get_neighbors, get_output_dir
@@ -101,6 +101,7 @@ __all__ = [
     'plot_loss_line',
     'plot_training_aggregation_times',
     'plot_additional_metrics',
+    'plot_metrics_for_data_after_aggregation',
 
     # Local Data Functions
     'make_csv',

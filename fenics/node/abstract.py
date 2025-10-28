@@ -33,6 +33,7 @@ class AbstractNode(ABC):
         self.model = ModelFactory.get_model(model_type)
         self.metrics_train = []
         self.metrics_test = []
+        self.metrics_test_after_aggregation = []
         self.send_requests = []
         self.epochs = epochs
 

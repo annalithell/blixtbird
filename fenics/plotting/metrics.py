@@ -418,6 +418,59 @@ def plot_additional_metrics(rounds_range, cpu_usages, round_times, output_dir, l
     plt.close()
     logger.info(f"Round times plot saved as '{round_time_plot_path}'.")
 
+def plot_metrics_for_data_after_aggregation(metrics, rounds_range, output_dir, node_id):
+    
+    # Prepare data for testing metrics after aggregation
+    avg_metrics_test_aa = {
+        'Accuracy': [],
+        'F1 Score': [],
+        'Precision': [],
+        'Recall': []
+    }
+
+    for rnd in rounds_range:
+        acc_test, f1_test, prec_test, rec_test = [], [], [], []
+
+        if len(metrics['test_accuracy_aa']) >= rnd:
+            acc_test.append(metrics['test_accuracy_aa'][rnd-1])
+            f1_test.append(metrics['test_f1_score_aa'][rnd-1])
+            prec_test.append(metrics['test_precision_aa'][rnd-1])
+            rec_test.append(metrics['test_recall_aa'][rnd-1])
+
+        avg_metrics_test_aa['Accuracy'].append(np.nanmean(acc_test) if acc_test else 0)
+        avg_metrics_test_aa['F1 Score'].append(np.nanmean(f1_test) if f1_test else 0)
+        avg_metrics_test_aa['Precision'].append(np.nanmean(prec_test) if prec_test else 0)
+        avg_metrics_test_aa['Recall'].append(np.nanmean(rec_test) if rec_test else 0)
+    
+    #Plot Testing Metrics Line Plot
+    plt.figure(figsize=(7, 4))
+    rounds = list(rounds_range)
+    # Use a colorblind-friendly palette from seaborn
+    palette = sns.color_palette("Set2", 4)
+    x_offset = 0.1  # Small offset to separate overlapping lines
+
+    plt.plot(rounds, avg_metrics_test_aa['Accuracy'], marker='o', label='Accuracy(%)', color=palette[0])
+    plt.plot([x + x_offset for x in rounds], avg_metrics_test_aa['F1 Score'], marker='s', label='F1 Score(%)', color=palette[1])
+    plt.plot(rounds, avg_metrics_test_aa['Precision'], marker='^', label='Precision(%)', color=palette[2])
+    plt.plot([x - x_offset for x in rounds], avg_metrics_test_aa['Recall'], marker='d', label='Recall(%)', color=palette[3])
+
+    plt.ylabel('Metric Value')
+    plt.xlabel('Round')
+    #plt.title('Average Testing Metrics per Round (Line Plot)')
+    plt.xticks(rounds)
+    plt.ylim(0, 1)
+    plt.legend(markerscale=0.8, prop={'size': 10})
+    plt.grid(True)
+    plt.tight_layout()
+
+    path_template = os.path.join('metrics', f'node_{node_id}', 
+                                f'node_{node_id}_average_testing_metrics_line_plot_after_aggregation.pdf')
+    testing_line_path = os.path.join(output_dir, path_template)
+
+    plt.savefig(testing_line_path, format='pdf')
+    plt.close()
+
+
 def create_node_metrics_folder(output_dir, node_id):
     metrics_folder = f'{output_dir}/metrics/node_{node_id}'
     if not os.path.exists(metrics_folder):

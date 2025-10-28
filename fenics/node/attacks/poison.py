@@ -66,3 +66,5 @@ class PoisonAttack(AttackNode):
         self.recv()
         print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")
         self.aggregate()
+        #evaluate model after aggregation
+        self.append_test_metrics_after_aggregation()

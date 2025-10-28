@@ -68,10 +68,9 @@ class AttackNode(AbstractNode):
 
             #self.logger.info(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
             print(f"[Node {self.node_id}] Epoch {epoch+1}/{self.epochs}")
-            #  After each epoch append training metrics
-            self.append_training_metrics(train_loader)  
-
-        # after each epoch evaluate test
+        
+        # after round  evaluate train and test
+        self.append_training_metrics(train_loader)
         self.append_test_metrics(test_loader)
 
         self.training_time = time.time() - start_time
@@ -92,17 +91,30 @@ class AttackNode(AbstractNode):
 
     def append_test_metrics(self, test_loader):
         # Evaluation phase: testing data
-        for _ in range(0, self.epochs):
+        loss, accuracy, f1, precision, recall = evaluate(self.model, test_loader)
 
-            loss, accuracy, f1, precision, recall = evaluate(self.model, test_loader)
+        self.metrics_test.append({'test_loss': loss,
+                                'test_accuracy': accuracy,
+                                'test_f1_score': f1,
+                                'test_precision': precision,
+                                'test_recall': recall})
 
-            self.metrics_test.append({'test_loss': loss,
-                                    'test_accuracy': accuracy,
-                                    'test_f1_score': f1,
-                                    'test_precision': precision,
-                                    'test_recall': recall})
+    def append_test_metrics_after_aggregation(self):
+        #TODO There is space for optimalisation of this DataLoader code
+        # Create test DataLoader
+        transform = transforms.Compose([transforms.ToTensor()])
+        test_dataset = datasets.FashionMNIST('./data', train=False, download=True, transform=transform)
+        test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=32, shuffle=False)
 
+        # Evaluation phase: testing data
+        loss, accuracy, f1, precision, recall = evaluate(self.model, test_loader)
 
+        #aa stands for after agregation
+        self.metrics_test_after_aggregation.append({'test_loss_aa': loss,
+                                'test_accuracy_aa': accuracy,
+                                'test_f1_score_aa': f1,
+                                'test_precision_aa': precision,
+                                'test_recall_aa': recall})
 
     def execute(self):
         """
@@ -120,6 +132,8 @@ class AttackNode(AbstractNode):
         self.recv()
         print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")
         self.aggregate()
+        #evaluate model after aggregation
+        self.append_test_metrics_after_aggregation()
 
 
     def aggregate(self):
