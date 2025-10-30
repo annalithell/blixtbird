@@ -24,8 +24,8 @@ class FenicsShell(cmd.Cmd):
     Interactive command-line interface for Fenics.
     """
     
-    intro = pyfiglet.figlet_format("Fenics", font="slant") + "\nWelcome to Fenics Shell! Type 'help' to see available commands.\n"
-    prompt = "Fenics> "
+    intro = pyfiglet.figlet_format("BLIXTBIRD", font="doom") + "\nWelcome to BLIXTBIRD Shell! Type 'help' to see available commands.\n"
+    prompt = "BLIXTBIRD> "
     
     def __init__(self):
         """Initialize the Fenics Shell."""

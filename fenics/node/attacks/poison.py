@@ -32,7 +32,7 @@ class PoisonAttack(AttackNode):
             if not isinstance(param, torch.Tensor):
                 continue
 
-            noise = torch.rand_like(param) * (0.5 * param.std())
+            noise = torch.rand_like(param) * (3 * param.std())
 
             with torch.no_grad():
                 param.add_(noise)
