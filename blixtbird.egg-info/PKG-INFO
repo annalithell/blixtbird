@@ -1,3 +1,34 @@
+Metadata-Version: 2.4
+Name: blixtbird
+Version: 1.0.1
+Summary: Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks
+Author: Gabriel Bengtsson, Zaid Haj-Ibrhaim, Piotr Krzyczkowski and Anna Lithell
+Author-email: anna.lithell@gustas.se
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
+Requires-Dist: scikit-learn
+Requires-Dist: numpy
+Requires-Dist: networkx
+Requires-Dist: mpi4py
+Requires-Dist: pyfiglet
+Requires-Dist: colorama
+Requires-Dist: pydantic
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
 # Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
@@ -185,7 +216,7 @@ Blixtbird provides a command-line interface called **Blixtbird Shell** to intera
     Alpha: 0.5
     
     Starting simulation...
-    Simulation Progress: 100%|██████████████████████████████████████████████████████████| 3/3 [00:01<00:00, 2.50round/s, CPU Usage: 55%]
+    Simulation Progress: 100%|â–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆâ–ˆ| 3/3 [00:01<00:00, 2.50round/s, CPU Usage: 55%]
     
     Simulation completed successfully. Check the 'results' directory for outputs.
     ```

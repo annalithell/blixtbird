@@ -6,9 +6,7 @@ seaborn
 scikit-learn
 numpy
 networkx
-psutil
+mpi4py
 pyfiglet
 colorama
 pydantic
-yamllint
-tqdm
