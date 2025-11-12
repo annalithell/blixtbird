@@ -1,6 +1,5 @@
 # Ignore data folders
-*/FashionMNIST/raw
-data/
+#*/FashionMNIST/raw
 
 # ignore cache and environment artifact
 **/__pycache__/

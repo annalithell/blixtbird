@@ -77,7 +77,6 @@ __all__ = [
     'Simulator',
     'Simulator_MPI',
 
-
     # Plotting
     'visualize_data_distribution',
     'plot_metrics_with_convergence',
