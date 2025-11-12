@@ -1,10 +1,14 @@
-# Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks
+# Blixtbird: A Simulation Framework for Attacks in DFL networks
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11%2B-purple.svg)
 ![MPI4PY](https://img.shields.io/badge/MPI4PY-Required-brightgreen.svg)
 ![Threading](https://img.shields.io/badge/Concurrent-Multithreading-blueviolet.svg)
 ![Modular](https://img.shields.io/badge/Architecture-Modular-yellow.svg)
+
+**Blixtbird** is a modular simulation framework for Decentralized Federated Learning (DFL) networks operating under adversarial conditions.
+It models peer-to-peer communication using a Message Passing Interface (MPI) and currently supports normal and adversarial nodes, implementing free-rider and model poisoning attacks.
+The framework is built for extensibility, allowing users to easily register custom node classes and implement new attack types or defense strategies through a flexible factory-based architecture.
 
 
 ## Prerequisites
