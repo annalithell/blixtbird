@@ -1,12 +1,12 @@
 simulations:
   simulation1:
-    rounds: 10                  # Number of training rounds
-    epochs: 10                  # Number of epochs per round
+    rounds: 3                  # Number of training rounds
+    epochs: 1                  # Number of epochs per round
     num_nodes: 3                # Total number of nodes in the simulation
     node_type_map: 
       0: 'base'
       1: 'base'
-      2: 'poison'
+      2: 'freerider'
     use_attackers: true         # Flag to enable or disable attacker simulation 
     participation_rate: 0.6     # Fraction of nodes participating each round ## DELETE
     topology: fully_connected   # Network topology type

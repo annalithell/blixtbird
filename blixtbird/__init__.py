@@ -66,12 +66,7 @@ __all__ = [
     'FedAvgStrategy',
     'AggregationStrategy',
     'AggregationFactory',
-    
-    # Client Selection
-    'ClientSelector',
-    # 'select_clients_uniform',
-    'select_clients_md_sampling',
-    'SelectionFactory',
+
 
     # Utils
     'setup_logging',
@@ -82,12 +77,6 @@ __all__ = [
     'Simulator',
     'Simulator_MPI',
 
-    # Attack
-    'AttackManager',
-    'Attack',
-    'PoisonAttack',
-    'DelayAttack',
-    'AttackFactory',
 
     # Plotting
     'visualize_data_distribution',

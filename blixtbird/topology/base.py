@@ -1,4 +1,4 @@
-# fenics/topology/base.py
+# blixtbird/topology/base.py
 
 import networkx as nx
 from abc import ABC, abstractmethod

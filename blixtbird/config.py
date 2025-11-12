@@ -1,10 +1,9 @@
-# fenics/config.py
+# blixtbird/config.py
 
 from typing import List, Optional, Dict, Any, Union
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 from pathlib import Path
 import yaml
-import os
 import argparse
 
 class SimulationConfig(BaseModel):
@@ -34,30 +33,6 @@ class SimulationConfig(BaseModel):
     
     # Model parameters
     model_type: str = Field("cnn", description="Model type to use: cnn, mlp, custom")
-    
-    # @field_validator('participation_rate')
-    # def validate_participation_rate(cls, v):
-    #     if not (0 < v <= 1):
-    #         raise ValueError("participation_rate must be between 0 and 1")
-    #     return v
-    
-    # @field_validator('node_type_map')
-    # def validate_num_attackers(cls, v, values):
-    #     if 'num_nodes' in values and len(v) > values.get['num_nodes']:
-    #         raise ValueError("Attacker nodes cannot exceed num_nodes")
-    #     return v
-    
-    # @field_validator('topology_file')
-    # def validate_topology_file(cls, v, values):
-    #     if values.get('topology') == 'custom' and not v:
-    #         raise ValueError("topology_file must be provided when topology is 'custom'")
-    #     return v
-    
-    # @field_validator('protocol')
-    # def validate_protocol(cls, v):
-    #     if v not in ['gossip', 'neighboring']:
-    #         raise ValueError("protocol must be either 'gossip' or 'neighboring'")
-    #     return v
     
     class Config:
         # Allow extra fields for flexibility

@@ -1,4 +1,4 @@
-# fenics/models/cnn.py
+# blixtbird/models/cnn.py
 
 import torch
 import torch.nn as nn

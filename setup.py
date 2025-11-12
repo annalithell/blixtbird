@@ -10,9 +10,9 @@ setup(
     author_email='anna.lithell@gustas.se',
     packages=find_packages(),
     install_requires=[
-        #'torch',
-        #'torchvision',
         'numpy',
+        'torch',
+        'torchvision',
         'matplotlib',
         'seaborn',
         'scikit-learn',
@@ -21,6 +21,7 @@ setup(
         'pyfiglet',
         'colorama',
         'pydantic', 
+        'pyyaml'
     ],
     entry_points={
         'console_scripts': [
@@ -36,5 +37,5 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.11',
 )

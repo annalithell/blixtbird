@@ -1,19 +1,16 @@
-# fenics/cli/commands.py
+# blixtbird/cli/commands.py
 
 import os
 import shlex
 import logging
-import numpy as np
 import yaml
 from colorama import Fore
 import subprocess
 import sys
 
-from blixtbird.config import parse_arguments, SimulationConfig, load_config_from_file
+from blixtbird.config import parse_arguments
 from blixtbird.data import DataModule
-from blixtbird.utils import setup_logging
-from blixtbird.plotting import plot_metrics_with_convergence, plot_loss_line, plot_metrics_for_data_after_aggregation, plot_training_aggregation_times, plot_additional_metrics
-from blixtbird.node.attacks.attack_registry import autodiscover_attack_modules
+from blixtbird.plotting import plot_metrics_with_convergence, plot_loss_line, plot_metrics_for_data_after_aggregation
 from blixtbird.local_data_manipulation.yaml_maker import create_yaml
 from blixtbird.local_data_manipulation.csv_metric import load_csv
 
@@ -115,7 +112,7 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         str(simulation_args.num_nodes),
         'python',
         '-m',
-        'fenics.mpi_script'
+        'blixtbird.mpi_script'
     ]
 
     process = subprocess.Popen(

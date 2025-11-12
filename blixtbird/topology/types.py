@@ -1,4 +1,4 @@
-# fenics/topology/types.py
+# blixtbird/topology/types.py
 
 import networkx as nx
 from typing import Optional

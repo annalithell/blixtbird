@@ -1,9 +1,12 @@
-# fenics/node/attacks/delay.py
+# blixtbird/node/attacks/delay.py
+
+### OBSERVE: This file was included from the original Fenics repository.
+# TODO: Implement execute() functionality according to Blixtbird standards. 
 
 import random
 import time
 import logging
-from typing import Optional, override
+from typing import Optional
 
 from blixtbird.node.attacks.attack_node import AttackNode
 from blixtbird.node.attacks.attack_registry import register_attack

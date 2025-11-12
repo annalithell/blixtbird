@@ -1,4 +1,4 @@
-# fenics/models/base.py
+# blixtbird/models/base.py
 
 import torch.nn as nn
 from abc import ABC, abstractmethod

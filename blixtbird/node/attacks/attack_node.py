@@ -137,9 +137,6 @@ class AttackNode(AbstractNode):
 
 
     def aggregate(self):
-
-        # Initialize an empty state dict for the aggregated model
-        aggregated_state_dict = {}
         total_data = sum(self.data_sizes.values())
         
         # Get the list of all parameter keys

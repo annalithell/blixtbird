@@ -1,4 +1,4 @@
-# fenics/models/__init__.py
+# blixtbird/models/__init__.py
 
 from blixtbird.models.cnn import Net
 from blixtbird.models.base import ModelBase

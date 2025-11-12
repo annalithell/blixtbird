@@ -5,5 +5,4 @@ class NodeType(Enum):
     NORMAL = auto()
     ATTACK = auto()
     MITIGATION = auto()
-  # COORDINATION = auto() DO WE NEED ONE SO FAR ? 
-  # TO FUNCTION AS THE MAIN POROCESS KEEOPING TRACK OF THE PROCESSES?
+

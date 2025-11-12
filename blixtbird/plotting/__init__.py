@@ -1,4 +1,4 @@
-# fenics/plotting/__init__.py
+# blixtbird/plotting/__init__.py
 
 from blixtbird.plotting.metrics import (
     visualize_data_distribution,

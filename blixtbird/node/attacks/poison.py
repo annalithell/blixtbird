@@ -1,8 +1,8 @@
-# fenics/node/attacks/poison.py
+# blixtbird/node/attacks/poison.py
 
 import torch
 import logging
-from typing import Optional, override
+from typing import Optional
 
 from blixtbird.node.attacks.attack_node import AttackNode
 from blixtbird.node.attacks.attack_registry import register_attack

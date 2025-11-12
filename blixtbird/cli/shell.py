@@ -1,11 +1,8 @@
 # blixtbird/cli/shell.py
 
 import cmd
-import os
 import shlex
 import logging
-import numpy as np
-import yaml
 import pyfiglet
 from colorama import Fore
 
@@ -21,14 +18,14 @@ from blixtbird.cli.commands import (
 
 class BlixtbirdShell(cmd.Cmd):
     """
-    Interactive command-line interface for Fenics.
+    Interactive command-line interface for Blixtbird.
     """
     
     intro = pyfiglet.figlet_format("BLIXTBIRD", font="doom") + "\nWelcome to BLIXTBIRD Shell! Type 'help' to see available commands.\n"
     prompt = "BLIXTBIRD> "
     
     def __init__(self):
-        """Initialize the Fenics Shell."""
+        """Initialize the Blixtbird Shell."""
         super().__init__()
         self.output_dir = "results"
         self.logger = None

@@ -1,11 +1,10 @@
-# fenics/node/attacks/freerider.py
+# blixtbird/node/attacks/freerider.py
 
 import torch
 import torch.nn as nn
 import logging
-from typing import Optional, override
+from typing import Optional
 import time
-import numpy as np
 
 from torchvision import datasets, transforms
 from blixtbird.node.attacks.attack_node import AttackNode
@@ -26,7 +25,6 @@ class FreeRiderAttack(AttackNode):
         """
         super().__init__(node_id, data_path, neighbors, model_type, epochs, logger)
         self.attack_round = 0 # Placeholder for potential future use
-        #self.__attack_type__ = attack_type
 
 
     def train_model(self):
@@ -43,7 +41,6 @@ class FreeRiderAttack(AttackNode):
         train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
         start_time = time.time()
-        #self.logger.info(f"[Free-rider node {self.node_id}] fakes training...")
         print((f"[Free-rider node {self.node_id}] fakes training..."))
 
         # Create test DataLoader
@@ -55,7 +52,7 @@ class FreeRiderAttack(AttackNode):
         self.append_training_metrics(train_loader)
         self.append_test_metrics(test_loader)
 
-        # TODO: manipulate training time
+        # TODO: manipulate training time in a more clever way to simulate free-rider behavior
         self.training_time = time.time() - start_time
 
 
@@ -67,7 +64,6 @@ class FreeRiderAttack(AttackNode):
             model: Model to intercept
         """
         self.train_model()
-        #self.logger.info(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
         print((f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s"))
 
         print(f"[Node {self.node_id}] will now start sending data")
@@ -78,9 +74,3 @@ class FreeRiderAttack(AttackNode):
         self.aggregate()
         #evaluate model after aggregation
         self.append_test_metrics_after_aggregation()
-
-        
-
-## This is done explicitly in attack_factory.py
-# Register the attack
-#AttackFactory.register_attack('freerider', FreeRiderAttack)

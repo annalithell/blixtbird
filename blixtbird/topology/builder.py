@@ -1,4 +1,4 @@
-# fenics/topology/builder.py
+# blixtbird/topology/builder.py
 
 import networkx as nx
 from typing import Optional

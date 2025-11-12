@@ -1,10 +1,9 @@
-# fenics/models/factory.py
+# blixtbird/models/factory.py
 
-from typing import Dict, Type, Optional, Any
+from typing import Dict, Type
 
 from blixtbird.models.base import ModelBase
 from blixtbird.models.cnn import Net
-# from fenics.models.mlp import MLP
 
 
 class ModelFactory:

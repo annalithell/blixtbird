@@ -1,9 +1,8 @@
-# node/attackregistry.py
+# blixtbird/node/attack_registry.py
+
 import importlib
 import pkgutil
-from pathlib import Path
 from typing import Dict, Type
-import os
 
 ATTACK_REGISTRY: Dict[str, Type] = {}
 

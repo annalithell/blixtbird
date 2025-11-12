@@ -1,10 +1,9 @@
-# fenics/node/base.py
+# blixtbird/node/base.py
 
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Optional
 from mpi4py import MPI
-#from fenics.node.node_type import NodeType
 
 from blixtbird.models import ModelFactory
     

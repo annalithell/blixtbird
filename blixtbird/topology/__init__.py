@@ -1,4 +1,4 @@
-# fenics/topology/__init__.py
+# blixtbird/topology/__init__.py
 
 from blixtbird.topology.base import create_nodes
 from blixtbird.topology.builder import build_topology

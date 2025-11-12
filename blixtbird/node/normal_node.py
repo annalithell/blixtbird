@@ -1,4 +1,4 @@
-# fenics/node/normal_node.py
+# blixtbird/node/normal_node.py
 
 import torch
 import torch.nn as nn
@@ -96,7 +96,7 @@ class NormalNode(AbstractNode):
                                 'test_recall': recall})
 
     def append_test_metrics_after_aggregation(self):
-        #TODO There is space for optimalisation of this DataLoader code
+        #TODO Optimize this DataLoader code
         # Create test DataLoader
         transform = transforms.Compose([transforms.ToTensor()])
         test_dataset = datasets.FashionMNIST('./data', train=False, download=True, transform=transform)
@@ -118,24 +118,24 @@ class NormalNode(AbstractNode):
             - Calls the train_model() function for a standard node
 
         """
-
+        # Train the model
         self.train_model()
         print(f"[Node {self.node_id}] Training finished in {self.training_time:.2f}s")
-        # TODO aggregation
+        # Send and receive model parameters
         print(f"[Node {self.node_id}] will now start sending data")
         self.send()
         print(f"[Node {self.node_id}] has completed sending, now stating the recieve operation")
         self.recv()
+        # Perform aggregation of model parameters
         print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")
         self.aggregate()
-        #evaluate model after aggregation
+        # Evaluate model after aggregation
         self.append_test_metrics_after_aggregation()
 
 
     def aggregate(self):
 
         # Initialize an empty state dict for the aggregated model
-        aggregated_state_dict = {}
         total_data = sum(self.data_sizes.values())
         
         # Get the list of all parameter keys

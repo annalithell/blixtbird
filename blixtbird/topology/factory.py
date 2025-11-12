@@ -1,4 +1,4 @@
-# fenics/topology/factory.py
+# blixtbird/topology/factory.py
 
 import networkx as nx
 from typing import Dict, Type, Optional, Any

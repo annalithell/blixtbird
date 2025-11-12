@@ -1,14 +1,10 @@
-from typing import List, Optional
+from typing import List
 import logging
-import numpy as np
 
 from blixtbird.node.normal_node import NormalNode
-from blixtbird.node.node_type import NodeType
-from blixtbird.node.attacks.old.attacknode import AttackNode
 from blixtbird.node.attacks.attack_registry import autodiscover_attack_modules, get_attack, ATTACK_REGISTRY
 from blixtbird.training.trainer import load_dataset
 from blixtbird.local_data_manipulation.csv_metric import make_pandas_df, make_csv, concat_pandas_df
-from blixtbird.training.evaluator import evaluate
 from blixtbird.training.trainer import load_dataset
 
 class Simulator_MPI:
@@ -33,7 +29,7 @@ class Simulator_MPI:
 
         # create the correct node instance 
         # either attack node or base node
-        # TODO: CHANGE WHEN TO CALL THIS, SHOULD HAPPEN ONLY ONCE??
+        # TODO: CHANGE WHEN TO CALL THIS, SHOULD HAPPEN ONLY ONCE
         autodiscover_attack_modules()
 
         # TODO: future implementation include mitigation type
@@ -83,18 +79,12 @@ class Simulator_MPI:
         """
         This method will initialize the model training and any eventual attacks. 
         """
-        # STEP 0: Iterate for self.simulation_rounds 
+        # Iterate for self.simulation_rounds 
         for round in range(self.simulation_rounds):
 
-            # STEP 1: Call execute for node instance.
             # execute includes training + potential attack.
             self.node.execute()
 
-            # aggregation(Self.node.params)
-
-            # STEP 2: AGGREGATION
-            # Wait until params from neighbors have been collected
-        
 
     def make_local_metrics(self):
 

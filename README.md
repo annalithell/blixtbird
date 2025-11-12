@@ -54,11 +54,21 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     Ensure you have `pip` updated to the latest version:
     
     ```bash
-    python3.exe -m pip install --upgrade pip
+    pip install --upgrade pip
     ```
-
+    
+    **For Windows users (recommended):** Install PyTorch from the official PyTorch wheel index first to avoid build errors:
+    
     ```bash
-    pip install --upgrade pip setuptools wheel
+    # CPU-only
+    pip3 install numpy
+    pip3 install torch torchvision
+    ```
+    
+    Then install remaining dependencies:
+    
+    ```bash
+    pip install -r requirements-dev.txt
     ```
     
 4. **Install the Package in Editable Mode:**
@@ -66,10 +76,10 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     This allows you to modify the code without reinstalling the package each time.
     
     ```bash
-    pip install -e .
+    pip install -e . --no-deps
     ```
     
-    **Note:** The `setup.py` is configured to install all necessary dependencies, including `torch`, `numpy`, `psutil`, `colorama`, `pyfiglet`, and `pydantic`.
+    **Note:** The `--no-deps` flag prevents pip from re-resolving dependencies (they are already installed above).
     
 5. **Verify Installation:**
     
@@ -125,15 +135,13 @@ simulations:
     alpha: 0.5                  # Dirichlet distribution parameter
     model_type: cnn             # Model type to use ('cnn')
 ```
-  
+
 
 ## Usage
     
 Blixtbird provides a command-line interface called **Blixtbird Shell** to interact with the simulator. Below are instructions on how to set up and run simulations.
     
 ### Using the Blixtbird Shell
-
-**TODO UPDATE FOR BLIXTBIRD**
     
 1. **Launch the Fenics Shell:**
     
@@ -179,24 +187,41 @@ Blixtbird provides a command-line interface called **Blixtbird Shell** to intera
     **Sample Output:**
     
     ```
+    BLIXTBIRD> run
     Final Simulation Arguments:
     Rounds: 3
     Epochs: 1
-    Topology: fully_connected
+    Num nodes: 3
+    Node type map: {0: 'base', 1: 'base', 2: 'freerider'}
+    Use attackers: True
+    Max attacks: 5
     Participation rate: 0.6
-    Protocol: gossip
-    Num nodes: 5
+    Topology: fully_connected
+    Topology file: None
+    Gossip steps: 3
+    Protocol: neighboring
     Alpha: 0.5
-    
+    Model type: cnn
     Starting simulation...
-    Simulation Progress: 100%|██████████████████████████████████████████████████████████| 3/3 [00:01<00:00, 2.50round/s, CPU Usage: 55%]
-    
-    Simulation completed successfully. Check the 'results' directory for outputs.
+    data saved
+
+    --- Standard Output (stdout): Starting MPI---
+    Node: 2 created node instance:freerider
+    Node: 1 created node instance:base
+    Node: 0 created node instance:base
+    Node: 2 with negighbors:[0, 1], type: freerider, data_path: ./results/federated_data/node_2_train_data.pt and epochs: 1
+    Node: 1 with negighbors:[0, 2], type: base, data_path: ./results/federated_data/node_1_train_data.pt and epochs: 1
+    Node: 0 with negighbors:[1, 2], type: base, data_path: ./results/federated_data/node_0_train_data.pt and epochs: 1
+    [Free-rider node 2] fakes training...
+    [Node 1] Training for 1 epochs...
+    [Node 0] Training for 1 epochs...
     ```
     
     **Explanation:**
-    - **Progress Bar:** A real-time progress bar displays the simulation's progress, showing the percentage completed and the latest CPU usage.
-    - **Logs and Plots:** Detailed logs and visual plots are saved in the `results` directory.
+    - `results` directory: contains plots showing network topology, data distribution and average performance of all nodes' models.  
+      - The partitioned data for each node is saved in `federated_data`.  
+      - The `metrics` folder contains detailed results after evaluating a specific node's model for the test and training dataset. 
+      - The (middle-man) MPI configuration created by an MPI instance is saved in `mpi_config`. 
     
 5. **Exit the Fenics Shell:**
     

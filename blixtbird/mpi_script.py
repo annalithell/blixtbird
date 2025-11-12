@@ -1,3 +1,6 @@
+## THIS SCRIPT TESTS BASIC MPI SIMULATOR FUNCTIONALITY
+## NOT MEANT TO BE RUN DIRECTLY BY THE USER
+
 from mpi4py import MPI
 
 from blixtbird.local_data_manipulation.yaml_maker import get_node_data, get_output_dir
