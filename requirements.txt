@@ -1,6 +1,6 @@
 # requirements.txt
-torch
-torchvision
+#torch
+#torchvision
 matplotlib
 seaborn
 scikit-learn

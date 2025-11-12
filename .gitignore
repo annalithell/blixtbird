@@ -4,7 +4,7 @@ data
 
 # ignore cache and environment artifact
 **/__pycache__/
-fenics.egg-info
+blixtbird.egg-info
 venv
 __pycache__
 .vscode

@@ -1,23 +1,17 @@
-# fenics/__init__.py
+# blixtbird/__init__.py
 
-__version__ = "2.0.1"
-__author__ = "Shubham Saha, Sifat Nawrin Nova"
-__email__ = "shuvsaha7@gmail.com, nawrinnova04@gmail.com"
+__version__ = "1.0.1"
+__author__ = "Gabriel Bengtsson, Zaid Haj-Ibrhaim, Piotr Krzyczkowski and Anna Lithell"
+__email__ = "anna.lithell@gustas.se"
 
 # Import key components from modules
 from blixtbird.cli import BlixtbirdShell, run_blixtbird_shell
 from blixtbird.config import parse_arguments, SimulationConfig, load_config_from_file
-# from fenics.models import Net, ModelBase, MLP, ModelFactory
 from blixtbird.models import Net, ModelBase, ModelFactory
 from blixtbird.data import load_datasets_dirichlet, print_class_distribution, DataModule
 from blixtbird.topology import create_nodes, build_topology, visualize_and_save_topology, TopologyFactory
 from blixtbird.training import local_train, evaluate, summarize_model_parameters
-#from fenics.communication import send_update, gossip_step, neighboring_step, CommunicationProtocol, ProtocolFactory
-#from fenics.aggregation import FedAvgStrategy, AggregationStrategy, AggregationFactory
-# from fenics.client_selection import ClientSelector, select_clients_uniform, select_clients_md_sampling, SelectionFactory
-#from fenics.client_selection import ClientSelector, select_clients_md_sampling, SelectionFactory
 from blixtbird.utils import setup_logging, calculate_selection_probabilities, detect_convergence
-#from fenics.simulator import Simulator
 from blixtbird.node.abstract import AbstractNode
 from blixtbird.node.normal_node import NormalNode
 from blixtbird.node.attacks.delay import DelayAttack

@@ -1,2 +1,0 @@
-[console_scripts]
-blixtbird = blixtbird.cli.runner:run_blixtbird_shell

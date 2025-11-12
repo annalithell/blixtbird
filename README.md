@@ -54,7 +54,11 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     Ensure you have `pip` updated to the latest version:
     
     ```bash
-    pip install --upgrade pip
+    python3.exe -m pip install --upgrade pip
+    ```
+
+    ```bash
+    pip install --upgrade pip setuptools wheel
     ```
     
 4. **Install the Package in Editable Mode:**
@@ -69,10 +73,10 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     
 5. **Verify Installation:**
     
-    After installation, the `fenics` command-line tool should be available.
+    After installation, the `blixtbird` command-line tool should be available.
     
     ```bash
-    fenics --help
+    blixtbird --help
     ```
 
     **Expected Output:**

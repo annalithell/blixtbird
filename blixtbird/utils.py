@@ -13,7 +13,7 @@ def setup_logging(output_dir):
     Args:
         output_dir: Directory to save log file
     """
-    logger = logging.getLogger()
+    logger = logging.getLogger() 
     
     # Clear existing handlers
     if logger.hasHandlers():
