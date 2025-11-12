@@ -1,5 +1,9 @@
 # Fenics Plotting Module
 
+**OBSERVE: This functionality has been inherited from Fenics and not been thoroughly tested for Blixtbird**
+
+**TODO: Integrate this into the Blixtbird framework**
+
 This directory contains the plotting functionality for the Fenics simulator.
 
 ## Components

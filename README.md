@@ -1,22 +1,18 @@
 # Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.7%2B-purple.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.8.0%2B-yellow.svg)
-![NetworkX](https://img.shields.io/badge/NetworkX-2.5%2B-green.svg)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-orange.svg)
-![Scikit--learn](https://img.shields.io/badge/Scikit--learn-0.24%2B-red.svg)
+![Python](https://img.shields.io/badge/python-3.11%2B-purple.svg)
+![MPI4PY](https://img.shields.io/badge/MPI4PY-Required-brightgreen.svg)
 ![Threading](https://img.shields.io/badge/Concurrent-Multithreading-blueviolet.svg)
-![Modular](https://img.shields.io/badge/Architecture-Modular-brightgreen.svg)
+![Modular](https://img.shields.io/badge/Architecture-Modular-yellow.svg)
 
-**THIS README FILE IS CURRENTLY UNDER DEVELOPMENT** 
 
 ## Prerequisites
 
 Before installing and using Blixtbird, ensure that your system meets the following requirements:
 
 - **Operating System:** Windows, macOS, or Linux
-- **Python Version:** Python 3.7 or higher
+- **Python Version:** Python 3.11 or higher
 - **MPI**: An installed MPI distribution. This framework was built and tested using Microsoft MPI v10.0 [download link](https://www.microsoft.com/en-us/download/details.aspx?id=57467). 
 - **Virtual Environment (Recommended):** It's advisable to use a virtual environment to manage dependencies
 
@@ -57,53 +53,37 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     pip install --upgrade pip
     ```
     
-    **For Windows users (recommended):** Install PyTorch from the official PyTorch wheel index first to avoid build errors:
-    
-    ```bash
-    # CPU-only
-    pip3 install numpy
-    pip3 install torch torchvision
-    ```
-    
-    Then install remaining dependencies:
-    
-    ```bash
-    pip install -r requirements-dev.txt
-    ```
-    
 4. **Install the Package in Editable Mode:**
     
     This allows you to modify the code without reinstalling the package each time.
     
     ```bash
-    pip install -e . --no-deps
+    pip install -e .
     ```
-    
-    **Note:** The `--no-deps` flag prevents pip from re-resolving dependencies (they are already installed above).
+
+    **Note:** The `setup.py` is configured to install all required dependencies.
     
 5. **Verify Installation:**
     
     After installation, the `blixtbird` command-line tool should be available.
     
     ```bash
-    blixtbird --help
+    blixtbird
     ```
 
     **Expected Output:**
     
     ```
-    Usage: phoenix [OPTIONS] COMMAND [ARGS]...
-    
-      Distributed Federated Learning Simulator
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      setup            Initialize the simulation environment with desired...
-      run              Execute the simulation with the provided options.
-      list_simulations List all available simulation configurations.
-      parameters       Display all available simulation parameters and...
+    ______ _     _______   _____________ _________________ 
+    | ___ \ |   |_   _\ \ / /_   _| ___ \_   _| ___ \  _  \
+    | |_/ / |     | |  \ V /  | | | |_/ / | | | |_/ / | | |
+    | ___ \ |     | |  /   \  | | | ___ \ | | |    /| | | |
+    | |_/ / |_____| |_/ /^\ \ | | | |_/ /_| |_| |\ \| |/ /
+    \____/\_____/\___/\/   \/ \_/ \____/ \___/\_| \_|___/
+
+
+
+    Welcome to BLIXTBIRD Shell! Type 'help' to see available commands.
     ```
 
 

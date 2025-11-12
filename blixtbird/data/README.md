@@ -1,4 +1,4 @@
-# Fenics Data Module
+# Blixtbird Data Module
 
 This directory contains the data handling functionality for the Fenics simulator.
 

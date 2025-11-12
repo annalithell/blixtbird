@@ -1,4 +1,4 @@
-# utils.py
+# blixtbird/utils.py
 
 import logging
 import os

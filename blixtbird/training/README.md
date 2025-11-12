@@ -1,5 +1,9 @@
 # Fenics Training Module
 
+**OBSERVE: This functionality has been inherited from Fenics and not been thoroughly tested for Blixtbird**
+
+**TODO: Refactor training methods utilized in the Blixtbird framework to this class**
+
 This directory contains the training and evaluation functionality for the Fenics simulator.
 
 ## Components

@@ -1,5 +1,9 @@
 # Fenics Network Topologies
 
+**OBSERVE: This functionality has been inherited from Fenics and not been thoroughly tested for Blixtbird**
+
+**TODO: Integrate this into the Blixtbird framework**
+
 This directory contains the network topology implementations for the Fenics simulator.
 
 ## Available Topologies
