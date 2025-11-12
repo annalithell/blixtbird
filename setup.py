@@ -1,42 +1,41 @@
-# fenics/setup.py
+# blixtbird/setup.py
 
 from setuptools import setup, find_packages
 import os
 
 setup(
-    name='fenics',
-    version='2.0.1',
-    author='Shubham Saha, Sifat Nawrin Nova',
-    author_email='shuvsaha7@gmail.com, nawrinnova04@gmail.com',
+    name='blixtbird',
+    version='1.0.1',
+    author='Gabriel Bengtsson, Zaid Haj-Ibrhaim, Piotr Krzyczkowski and Anna Lithell',
+    author_email='anna.lithell@gustas.se',
     packages=find_packages(),
     install_requires=[
+        'numpy',
         'torch',
         'torchvision',
         'matplotlib',
         'seaborn',
         'scikit-learn',
-        'numpy',
         'networkx',
-        'psutil',
+        'mpi4py',
         'pyfiglet',
         'colorama',
-        'yamllint',
-        'pydantic',
-        'tqdm'  
+        'pydantic', 
+        'pyyaml'
     ],
     entry_points={
         'console_scripts': [
-            'fenics=fenics.cli.runner:run_fenics_shell',
+            'blixtbird=blixtbird.cli.runner:run_blixtbird_shell',
         ],
     },
     include_package_data=True,
-    description='Decentralized Federated Learning Simulator for Security Evaluation - Fenics',
-    long_description=open('README.md').read() if os.path.exists('README.md') else 'Fenics Shell for DFL Simulator',
+    description='Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks',
+    long_description=open('README.md').read() if os.path.exists('README.md') else 'Blixtbird Shell for DFL Simulator',
     long_description_content_type='text/markdown',
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.11',
 )

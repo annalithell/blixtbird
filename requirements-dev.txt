@@ -1,0 +1,19 @@
+# Core ML and data science
+numpy
+torch
+torchvision
+matplotlib
+seaborn
+scikit-learn
+
+# Networking and topology
+networkx
+
+# Distributed computing
+mpi4py
+
+# CLI and utilities
+yaml
+pyfiglet
+colorama
+pydantic

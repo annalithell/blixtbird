@@ -1,22 +1,22 @@
-# Blixtbird: A Simulation Framework for Modeling Attacks in DFL networks
+# Blixtbird: A Simulation Framework for Attacks in DFL networks
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.7%2B-purple.svg)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.8.0%2B-yellow.svg)
-![NetworkX](https://img.shields.io/badge/NetworkX-2.5%2B-green.svg)
-![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-orange.svg)
-![Scikit--learn](https://img.shields.io/badge/Scikit--learn-0.24%2B-red.svg)
+![Python](https://img.shields.io/badge/python-3.11%2B-purple.svg)
+![MPI4PY](https://img.shields.io/badge/MPI4PY-Required-brightgreen.svg)
 ![Threading](https://img.shields.io/badge/Concurrent-Multithreading-blueviolet.svg)
-![Modular](https://img.shields.io/badge/Architecture-Modular-brightgreen.svg)
+![Modular](https://img.shields.io/badge/Architecture-Modular-yellow.svg)
 
-**THIS README FILE IS CURRENTLY UNDER DEVELOPMENT** 
+**Blixtbird** is a modular simulation framework for Decentralized Federated Learning (DFL) networks operating under adversarial conditions.
+It models peer-to-peer communication using a Message Passing Interface (MPI) and currently supports normal and adversarial nodes, implementing free-rider and model poisoning attacks.
+The framework is built for extensibility, allowing users to easily register custom node classes and implement new attack types or defense strategies through a flexible factory-based architecture.
+
 
 ## Prerequisites
 
 Before installing and using Blixtbird, ensure that your system meets the following requirements:
 
 - **Operating System:** Windows, macOS, or Linux
-- **Python Version:** Python 3.7 or higher
+- **Python Version:** Python 3.11 or higher
 - **MPI**: An installed MPI distribution. This framework was built and tested using Microsoft MPI v10.0 [download link](https://www.microsoft.com/en-us/download/details.aspx?id=57467). 
 - **Virtual Environment (Recommended):** It's advisable to use a virtual environment to manage dependencies
 
@@ -30,7 +30,7 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     
     ```bash
     git clone https://github.com/yourusername/blixtbird.git
-    cd fenics
+    cd blixtbird
     ```
     
 2. **Create and Activate a Virtual Environment (Optional but Recommended):**
@@ -64,32 +64,30 @@ Before installing and using Blixtbird, ensure that your system meets the followi
     ```bash
     pip install -e .
     ```
-    
-    **Note:** The `setup.py` is configured to install all necessary dependencies, including `torch`, `numpy`, `psutil`, `colorama`, `pyfiglet`, and `pydantic`.
+
+    **Note:** The `setup.py` is configured to install all required dependencies.
     
 5. **Verify Installation:**
     
-    After installation, the `fenics` command-line tool should be available.
+    After installation, the `blixtbird` command-line tool should be available.
     
     ```bash
-    fenics --help
+    blixtbird
     ```
 
     **Expected Output:**
     
     ```
-    Usage: phoenix [OPTIONS] COMMAND [ARGS]...
-    
-      Distributed Federated Learning Simulator
-    
-    Options:
-      --help  Show this message and exit.
-    
-    Commands:
-      setup            Initialize the simulation environment with desired...
-      run              Execute the simulation with the provided options.
-      list_simulations List all available simulation configurations.
-      parameters       Display all available simulation parameters and...
+    ______ _     _______   _____________ _________________ 
+    | ___ \ |   |_   _\ \ / /_   _| ___ \_   _| ___ \  _  \
+    | |_/ / |     | |  \ V /  | | | |_/ / | | | |_/ / | | |
+    | ___ \ |     | |  /   \  | | | ___ \ | | |    /| | | |
+    | |_/ / |_____| |_/ /^\ \ | | | |_/ /_| |_| |\ \| |/ /
+    \____/\_____/\___/\/   \/ \_/ \____/ \___/\_| \_|___/
+
+
+
+    Welcome to BLIXTBIRD Shell! Type 'help' to see available commands.
     ```
 
 
@@ -121,34 +119,33 @@ simulations:
     alpha: 0.5                  # Dirichlet distribution parameter
     model_type: cnn             # Model type to use ('cnn')
 ```
-  
+
 
 ## Usage
     
 Blixtbird provides a command-line interface called **Blixtbird Shell** to interact with the simulator. Below are instructions on how to set up and run simulations.
     
 ### Using the Blixtbird Shell
-
-**TODO UPDATE FOR BLIXTBIRD**
     
 1. **Launch the Fenics Shell:**
     
     ```bash
-    fenics
+    blixtbird
     ```
     
     **Sample Output:**
-    
     ```
-       ______              _            
-      |  ____|            (_)           
-      | |__ ___ _ __  ___ _  ___ ___ 
-      |  __/ _ \ '_ \/ __| |/ __/ __|
-      | | |  __/ | | \__ \ | (__\__ \
-      |_|  \___|_| |_|___/_|\___|___/
-                                        
-    Welcome to Fenics Shell! Type 'help' to see available commands.
-    Fenics> 
+    ______ _     _______   _____________ _________________ 
+    | ___ \ |   |_   _\ \ / /_   _| ___ \_   _| ___ \  _  \
+    | |_/ / |     | |  \ V /  | | | |_/ / | | | |_/ / | | |
+    | ___ \ |     | |  /   \  | | | ___ \ | | |    /| | | |
+    | |_/ / |_____| |_/ /^\ \ | | | |_/ /_| |_| |\ \| |/ / 
+    \____/\_____/\___/\/   \/ \_/ \____/ \___/\_| \_|___/  
+
+
+    Welcome to BLIXTBIRD Shell! Type 'help' to see available commands.
+
+    BLIXTBIRD> 
     ```
     
 2. **Setup the Simulation Environment:**
@@ -174,24 +171,41 @@ Blixtbird provides a command-line interface called **Blixtbird Shell** to intera
     **Sample Output:**
     
     ```
+    BLIXTBIRD> run
     Final Simulation Arguments:
     Rounds: 3
     Epochs: 1
-    Topology: fully_connected
+    Num nodes: 3
+    Node type map: {0: 'base', 1: 'base', 2: 'freerider'}
+    Use attackers: True
+    Max attacks: 5
     Participation rate: 0.6
-    Protocol: gossip
-    Num nodes: 5
+    Topology: fully_connected
+    Topology file: None
+    Gossip steps: 3
+    Protocol: neighboring
     Alpha: 0.5
-    
+    Model type: cnn
     Starting simulation...
-    Simulation Progress: 100%|██████████████████████████████████████████████████████████| 3/3 [00:01<00:00, 2.50round/s, CPU Usage: 55%]
-    
-    Simulation completed successfully. Check the 'results' directory for outputs.
+    data saved
+
+    --- Standard Output (stdout): Starting MPI---
+    Node: 2 created node instance:freerider
+    Node: 1 created node instance:base
+    Node: 0 created node instance:base
+    Node: 2 with negighbors:[0, 1], type: freerider, data_path: ./results/federated_data/node_2_train_data.pt and epochs: 1
+    Node: 1 with negighbors:[0, 2], type: base, data_path: ./results/federated_data/node_1_train_data.pt and epochs: 1
+    Node: 0 with negighbors:[1, 2], type: base, data_path: ./results/federated_data/node_0_train_data.pt and epochs: 1
+    [Free-rider node 2] fakes training...
+    [Node 1] Training for 1 epochs...
+    [Node 0] Training for 1 epochs...
     ```
     
     **Explanation:**
-    - **Progress Bar:** A real-time progress bar displays the simulation's progress, showing the percentage completed and the latest CPU usage.
-    - **Logs and Plots:** Detailed logs and visual plots are saved in the `results` directory.
+    - `results` directory: contains plots showing network topology, data distribution and average performance of all nodes' models.  
+      - The partitioned data for each node is saved in `federated_data`.  
+      - The `metrics` folder contains detailed results after evaluating a specific node's model for the test and training dataset. 
+      - The (middle-man) MPI configuration created by an MPI instance is saved in `mpi_config`. 
     
 5. **Exit the Fenics Shell:**
     

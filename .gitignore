@@ -1,11 +1,10 @@
 # Ignore data folders
-*/FashionMNIST/raw
-data
+#*/FashionMNIST/raw
 
 # ignore cache and environment artifact
 **/__pycache__/
-fenics.egg-info
-venv
+blixtbird.egg-info
+venv*
 __pycache__
 .vscode
 
