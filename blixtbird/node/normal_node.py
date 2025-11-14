@@ -124,7 +124,7 @@ class NormalNode(AbstractNode):
         # Send and receive model parameters
         print(f"[Node {self.node_id}] will now start sending data")
         self.send()
-        print(f"[Node {self.node_id}] has completed sending, now stating the recieve operation")
+        print(f"[Node {self.node_id}] has completed sending, now starting the recieve operation")
         self.recv()
         # Perform aggregation of model parameters
         print(f"[Node {self.node_id}] Communication completed, starting aggregation .....")

@@ -54,7 +54,7 @@ def visualize_data_distribution(train_datasets, num_nodes, class_names, output_d
     logger.info(f"Data distribution plot saved as '{data_dist_path}'.")
 
 
-def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger, all_nodes, node_id):
+def plot_metrics_with_convergence(metrics, rounds_range, output_dir, logger, all_nodes, node_id):
     """
     Plot metrics with convergence detection.
     
@@ -221,14 +221,6 @@ def plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, o
     # Mark convergence point on training line plot
     '''if convergence_round and convergence_round in rounds_range:
         plt.axvline(x=convergence_round, color='red', linestyle='--', label='Convergence Point')'''
-
-    # Annotate total execution time only on training line plot
-    plt.text(0.95, 0.95, f'Total Execution Time: {total_execution_time:.2f} sec',
-             horizontalalignment='right',
-             verticalalignment='top',
-             transform=plt.gca().transAxes,
-             fontsize=10,
-             bbox=dict(facecolor='white', alpha=0.5))
 
     plt.ylabel('Metric Value')
     plt.xlabel('Round')

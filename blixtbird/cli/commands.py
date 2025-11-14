@@ -76,8 +76,6 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     print(Fore.CYAN + "Starting simulation...")
     logger.info("Starting simulation...")
 
-    #TODO Call atack register here?
-    #autodiscover_attack_modules()
 
     # Set up data module
     data_module = DataModule(
@@ -153,7 +151,6 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
         print(Fore.RED, "\n--- Standard Errors (stderr): ---")
         print(Fore.RED, full_stderr)
     
-    #TODO For now all metrics are comment!
     # After all rounds, compute training and aggregation times per round
     rounds_range = range(1, simulation_args.rounds + 1)
     
@@ -162,26 +159,20 @@ def run_simulation_command(arg, simulation_args, output_dir, logger):
     """
 
     metrics = {}
-    total_execution_time = 2000 #TODO change to real time
 
     for node_id, _ in (simulation_args.node_type_map).items():
         metric = load_csv(node_id)
         metrics[node_id] = metric
 
-        plot_metrics_with_convergence(metric, rounds_range, total_execution_time, output_dir, logger, False, node_id)
+        plot_metrics_with_convergence(metric, rounds_range, output_dir, logger, False, node_id)
         plot_metrics_for_data_after_aggregation(metric, rounds_range, output_dir, node_id)
         plot_loss_line(metric, rounds_range, output_dir, logger, False, node_id)
-    
-    # # Log total training and aggregation times per round
-    # for rnd, (train_time, agg_time) in enumerate(zip(total_training_time_per_round, total_aggregation_time_per_round), start=1):
-    #     logger.info(f"Round {rnd}: Total Training Time = {train_time:.2f} seconds")
-    #     logger.info(f"Round {rnd}: Total Aggregation Time = {agg_time:.2f} seconds")
     
     # Plot the metrics with convergence and execution time annotations
     all_nodes = True
     node_id = None
 
-    plot_metrics_with_convergence(metrics, rounds_range, total_execution_time, output_dir, logger, all_nodes, node_id)
+    plot_metrics_with_convergence(metrics, rounds_range, output_dir, logger, all_nodes, node_id)
     plot_loss_line(metrics, rounds_range, output_dir, logger, all_nodes, node_id)
 
 

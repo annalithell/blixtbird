@@ -6,7 +6,7 @@ from blixtbird.cli.shell import BlixtbirdShell
 
 def run_blixtbird_shell():
     """
-    Run the Fenics Shell.
+    Run the Blixtbird Shell.
     """
     # Initialize colorama
     init(autoreset=True)

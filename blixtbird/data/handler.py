@@ -14,9 +14,7 @@ def save_datasets(train_datasets, output_dir):
         save_path: Path for folder where data will be saved.
     """
 
-    #federated_data_folder = f'{output_dir}/federated_data'
     federated_data_folder = os.path.join(output_dir, 'federated_data')
-    #os.makedirs(federated_data_folder, exist_ok=True)
 
     if not os.path.exists(federated_data_folder):
         os.makedirs(federated_data_folder)
@@ -106,7 +104,7 @@ def load_datasets_dirichlet(num_nodes, alpha, save_to_file, output_dir):
     # Save datasets to separate files
     if save_to_file:
         save_datasets(train_datasets, output_dir)
-        print("data saved")
+        print("Local datasets saved")
 
     return train_datasets, test_dataset, labels
 

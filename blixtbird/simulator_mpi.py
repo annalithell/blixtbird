@@ -25,7 +25,6 @@ class Simulator_MPI:
         self.epochs = epochs
         self.simulation_rounds = rounds
         self.model = model
-        #self.attack_type = attack_type # TODO: This is never used, fix?
 
         # create the correct node instance 
         # either attack node or base node
